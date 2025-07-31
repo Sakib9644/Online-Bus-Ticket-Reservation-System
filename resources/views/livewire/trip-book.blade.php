@@ -42,11 +42,11 @@
     </div>
 
 
-@if ($message)
-                <p class="alert alert-success">
-                    {{ $message }}
-                </p>
-            @endif
+    @if ($message)
+        <p class="alert alert-success">
+            {{ $message }}
+        </p>
+    @endif
     <hr>
 
 
@@ -90,35 +90,22 @@
 
         <p style="color:white">Seat and bookig status</p>
         <hr>
-        @if (count($selectedSeats) < 7)
+        @if ($demo + count($selectedSeats) < 7)
+
             <p><b>Total Seats:</b> {{ count($selectedSeats) ?? '0' }}</p>
-            <!-- <p><b>Available Seats:</b>  {{ count($seats) }} - {{ count($booked) }}</p> -->
-
-
-
+            <p><b>Available Seats:</b> {{ count($seats) - count($booked) }}</p>
             <p><b>Total Price:</b> {{ $totalPrice ?? '00.00' }}</p>
+
+            <button wire:click="book" type="submit" class="btn btn-primary btn-sm">Book Now</button>
+            <a href="{{ route('booking.details') }}" class="btn btn-primary btn-sm">View Booking Details</a>
+
         @else
-            {{ $seat->seat_id }}
-            <H2><b> You can book only 7 seats from a bus </b></H2>
+            <p class="text-danger"><b>You have already Choosen 7 Seats</b></p>
+            <a href="{{ route('booking.details') }}" class="btn btn-primary btn-sm">View Booking Details</a>
         @endif
 
-        @if (!empty(auth()->user()))
-
-            @if (count($selectedSeats) < 7)
-                <button wire:click="book" type="submit" class="btn btn-primary btn-sm">Book Now</button>
-
-                <a href="{{ route('booking.details') }}" class="btn btn-primary btn-sm">View Booking Details</a>
 
 
-
-            @else
-
-            @endif
-        @else
-            <a href="{{ route('user.login') }}" class="btn btn-primary btn-sm">Book Now</a>
-        @endif
     @endif
-
-
 
 </div>

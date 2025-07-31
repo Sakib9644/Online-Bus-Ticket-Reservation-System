@@ -34,7 +34,7 @@
 
             <div class="col-sm-3">
                 <select class="form-control" wire:model="time" required>
-                    <option value="">Time Period</option>
+                    <option value="" disabled selected>Time Period</option>
                     <option value="Morning (07:00AM)">Morning (07:00AM)</option>
                     <option value="Morning (09:00AM)">Morning (09:00AM)</option>
                     <option value="Morning (11:00AM)">Morning (11:00AM)</option>

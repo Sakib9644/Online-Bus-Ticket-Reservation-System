@@ -14,16 +14,28 @@ class SeatSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i <= 40; $i++) {
+        for($i = 1; $i <= 40; $i++) {
             Seat::create([
                 'name' => 'S'.$i,
                 'bus_id' => 1,
             ]);
         }
-        for($p = 0; $p <= 40; $p++) {
+        for($p = 1; $p <= 40; $p++) {
             Seat::create([
                 'name' => 'A'.$p,
                 'bus_id' => 3,
+            ]);
+        }
+        for($i = 1; $i <= 40; $i++) {
+            Seat::create([
+                'name' => 'S'.$i,
+                'bus_id' => 2,
+            ]);
+        }
+        for($p = 1; $p <= 40; $p++) {
+            Seat::create([
+                'name' => 'A'.$p,
+                'bus_id' => 4,
             ]);
         }
 
