@@ -12,7 +12,7 @@
                         <div class="row">
                             @forelse ($buses as $bus )
                                 <div class="col-md-4 mt-2 text-center" style="border: 1px solid #ccc;">
-                                    <img src="{{ url('/uploads/' . $bus->image) }}" height="120">
+                                    <img src="{{ url('/uploads/' . $bus->image) }}" height="120" width="120">
                                     <p><h2>Bus Name:{{  $bus->bus_name }}</p></h2>
                                     <p><h2>Bus No:{{  $bus->bus_no }}</p></h2>
                                     <p><h2>Bus Type:{{ $bus->bus_type }}</p></h2>

@@ -16,6 +16,8 @@ class Trip extends Model
         return $this->belongsTo(Location::class);
     }
 
+
+
     public function bus()
     {
         return $this->belongsTo(Bus::Class);

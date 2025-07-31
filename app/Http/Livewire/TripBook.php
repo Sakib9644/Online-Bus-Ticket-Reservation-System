@@ -4,16 +4,10 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Booking;
-use App\Models\Payment;
-use App\Models\Trip;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
 
 class TripBook extends Component
 {
-    public $trip, $seats, $totalPrice, $date, $time, $booked;
-    public $availableBuses, $availableDates, $availableTimes;
-    public $selectedSeats = [];
+    public $trip, $seats, $totalPrice = 0, $date, $time, $booked, $selectedSeats = [], $message = null;
 
     public function mount($trip)
     {
@@ -33,36 +27,62 @@ class TripBook extends Component
         if ($value) {
             $this->totalPrice = count($this->selectedSeats) * $this->trip->fare;
         } else {
-            $this->reset(['selectedSeats']);
+            $this->reset('selectedSeats');
+            $this->totalPrice = 0;
         }
     }
 
-    public function searchSeat()
-    {
-        $this->booked = Booking::where('date', $this->date)
-            ->where('time', $this->time)
-            ->get();
-        $this->seats = $this->trip->bus->seats;
+ public function searchSeat()
+{
+    $this->booked = Booking::where('date', $this->date)
+        ->where('time', $this->time)
+        ->get();
+
+    $this->seats = $this->trip->bus->seats;
+
+    $availableSeatsCount = $this->seats->count() - $this->booked->count();
+
+    if ($availableSeatsCount <= 0) {
+        $this->dispatchBrowserEvent('notify', [
+            'type' => 'error',
+            'message' => 'No seats available.'
+        ]);
+    } else {
+        $this->dispatchBrowserEvent('notify', [
+            'type' => 'success',
+            'message' => 'Seats are available.'
+        ]);
+    }
+}
+
+  public function book()
+{
+    if (empty($this->selectedSeats)) {
+        $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please choose at least one seat before booking.']);
+        return;
     }
 
-    public function book()
-    {
-        $this->selectedSeats;
-        $this->totalPrice = count($this->selectedSeats) * $this->trip->fare;
-        if ($this->selectedSeats) {
-            foreach ($this->selectedSeats as $key => $value) {
-                $data = array(
-                    'seat_id' => $value,
-                    'user_id' => auth()->id(),
-                    'bus_id' => $this->trip->bus_id,
-                    'date' => $this->trip->date,
-                    'time' => $this->trip->time,
-                    'amount' => $this->trip->fare,
-                );
-                Booking::Create($data);
-            }
-        }
-        Session::flash('message', 'Your Ticket Booked. Please complete the transaction,
-        otherwise, your booking may be pending');
+    $bus = Booking::where('bus_id', $this->trip->bus_id)->where('user_id', auth()->user()->id)->count();
+    if ($bus >= 7) {
+        $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You have Already Booked 7 Seats from this bus.']);
+        return;
     }
+
+    $this->totalPrice = count($this->selectedSeats) * $this->trip->fare;
+    foreach ($this->selectedSeats as $seatId) {
+        Booking::create([
+            'seat_id' => $seatId,
+            'user_id' => auth()->id(),
+            'bus_id' => $this->trip->bus_id,
+            'date' => $this->trip->date,
+            'time' => $this->trip->time,
+            'amount' => $this->trip->fare,
+        ]);
+    }
+
+    $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Your Ticket Booked. Please complete the transaction, otherwise, your booking may be pending.']);
+
+    // Reset after booking
+}
+
 }
