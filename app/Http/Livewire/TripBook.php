@@ -73,7 +73,6 @@ class TripBook extends Component
             return;
         }
 
-        $this->totalPrice = count($this->selectedSeats) * $this->trip->fare;
         foreach ($this->selectedSeats as $seatId) {
             Booking::create([
                 'seat_id' => $seatId,

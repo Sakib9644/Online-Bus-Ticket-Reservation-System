@@ -185,7 +185,7 @@
 </style>
 
 <div style="margin-top:57px; margin-left: 61px;">
-    
+
     @if(session()->has('message'))
    <p class="alert alert-success">{{session()->get('message')}}</p>
 @endif
@@ -205,45 +205,45 @@
          <h4 style="font-weight: bold; padding-right: 15px;">Email:</h4>
          <dd class="col-sm-9"  style="font-size: 22px;"> {{($detail->user->email)}}</dd>
     </div>
-      
+
     <div style="display:flex; align-items:center;">
 
             <h4 style="font-weight: bold; padding-right: 15px;">Bus Name: </h4>
             <dd class="col-sm-9"  style="font-size: 22px;">{{($detail->seat->bus->bus_name)}}</dd>
-         
+
     </div>
-      
-        
+
+
     <div style="display:flex; align-items:center;">
-            <h4 style="font-weight: bold; padding-right: 15px;">Seat Number:</h4>  
+            <h4 style="font-weight: bold; padding-right: 15px;">Seat Number:</h4>
             <dd class="col-sm-9"  style="font-size: 22px;">{{($detail->seat->name)}}</dd>
     </div>
 
     <div style="display:flex; align-items:center;">
         <h4 style="font-weight: bold; padding-right: 15px;">Date: </h4>
-          <dd class="col-sm-9"  style="font-size: 22px;">{{$detail->date}}</</dd>    
+          <dd class="col-sm-9"  style="font-size: 22px;">{{$detail->date}}</</dd>
   </div>
 
   <div style="display:flex; align-items:center;">
       <h4 style="font-weight: bold; padding-right: 15px;">Time: </h4>
-        <dd class="col-sm-9"  style="font-size: 22px;">{{$detail->time}}</</dd>    
+        <dd class="col-sm-9"  style="font-size: 22px;">{{$detail->time}}</</dd>
 </div>
 
     <div style="display:flex; align-items:center;">
           <h4 style="font-weight: bold; padding-right: 15px;">Total Price: </h4>
           <dd class="col-sm-9"  style="font-size: 22px;">{{$detail->amount}}</dd>
     </div>
-    
+
 
     User booking payment form
 
     <p class="alert alert-success"  >In case you want to cancel your ticket online, please call 16374,before the Departure day,Thank You</p>
 
  </div>
-</div>     
+</div>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
-    
+
 <script language="javascript">
     function PrintDiv() {
         var divToPrint = document.getElementById('divToPrint');
@@ -255,7 +255,7 @@
 </script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
 

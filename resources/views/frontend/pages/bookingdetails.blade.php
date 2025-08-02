@@ -189,37 +189,44 @@
             <th>Date</th>
             <th>Time</th>
             <th>Amount</th>
-            <th>Bus ID</th>
+            <th>Bus Name</th>
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
-        @if ($details->count() > 0)
-            @foreach ($details as $detail)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $detail->user->name }}</td>
-                    <td>{{ $detail->user->email }}</td>
-                    <td>{{ $detail->seat->bus->bus_name }}</td>
-                    <td>{{ $detail->seat->name }}</td>
-                    <td>{{ $detail->date }}</td>
-                    <td>{{ $detail->time }}</td>
-                    <td>{{ $detail->amount }}</td>
-                    <td>{{ $detail->seat->bus->bus_name }}</td>
-                    <td>
-                        @if ($detail->status == 'pending')
-                            <a class="btn btn-primary" href="{{ route('user.payment', $detail->id) }}">Payment</a>
-                            <a class="btn btn-danger" href="{{ route('booking.delete', $detail->id) }}">Cancel</a>
-                        @else
-                            <button class="btn btn-info" disabled>Complete</button>
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
-        @else
+   <tbody>
+    @if ($details->count() > 0)
+        @foreach ($details as $detail)
             <tr>
-                <td colspan="10" class="text-center">No ticket</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $detail->user->name }}</td>
+                <td>{{ $detail->user->email }}</td>
+                <td>{{ $detail->seat->bus->bus_name ?? '' }}</td>
+                <td>{{ $detail->seat->name }}</td>
+                <td>{{ $detail->date }}</td>
+                <td>{{ $detail->time }}</td>
+                <td>{{ $detail->amount }}</td>
+                <td>{{ $detail->seat->bus->bus_name ?? '' }}</td>
+                <td>
+                    @if ($detail->status == 'pending')
+                        <a class="btn btn-primary" href="{{ route('user.payment', $detail->id) }}">Payment</a>
+                        <a class="btn btn-danger" href="{{ route('booking.delete', $detail->id) }}">Cancel</a>
+                    @else
+                        <button class="btn btn-info" disabled>Complete</button>
+                    @endif
+                </td>
             </tr>
-        @endif
-    </tbody>
+        @endforeach
+    @else
+        <tr>
+            <td colspan="10" class="text-center">No ticket</td>
+        </tr>
+    @endif
+</tbody>
+<tfoot>
+    <tr>
+        <td colspan="7" class="" style="text-align: end"><strong>Total:</strong></td>
+        <td colspan="3">{{ $details->sum('amount') }} Tk</td>
+    </tr>
+</tfoot>
+
 </table>

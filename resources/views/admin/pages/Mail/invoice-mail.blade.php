@@ -30,23 +30,23 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{$invoice->user->name}}</td>
-                <td>{{$invoice->user->email}}</td>
-                <td>{{$invoice->user->phone}}</td>
-                <td>{{$invoice->seat->bus->bus_name}}</td>
-                <td>{{$invoice->seat->name}}</td>
+                <td>{{$invoice->userRelation->name}}</td>
+                <td>{{$invoice->userRelation->email}}</td>
+                <td>{{$invoice->userRelation->phone}}</td>
+                <td>{{$invoice->seat->bus->bus_name ?? null}}</td>
+                <td>{{$invoice->seat->name ?? null}}</td>
                 <td>{{$invoice->date}}</td>
                 <td>{{$invoice->time}}</td>
                 <td>{{$invoice->amount}}tk</td>
             </tr>
         </tbody>
-    </table> 
+    </table>
     <p>Thank you for receive our service.</p>
 </body>
 {{-- <center>  <a href="#" class="btn btn-warning" onclick="printDiv('PrintTableArea')">Print</a></center> --}}
 </div>
 </div>
-{{-- 
+
 <script type="text/javascript">
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
@@ -55,5 +55,5 @@
         window.print();
         document.body.innerHTML = originalContents;
     }
-</script> --}}
+</script>
 </html>

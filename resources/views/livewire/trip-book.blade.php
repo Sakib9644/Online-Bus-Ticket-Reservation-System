@@ -33,13 +33,16 @@
 
 
 
-            <button wire:click.prevent="searchSeat" class="btn btn-primary btn-sm">View Seats </button>
+            <button wire:click.prevent="searchSeat" wire:loading.attr="disabled" class="btn btn-primary btn-sm">
+                View Seats
+            </button>
 
 
         </div>
 
 
     </div>
+
 
 
     @if ($message)
@@ -52,7 +55,8 @@
 
     @if (count($seats) > 0)
         @foreach ($trip->bus->seats->chunk(6) as $row)
-            <div class=>
+            <div >
+
                 @foreach ($row as $seat)
                     <div class="col-sm-3">
                         <div class="form-check">
@@ -61,13 +65,10 @@
                                 @foreach ($booked as $book)
                             @if ($book->seat_id == $seat->id)
 
-
+title="Already Booked"
                             disabled
 
                             @endif @endforeach>
-
-
-
 
 
                             <label
@@ -91,14 +92,12 @@
         <p style="color:white">Seat and bookig status</p>
         <hr>
         @if ($demo + count($selectedSeats) < 7)
-
             <p><b>Total Seats:</b> {{ count($selectedSeats) ?? '0' }}</p>
-            <p><b>Available Seats:</b> {{ count($seats) - count($booked) }}</p>
+            <p><b>Available Seats:</b> {{ count($seats) - $demo - count($selectedSeats) }}</p>
             <p><b>Total Price:</b> {{ $totalPrice ?? '00.00' }}</p>
 
             <button wire:click="book" type="submit" class="btn btn-primary btn-sm">Book Now</button>
             <a href="{{ route('booking.details') }}" class="btn btn-primary btn-sm">View Booking Details</a>
-
         @else
             <p class="text-danger"><b>You have already Choosen 7 Seats</b></p>
             <a href="{{ route('booking.details') }}" class="btn btn-primary btn-sm">View Booking Details</a>
