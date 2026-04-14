@@ -17,9 +17,6 @@
                 <a href="{{ route('frontend.reserve') }}" class="sb-btn sb-btn-accent" style="padding:18px 42px; font-size:16px; text-decoration:none; display:inline-flex; align-items:center; gap:12px;">
                     Find Trips Now <i class="fa fa-arrow-right"></i>
                 </a>
-                <a href="#fleet" class="sb-btn" style="padding:18px 36px; font-size:16px; text-decoration:none; display:inline-flex; align-items:center;">
-                    Our Fleet
-                </a>
             </div>
         </div>
         
@@ -117,46 +114,5 @@
     </div>
 </section>
 @endif
-
-{{-- BUS FLEET --}}
-<section class="section-wrap" style="padding-bottom: 120px;">
-    <div style="text-align:center; margin-bottom:60px;">
-        <span class="sb-badge" style="margin-bottom:12px;">Our Fleet</span>
-        <h2 class="syne" style="font-size:36px; font-weight:800;">Available Coaches</h2>
-    </div>
-
-    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:32px;">
-        @forelse ($buses as $bus)
-        <div class="sb-card" style="padding:0; overflow:hidden;">
-            <div style="aspect-ratio:16/10; overflow:hidden; position:relative;">
-                <img src="{{ url('/uploads/' . $bus->image) }}" alt="{{ $bus->bus_name }}"
-                     style="width:100%; height:100%; object-fit:cover; transition:transform .6s;"
-                     onmouseover="this.style.transform='scale(1.1)'"
-                     onmouseout="this.style.transform='scale(1)'">
-                <div style="position:absolute; top:20px; right:20px;">
-                    <span style="background:{{ $bus->bus_type == 'ac' ? 'rgba(46,125,50,0.9)' : 'rgba(230,81,0,0.9)' }}; color:#fff; font-size:10px; font-weight:800; padding:6px 12px; border-radius:100px; text-transform:uppercase; backdrop-filter:blur(10px);">
-                        {{ $bus->bus_type }}
-                    </span>
-                </div>
-            </div>
-            <div style="padding:24px;">
-                <div style="margin-bottom:20px;">
-                    <h3 class="syne" style="font-size:20px; font-weight:700; margin-bottom:4px;">{{ $bus->bus_name }}</h3>
-                    <div style="color:var(--muted); font-size:13px; display:flex; gap:12px;">
-                        <span><i class="fa fa-shuttle-van me-1"></i> {{ $bus->bus_no }}</span>
-                        <span><i class="fa fa-couch me-1"></i> 40 Seats</span>
-                    </div>
-                </div>
-                <a href="{{ route('frontend.reserve') }}" class="sb-btn" style="width:100%; display:block; text-align:center; text-decoration:none;">View Schedule</a>
-            </div>
-        </div>
-        @empty
-        <div style="grid-column:1/-1; text-align:center; padding:100px 20px; color:var(--muted);">
-            <i class="fas fa-bus" style="font-size:64px; margin-bottom:24px; display:block; opacity:.1;"></i>
-            <p>Our coaches are currently on the road. Check back soon!</p>
-        </div>
-        @endforelse
-    </div>
-</section>
 
 @endsection
