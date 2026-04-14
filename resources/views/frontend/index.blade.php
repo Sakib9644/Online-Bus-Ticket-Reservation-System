@@ -343,6 +343,121 @@
         .sb-btn:hover { background: var(--border); }
         .sb-btn-accent { background: var(--accent); border-color: var(--accent); color: #0d1a09; }
         .sb-btn-accent:hover { background: #7ab32f; border-color: #7ab32f; color: #0d1a09; }
+
+        /* BOOKING SITE SPECIFIC UTILITIES */
+        .glass-card {
+            background: rgba(28, 32, 27, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .ticket-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            position: relative;
+        }
+
+        .ticket-left { padding: 24px; flex: 1; }
+        .ticket-right { 
+            width: 150px; 
+            padding: 24px; 
+            background: rgba(141, 198, 63, 0.05); 
+            border-left: 2px dashed var(--border); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            position: relative;
+        }
+
+        .ticket-right::before, .ticket-right::after {
+            content: '';
+            position: absolute;
+            left: -11px;
+            width: 20px;
+            height: 20px;
+            background: var(--paper);
+            border-radius: 50%;
+            border: 1px solid var(--border);
+        }
+        .ticket-right::before { top: -11px; }
+        .ticket-right::after { bottom: -11px; }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            background: rgba(18, 22, 17, 0.8) !important;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Hero Booking Bar */
+        .booking-bar {
+            background: rgba(28, 32, 27, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 10px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 900px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .booking-bar-item {
+            flex: 1;
+            padding: 12px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+        .booking-bar-item:not(:last-child) {
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        .booking-bar-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .booking-bar-input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            outline: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        .booking-bar-input option {
+            background-color: #1c201b !important;
+            color: #fff !important;
+            padding: 10px;
+        }
+        .booking-bar-input::placeholder { color: #555; }
+        .booking-bar-btn {
+            background: var(--accent);
+            color: #0d1a09;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .booking-bar-btn:hover { transform: scale(1.05); background: #8dc63f; }
     </style>
     </style>
 </head>

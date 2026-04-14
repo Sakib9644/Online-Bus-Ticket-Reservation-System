@@ -21,6 +21,11 @@ class Trip extends Component
     public function mount()
     {
         $this->locations = Location::all();
+        
+        // Handle incoming request parameters for homepage redirects
+        $this->from = request('from', $this->from);
+        $this->to = request('to', $this->to);
+        $this->date = request('date', $this->date);
     }
 
     public function loadMore()

@@ -8,28 +8,28 @@
         <div class="contact-grid">
             <div>
                 <div class="contact-info-item">
-                    <div class="contact-icon" style="background:#1a1a1a;"><i class="fas fa-phone" style="color:#ff4d1c;"></i></div>
+                    <div class="contact-icon" style="background:rgba(141,198,63,0.1);"><i class="fas fa-phone" style="color:var(--accent);"></i></div>
                     <div>
                         <div class="contact-label">Phone</div>
                         <div class="contact-value" style="color:#fff;">01715484510</div>
                     </div>
                 </div>
                 <div class="contact-info-item">
-                    <div class="contact-icon" style="background:#1a1a1a;"><i class="fas fa-phone" style="color:#ff4d1c;"></i></div>
+                    <div class="contact-icon" style="background:rgba(141,198,63,0.1);"><i class="fas fa-phone" style="color:var(--accent);"></i></div>
                     <div>
                         <div class="contact-label">Support Line</div>
                         <div class="contact-value" style="color:#fff;">01985562100</div>
                     </div>
                 </div>
                 <div class="contact-info-item">
-                    <div class="contact-icon" style="background:#1a1a1a;"><i class="fas fa-envelope" style="color:#ff4d1c;"></i></div>
+                    <div class="contact-icon" style="background:rgba(141,198,63,0.1);"><i class="fas fa-envelope" style="color:var(--accent);"></i></div>
                     <div>
                         <div class="contact-label">Email</div>
                         <div class="contact-value" style="color:#fff;">info@xyz.net</div>
                     </div>
                 </div>
                 <div class="contact-info-item">
-                    <div class="contact-icon" style="background:#1a1a1a;"><i class="fas fa-location-dot" style="color:#ff4d1c;"></i></div>
+                    <div class="contact-icon" style="background:rgba(141,198,63,0.1);"><i class="fas fa-location-dot" style="color:var(--accent);"></i></div>
                     <div>
                         <div class="contact-label">Address</div>
                         <div class="contact-value" style="color:#fff;">Road-8, House-14, Sector-6<br>Softech Ltd, Dhaka-1230</div>

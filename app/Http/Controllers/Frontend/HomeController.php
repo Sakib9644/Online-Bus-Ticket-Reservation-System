@@ -14,7 +14,9 @@ class HomeController extends Controller
     public function home()
     {
         $buses = Bus::all();
-        return view('frontend.pages.home', compact('buses'));
+        $locations = Location::all();
+        $trips = Trip::with('bus')->latest()->take(3)->get();
+        return view('frontend.pages.home', compact('buses', 'locations', 'trips'));
     }
     public function reserveForm()
     {
