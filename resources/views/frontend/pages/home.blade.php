@@ -13,37 +13,13 @@
             </h1>
             <p style="color:var(--muted); font-size:18px; max-width:500px; margin-bottom:48px; line-height:1.6;">Your premium gateway to bus reservations. Experience the most comfortable and secure way to travel across Bangladesh.</p>
             
-            <form action="{{ route('frontend.reserve') }}" method="GET" class="booking-bar" style="margin-top: 32px;">
-                <div class="booking-bar-item">
-                    <span class="booking-bar-label">From</span>
-                    <select name="from" class="booking-bar-input" style="color: #fff; background: transparent;" required>
-                        <option value="" style="background: #1c201b; color: #fff;">Select City</option>
-                        @foreach($locations->unique('location_from') as $loc)
-                            <option value="{{ $loc->location_from }}" style="background: #1c201b; color: #fff;">{{ $loc->location_from }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="booking-bar-item">
-                    <span class="booking-bar-label">To</span>
-                    <select name="to" class="booking-bar-input" style="color: #fff; background: transparent;" required>
-                        <option value="" style="background: #1c201b; color: #fff;">Select City</option>
-                        @foreach($locations->unique('location_to') as $loc)
-                            <option value="{{ $loc->location_to }}" style="background: #1c201b; color: #fff;">{{ $loc->location_to }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="booking-bar-item">
-                    <span class="booking-bar-label">Date</span>
-                    <input type="date" name="date" class="booking-bar-input" style="color-scheme: dark; color: #fff; background: transparent;" required>
-                </div>
-                <button type="submit" class="booking-bar-btn" style="width: auto; padding: 0 24px; border-radius: 100px; font-weight: 800; font-size: 13px; gap: 8px;">
-                    FIND TRIPS <i class="fa fa-arrow-right" style="font-size: 11px;"></i>
-                </button>
-            </form>
-
-            <div style="margin-top: 24px; display: flex; align-items: center; gap: 16px;">
-                <span style="color: var(--muted); font-size: 13px;">Or explore:</span>
-                <a href="{{ route('frontend.reserve') }}" style="color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 700; border-bottom: 1px dashed var(--accent); padding-bottom: 2px;">View All Available Routes →</a>
+            <div style="display:flex; gap:20px; align-items:center; margin-top:40px;">
+                <a href="{{ route('frontend.reserve') }}" class="sb-btn sb-btn-accent" style="padding:18px 42px; font-size:16px; text-decoration:none; display:inline-flex; align-items:center; gap:12px;">
+                    Find Trips Now <i class="fa fa-arrow-right"></i>
+                </a>
+                <a href="#fleet" class="sb-btn" style="padding:18px 36px; font-size:16px; text-decoration:none; display:inline-flex; align-items:center;">
+                    Our Fleet
+                </a>
             </div>
         </div>
         

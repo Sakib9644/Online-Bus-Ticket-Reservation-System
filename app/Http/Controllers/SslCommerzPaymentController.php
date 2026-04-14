@@ -14,15 +14,19 @@ class SslCommerzPaymentController extends Controller
 
     public function index(Request $request, $id)
     {
-        $booking = Booking::find($id);
-        if (!$booking) {
-            return redirect()->back()->with('error', 'Booking not found');
+        $ids = explode(',', $id);
+        $bookings = Booking::whereIn('id', $ids)->get();
+        
+        if ($bookings->isEmpty()) {
+            return redirect()->back()->with('error', 'Bookings not found');
         }
 
+        $total_amount = $bookings->sum('amount');
+
         $post_data = array();
-        $post_data['total_amount'] = $booking->amount; # You cant not use $_GET or $_POST variable here. Plus value must be integer.
+        $post_data['total_amount'] = $total_amount;
         $post_data['currency'] = "BDT";
-        $post_data['tran_id'] = uniqid(); // tran_id must be unique
+        $post_data['tran_id'] = uniqid();
 
         # CUSTOMER INFORMATION
         $post_data['cus_name'] = Auth::user()->name;
@@ -52,12 +56,12 @@ class SslCommerzPaymentController extends Controller
         $post_data['product_profile'] = "non-physical-goods";
 
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = $id; // Store Booking ID
+        $post_data['value_a'] = $id; // Store Comma-separated Booking IDs
         $post_data['value_b'] = Auth::id();
 
-        # Before  going to initiate the payment order status need to update as Pending.
-        $update_product = DB::table('bookings')
-            ->where('id', $id)
+        # Before going to initiate the payment order status need to update as Pending.
+        DB::table('bookings')
+            ->whereIn('id', $ids)
             ->update([
                 'status' => 'Pending'
             ]);
@@ -86,22 +90,17 @@ class SslCommerzPaymentController extends Controller
 
         $sslc = new SslCommerzNotification();
 
-        #Check order status in order tabel.
+        #Check if first booking is pending
         $order_details = DB::table('bookings')
-            ->where('id', $booking_id)
+            ->whereIn('id', $ids)
             ->first();
 
-        if ($order_details->status == 'Pending') {
+        if ($order_details && $order_details->status == 'Pending') {
             $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
 
             if ($validation == TRUE) {
-                /*
-                That means IPN did not work or IPN URL was not set in your merchant panel. Here you need to update order status
-                in order table as Processing or Complete.
-                Here you can also sent sms or email for successfull transaction to customer
-                */
                 DB::table('bookings')
-                    ->where('id', $booking_id)
+                    ->whereIn('id', $ids)
                     ->update(['status' => 'complete']);
 
                 Payment::create([
@@ -137,8 +136,9 @@ class SslCommerzPaymentController extends Controller
         }
 
         $booking_id = $request->input('value_a');
+        $ids = explode(',', $booking_id);
         DB::table('bookings')
-            ->where('id', $booking_id)
+            ->whereIn('id', $ids)
             ->update(['status' => 'Failed']);
 
         return redirect()->route('frontend.home')->with('error', 'Payment Failed');
@@ -151,8 +151,9 @@ class SslCommerzPaymentController extends Controller
         }
 
         $booking_id = $request->input('value_a');
+        $ids = explode(',', $booking_id);
         DB::table('bookings')
-            ->where('id', $booking_id)
+            ->whereIn('id', $ids)
             ->update(['status' => 'Canceled']);
 
         return redirect()->route('frontend.home')->with('error', 'Payment Canceled');
