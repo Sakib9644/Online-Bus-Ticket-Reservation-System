@@ -9,10 +9,14 @@ use App\Http\Controllers\Controller;
 class BookingDetailsController extends Controller
 {
     public function bookingdetails(){
-        $details = Booking::with('seat')->where('user_id',auth()->user()->id)->orderBy('id', 'DESC')->get();
-        // dd($details);
-        // dd(auth()->user());
-        return view('frontend.pages.bookingdetails',compact('details'));
+        $rawDetails = Booking::with('seat.bus')->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        
+        // Group logic: bundle seats bought for the exact same trip itinerary and payment status
+        $groupedDetails = $rawDetails->groupBy(function($item) {
+            return $item->bus_id . '|' . $item->date . '|' . $item->time . '|' . $item->status;
+        });
+
+        return view('frontend.pages.bookingdetails', compact('groupedDetails'));
     }
 
     public function viewinfo($id){

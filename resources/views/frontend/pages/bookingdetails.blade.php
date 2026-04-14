@@ -1,232 +1,104 @@
-<style>
-    * {
-        box-sizing: border-box;
-    }
+@extends('frontend.index')
+@section('content')
 
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .header {
-        overflow: hidden;
-        background-color: #f1f1f1;
-        padding: 20px 10px;
-    }
-
-    .header a {
-        float: left;
-        color: black;
-        text-align: center;
-        padding: 2px;
-        text-decoration: none;
-        font-size: 18px;
-        line-height: 25px;
-        border-radius: 4px;
-    }
-
-    .header a.logo {
-        font-size: 25px;
-        font-weight: bold;
-    }
-
-    .header a:hover {
-        background-color: #ddd;
-        color: black;
-    }
-
-    .header a.active {
-        background-color: dodgerblue;
-        color: white;
-    }
-
-    .header-right {
-        float: right;
-    }
-
-    @media screen and (max-width: 500px) {
-        .header a {
-            float: none;
-            display: block;
-            text-align: left;
-        }
-
-        .header-right {
-            float: none;
-        }
-    }
-
-    .card {
-        margin: auto;
-        border: solid 1px #dbdad7;
-        width: 40%;
-        padding-left: 10px !important;
-        padding-bottom: 10px !important;
-        padding-right: 10px !important;
-        padding-top: 0px !important
-    }
-
-    .card-title {
-        margin: auto;
-        padding: 15px;
-        background-color: #2f7fad;
-        color: white;
-        width: 80%
-    }
-
-    div.card-body {
-        padding: 0px
-    }
-
-    .custom-select {
-        width: 100%
-    }
-
-    .btn2 {
-        margin-left: 10%
-    }
-
-    input {
-        outline: 0 !important;
-        border-width: 0 0 2px !important;
-        border-color: #d1d1cf !important
-    }
-
-    input:focus {
-        border-color: #d1d1cf !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important
-    }
-
-    select {
-        outline: 0 !important;
-        border-width: 0 0 2px !important;
-        border-color: #d1d1cf !important
-    }
-
-    select:focus {
-        border-color: #d1d1cf !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important
-    }
-
-    .radiobtn {
-        margin-left: 3.5%
-    }
-
-    .icons {
-        margin: auto !important
-    }
-
-    .fa {
-        border-radius: 25px;
-        width: 10%;
-        margin-left: 5%;
-        border: solid 2px #dbdad7;
-        margin-top: 5%;
-        text-align: center
-    }
-
-    .fa-plane {
-        color: #1cad9f
-    }
-
-    .fa-taxi {
-        color: #c2f700
-    }
-
-    .fa-train {
-        color: red
-    }
-
-    @media only screen and (max-width: 600px) {
-        .card {
-            margin: auto;
-            border: solid 1px #dbdad7;
-            width: 90%;
-            padding-left: 10px !important;
-            padding-bottom: 10px !important;
-            padding-right: 10px !important;
-            padding-top: 0px !important
-        }
-
-        .fa {
-            border-radius: 25px;
-            width: 15%;
-            margin-left: 5%;
-            border: solid 2px #dbdad7;
-            margin-top: 5%;
-            text-align: center
-        }
-    }
-
-</style>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-
-<body>
-    <div class="header">
-        <a href="#" style="text-decoration: none" class="logo">Here is your booking information</a>
-        <div class="header-right">
-            <a class="" href="{{url('/')}}" style="margin-right: 15px;
-    text-decoration: none">Home</a>
+<div class="section-wrap" style="padding-top:60px; min-height: 80vh; background: var(--paper);">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-8">
+            <h1 class="syne" style="color: #fff; font-size: 32px; font-weight: 800; margin-bottom: 8px;">My Booking History</h1>
+            <p style="color: var(--muted); font-size: 15px;">Review all your pending and completed bus ticket reservations.</p>
         </div>
     </div>
-</body>
 
-<br>
+    <div class="sb-card" style="padding: 0; overflow: hidden; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.5); background: var(--card-bg);">
+        <div class="table-responsive">
+            <table class="table" style="margin-bottom: 0; color: #fff; border-collapse: collapse;">
+                <thead style="background: rgba(255,255,255,0.02);">
+                    <tr>
+                        <th style="padding: 20px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border); font-size: 13px; text-transform: uppercase;">SL</th>
+                        <th style="padding: 20px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border); font-size: 13px; text-transform: uppercase;">Route & Bus</th>
+                        <th style="padding: 20px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border); font-size: 13px; text-transform: uppercase;">Schedule</th>
+                        <th style="padding: 20px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border); font-size: 13px; text-transform: uppercase;">Seat Name</th>
+                        <th style="padding: 20px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border); font-size: 13px; text-transform: uppercase;">Amount</th>
+                        <th style="padding: 20px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border); font-size: 13px; text-transform: uppercase;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (isset($groupedDetails) && $groupedDetails->count() > 0)
+                        @php $counter = 1; @endphp
+                        @foreach ($groupedDetails as $groupKey => $seatsGroup)
+                            @php
+                                $first = $seatsGroup->first();
+                                $totalAmount = $seatsGroup->sum('amount');
+                                $seatNames = $seatsGroup->pluck('seat.name')->implode(', ');
+                                $bookingIds = $seatsGroup->pluck('id')->implode(',');
+                                $modalId = 'modal-' . md5($groupKey);
+                            @endphp
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 20px; align-content: center; color: var(--muted);">{{ $counter++ }}</td>
+                                <td style="padding: 20px; align-content: center;">
+                                    <div style="font-weight: 700; color: #fff; font-size: 16px;">{{ $first->seat->bus->bus_name ?? 'N/A' }}</div>
+                                    <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Passenger: {{ auth()->user()->name }}</div>
+                                </td>
+                                <td style="padding: 20px; align-content: center;">
+                                    <div style="font-weight: 600; color: #ddd;">{{ date('D, d M Y', strtotime($first->date)) }}</div>
+                                    <div style="font-size: 13px; color: var(--muted);">{{ $first->time }}</div>
+                                </td>
+                                <td style="padding: 20px; align-content: center; max-width: 150px;">
+                                    <span style="background: rgba(255,255,255,0.05); color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); display: inline-block; word-break: break-all;">{{ $seatNames }}</span>
+                                </td>
+                                <td style="padding: 20px; align-content: center; font-weight: 800; font-family: 'Syne', sans-serif; font-size: 18px; color: #fff;">৳{{ $totalAmount }}</td>
+                                <td style="padding: 20px; align-content: center;">
+                                    @if ($first->status == 'pending')
+                                        <div style="display: flex; gap: 8px;">
+                                            <a class="sb-btn" href="{{ route('user.payment', $bookingIds) }}" style="padding: 10px 16px; font-size: 12px; font-weight: 700; border-radius: 8px; background: #a2e043; color: #0d1a09; text-decoration: none; border: none;">Pay Now</a>
+                                            <button type="button" class="sb-btn" onclick="document.getElementById('{{ $modalId }}').style.display='flex'" style="padding: 10px 16px; font-size: 12px; font-weight: 700; border-radius: 8px; background: transparent; color: #fff; border: 1px solid var(--border); text-decoration: none;">Manage Tickets</button>
+                                        </div>
 
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Sl</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Bus Name</th>
-            <th>Seat Name</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Amount</th>
-            <th>Bus Name</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-   <tbody>
-    @if ($details->count() > 0)
-        @foreach ($details as $detail)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $detail->user->name }}</td>
-                <td>{{ $detail->user->email }}</td>
-                <td>{{ $detail->seat->bus->bus_name ?? '' }}</td>
-                <td>{{ $detail->seat->name }}</td>
-                <td>{{ $detail->date }}</td>
-                <td>{{ $detail->time }}</td>
-                <td>{{ $detail->amount }}</td>
-                <td>{{ $detail->seat->bus->bus_name ?? '' }}</td>
-                <td>
-                    @if ($detail->status == 'pending')
-                        <a class="btn btn-primary" href="{{ route('user.payment', $detail->id) }}">Payment</a>
-                        <a class="btn btn-danger" href="{{ route('booking.delete', $detail->id) }}">Cancel</a>
+                                        <!-- Manage Ticket Bundle Modal -->
+                                        <div id="{{ $modalId }}" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); align-items: center; justify-content: center; z-index: 9999;">
+                                            <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 90%; max-width: 500px; position: relative;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 16px;">
+                                                    <h3 class="syne" style="color: #fff; font-size: 20px; font-weight: 700; margin: 0;">Manage Ticket Bundle</h3>
+                                                    <button type="button" onclick="document.getElementById('{{ $modalId }}').style.display='none'" style="background: transparent; color: var(--muted); border: none; font-size: 24px; cursor: pointer; padding: 0;">&times;</button>
+                                                </div>
+                                                <div style="display:flex; flex-direction: column; gap: 12px; margin-bottom: 24px; max-height: 50vh; overflow-y: auto;">
+                                                    @foreach($seatsGroup as $indSeat)
+                                                        <div style="display:flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border);">
+                                                            <div style="display:flex; align-items: center; gap: 12px;">
+                                                                <span style="font-weight: 700; color: #fff;">Seat: {{ $indSeat->seat->name ?? 'N/A' }}</span>
+                                                                <span style="color: var(--muted); font-size: 12px;">৳{{ $indSeat->amount }}</span>
+                                                            </div>
+                                                            <a href="{{ route('booking.delete', $indSeat->id) }}" class="sb-btn" style="padding: 6px 12px; background: rgba(255,0,0,0.1); color: #ff4d4d; border: 1px solid rgba(255,0,0,0.2); border-radius: 6px; font-size: 11px; text-decoration: none;">Remove</a>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                <div style="display:flex; justify-content: space-between; align-items: center;">
+                                                     <span style="color: var(--muted); font-size: 14px;">Total Deal: <span style="color: #fff; font-weight: 700;">৳{{ $totalAmount }}</span></span>
+                                                     <a href="{{ route('user.payment', $bookingIds) }}" class="sb-btn" style="padding: 10px 24px; background: #a2e043; color: #0d1a09; font-weight: 700; border-radius: 8px; text-decoration: none;">Checkout Bundle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <span style="background: rgba(141,198,63,0.1); color: #a2e043; padding: 6px 14px; border-radius: 8px; font-weight: 600; font-size: 12px; border: 1px solid rgba(141,198,63,0.2);">
+                                            <i class="fa fa-check-circle me-1"></i> Completed
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                     @else
-                        <button class="btn btn-info" disabled>Complete</button>
+                        <tr>
+                            <td colspan="6" class="text-center" style="padding: 60px;">
+                                <i class="fa-solid fa-ticket" style="font-size: 40px; color: var(--muted); margin-bottom: 20px; opacity: 0.3;"></i>
+                                <div style="color: var(--muted); font-size: 15px;">No booking history found.</div>
+                                <a href="{{ route('frontend.reserve') }}" class="sb-btn mt-3" style="background: transparent; color: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 10px 24px; font-weight: 600;">Find Trips</a>
+                            </td>
+                        </tr>
                     @endif
-                </td>
-            </tr>
-        @endforeach
-    @else
-        <tr>
-            <td colspan="10" class="text-center">No ticket</td>
-        </tr>
-    @endif
-</tbody>
-<tfoot>
-    <tr>
-        <td colspan="7" class="" style="text-align: end"><strong>Total:</strong></td>
-        <td colspan="3">{{ $details->sum('amount') }} Tk</td>
-    </tr>
-</tfoot>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-</table>
+@endsection

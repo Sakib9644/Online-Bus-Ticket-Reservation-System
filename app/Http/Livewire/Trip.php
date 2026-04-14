@@ -11,45 +11,58 @@ class Trip extends Component
     public $from;
     public $to;
     public $date;
-    public $time;
     public $locations;
-    public $trips;
+    public $perPage = 6;
+
+    protected $listeners = [
+        'load-more' => 'loadMore'
+    ];
 
     public function mount()
     {
         $this->locations = Location::all();
-        $this->trips = collect();
     }
 
-public function search()
-{
-    // If no filters selected, clear trips and return
-
-    $query = ModelsTrip::query();
-
-    if ($this->from !== null && $this->from !== '') {
-        $query->where('location_from', $this->from);
+    public function loadMore()
+    {
+        $this->perPage += 6;
     }
 
-    if ($this->to !== null && $this->to !== '') {
-        $query->where('location_to', $this->to);
+    public function search()
+    {
+        // Reset pagination on search
+        $this->perPage = 6;
     }
-
-    if ($this->date !== null && $this->date !== '') {
-        $query->whereDate('date', $this->date);
-    }
-
-    if ($this->time !== null && $this->time !== '') {
-        $query->where('time', $this->time);
-    }
-    $this->trips = $query->get();
-}
-
 
     public function render()
     {
+        $query = ModelsTrip::query();
+        $hasFilters = false;
+
+        if (!empty($this->from)) {
+            $query->where('location_from', $this->from);
+            $hasFilters = true;
+        }
+
+        if (!empty($this->to)) {
+            $query->where('location_to', $this->to);
+            $hasFilters = true;
+        }
+
+        if (!empty($this->date)) {
+            $query->whereDate('date', $this->date);
+            $hasFilters = true;
+        }
+
+        // Only fetch and show trips if at least one filter is applied
+        if ($hasFilters) {
+            $trips = $query->take($this->perPage)->get();
+        } else {
+            $trips = collect();
+        }
+
         return view('livewire.trip', [
-            'trips' => $this->trips,
+            'trips' => $trips,
             'locations' => $this->locations,
         ]);
     }

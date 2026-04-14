@@ -7,6 +7,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LoginController;
 use App\Http\Controllers\Frontend\BookingDetailsController;
 use App\Http\Controllers\Frontend\UserPaymentController;
+use App\Http\Controllers\SslCommerzPaymentController;
+
 
 // Backend
 use App\Http\Controllers\Backend\CounterController;
@@ -42,6 +44,15 @@ Route::get('/print/view{id}',[BookingDetailsController::class,'viewinfo'])->name
 //UserPayment
 Route::get('user/payment/{id}',[UserPaymentController::class,'userpayment'])->name('user.payment');
 Route::post('user/payment/store/{id}',[UserPaymentController::class,'store'])->name('user.payment.store');
+
+// SSLCOMMERZ Start
+Route::get('/pay/{id}', [SslCommerzPaymentController::class, 'index'])->name('pay.sslcommerz');
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
+
 
 // Registration & login
 Route::get('/user/registration',[LoginController::class,'registration'])->name('user.registration');
