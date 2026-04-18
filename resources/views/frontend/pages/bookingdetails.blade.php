@@ -5,7 +5,7 @@
     <div class="row align-items-center mb-5">
         <div class="col-md-8">
             <h1 style="color: #fff; font-size: 32px; font-weight: 800; margin-bottom: 8px;">My Booking History</h1>
-            <p style="color: var(--muted); font-size: 15px;">Review all your pending and completed bus ticket reservations.</p>
+            <p style="color: var(--muted); font-size: 15px;">Each row is one booking reference. The same bus can appear multiple times if booked in separate orders.</p>
         </div>
     </div>
 
@@ -26,17 +26,25 @@
                             @php
                                 $first = $seatsGroup->first();
                                 $allIds = $seatsGroup->pluck('id')->implode(',');
-                                $pendingSeats = $seatsGroup->where('status', 'Pending');
-                                $confirmedSeats = $seatsGroup->where('status', 'complete');
+                                $pendingSeats = $seatsGroup->filter(function($seatBooking) {
+                                    return strtolower((string) $seatBooking->status) === 'pending';
+                                });
+                                $confirmedSeats = $seatsGroup->filter(function($seatBooking) {
+                                    return strtolower((string) $seatBooking->status) === 'complete';
+                                });
                                 $pendingAmount = $pendingSeats->sum('amount');
                                 $pendingIds = $pendingSeats->pluck('id')->implode(',');
                                 $confirmedIds = $confirmedSeats->pluck('id')->implode(',');
                                 $seatNames = $seatsGroup->pluck('seat.name')->implode(', ');
+                                $ticketRef = $first->ticket_no ?: ('TRIP-' . $first->trip_id);
+                                $courseNo = $first->seat->bus->coach_no ?? 'N/A';
+                                $pendingExpiryAt = $pendingSeats->min('expires_at');
                                 $modalId = 'modal-' . md5($groupKey);
                             @endphp
                             <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.1); transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='rgba(0,0,0,0.1)'">
                                 <td style="padding: 28px 20px; align-content: center;">
-                                    <div style="font-weight: 800; color: var(--accent); font-size: 16px; letter-spacing: 0.5px;">{{ $first->seat->bus->coach_no ?? 'N/A' }}</div>
+                                    <div style="font-weight: 900; color: var(--accent); font-size: 30px; letter-spacing: 0.5px; line-height: 1;">{{ $courseNo }}</div>
+                                    <div style="font-size: 11px; color: var(--muted); margin-top: 8px; text-transform: uppercase;">Booking {{ $ticketRef }}</div>
                                 </td>
                                 <td style="padding: 28px 20px; align-content: center;">
                                     <div style="display: flex; align-items: center; gap: 18px;">
@@ -51,12 +59,21 @@
                                     </div>
                                 </td>
                                 <td style="padding: 28px 20px; align-content: center;">
-                                    @if($confirmedSeats->count() > 0 && $pendingSeats->count() == 0)
+                                    @if($pendingSeats->count() == 0)
                                         <div style="font-size: 12px; color: #2ecc71; font-weight: 700;"><i class="fa fa-check-circle me-1"></i> Fully Paid</div>
                                         <div style="font-size: 10px; color: var(--muted); margin-top: 4px;">Verified (SSLCommerz/Manual)</div>
+                                    @elseif($confirmedSeats->count() > 0)
+                                        <div style="font-size: 12px; color: #f1c40f; font-weight: 700;"><i class="fa fa-circle-half-stroke me-1"></i> Partially Paid</div>
+                                        <div style="font-size: 10px; color: var(--muted); margin-top: 4px; opacity:0.8;">Some seats are paid, remaining payment required</div>
+                                        @if($pendingExpiryAt)
+                                            <div style="font-size: 10px; color: #f1c40f; margin-top: 4px; opacity: 0.9;">Pending seats auto-release at {{ $pendingExpiryAt->format('h:i A, d M') }}</div>
+                                        @endif
                                     @else
                                         <div style="font-size: 12px; color: var(--muted); font-weight: 700;"><i class="fa fa-clock me-1"></i> Awaiting Payment</div>
                                         <div style="font-size: 10px; color: var(--muted); margin-top: 4px; opacity:0.6;">Manual/Online Required</div>
+                                        @if($pendingExpiryAt)
+                                            <div style="font-size: 10px; color: #f1c40f; margin-top: 4px; opacity: 0.9;">Auto-release at {{ $pendingExpiryAt->format('h:i A, d M') }}</div>
+                                        @endif
                                     @endif
                                 </td>
                                 <td style="padding: 28px 20px; align-content: center;">

@@ -6,22 +6,42 @@ use Illuminate\Http\Request;
 use AfzalSabbir\SSLaraCommerz\Library\SslCommerz\SslCommerzNotification;
 use App\Models\Booking;
 use App\Models\Payment;
+use App\Services\BookingExpiryService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class SslCommerzPaymentController extends Controller
 {
+    private function releaseExpiredPendingBookings()
+    {
+        app(BookingExpiryService::class)->releaseExpiredPending();
+    }
 
     public function index(Request $request, $id)
     {
+        $this->releaseExpiredPendingBookings();
+
         $ids = explode(',', $id);
-        $bookings = Booking::whereIn('id', $ids)->get();
-        
+        $bookings = Booking::whereIn('id', $ids)
+            ->where('user_id', Auth::id())
+            ->get();
+
         if ($bookings->isEmpty()) {
-            return redirect()->back()->with('error', 'Bookings not found');
+            return redirect()->route('booking.details')->with('error', 'Booking not found or payment window expired.');
         }
 
-        $total_amount = $bookings->sum('amount');
+        $pendingBookings = $bookings->filter(function ($booking) {
+            return strtolower((string) $booking->status) === 'pending';
+        });
+
+        if ($pendingBookings->isEmpty()) {
+            return redirect()->route('view.info', ['id' => $id])->with('message', 'This booking bundle is already paid.');
+        }
+
+        $pendingIds = $pendingBookings->pluck('id')->values()->all();
+        $id = implode(',', $pendingIds);
+
+        $total_amount = $pendingBookings->sum('amount');
 
         $post_data = array();
         $post_data['total_amount'] = $total_amount;
@@ -61,7 +81,7 @@ class SslCommerzPaymentController extends Controller
 
         # Before going to initiate the payment order status need to update as Pending.
         DB::table('bookings')
-            ->whereIn('id', $ids)
+            ->whereIn('id', $pendingIds)
             ->update([
                 'status' => 'Pending'
             ]);
@@ -78,6 +98,8 @@ class SslCommerzPaymentController extends Controller
 
     public function success(Request $request)
     {
+        $this->releaseExpiredPendingBookings();
+
         // Re-authenticate user via metadata to prevent SameSite cookie session drop
         if ($request->input('value_b')) {
             Auth::loginUsingId($request->input('value_b'));
@@ -91,12 +113,16 @@ class SslCommerzPaymentController extends Controller
 
         $sslc = new SslCommerzNotification();
 
-        #Check if first booking is pending
-        $order_details = DB::table('bookings')
-            ->whereIn('id', $ids)
-            ->first();
+        $bookings = Booking::whereIn('id', $ids)->get();
 
-        if ($order_details && $order_details->status == 'Pending') {
+        if ($bookings->isEmpty()) {
+            return redirect()->route('booking.details')->with('error', 'Payment window expired. Please book again.');
+        }
+
+        $order_details = $bookings->first();
+        $currentStatus = strtolower((string) $order_details->status);
+
+        if ($currentStatus == 'pending') {
             $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
 
             if ($validation == TRUE) {
@@ -106,7 +132,8 @@ class SslCommerzPaymentController extends Controller
                     ->whereIn('id', $ids)
                     ->update([
                         'status' => 'complete',
-                        'ticket_no' => $ticket_no
+                        'ticket_no' => $ticket_no,
+                        'expires_at' => null,
                     ]);
 
                 Payment::create([
@@ -123,7 +150,7 @@ class SslCommerzPaymentController extends Controller
                 */
                 return redirect()->route('frontend.home')->with('error', 'Validation Failed');
             }
-        } else if ($order_details->status == 'complete') {
+        } else if ($currentStatus == 'complete') {
             /*
              That means through IPN Order status already updated.
              Now you can just show the customer that transaction is completed.
@@ -137,6 +164,8 @@ class SslCommerzPaymentController extends Controller
 
     public function fail(Request $request)
     {
+        $this->releaseExpiredPendingBookings();
+
         if ($request->input('value_b')) {
             Auth::loginUsingId($request->input('value_b'));
         }
@@ -145,13 +174,18 @@ class SslCommerzPaymentController extends Controller
         $ids = explode(',', $booking_id);
         DB::table('bookings')
             ->whereIn('id', $ids)
-            ->update(['status' => 'Failed']);
+            ->update([
+                'status' => 'Failed',
+                'expires_at' => null,
+            ]);
 
         return redirect()->route('frontend.home')->with('error', 'Payment Failed');
     }
 
     public function cancel(Request $request)
     {
+        $this->releaseExpiredPendingBookings();
+
         if ($request->input('value_b')) {
             Auth::loginUsingId($request->input('value_b'));
         }
@@ -160,13 +194,18 @@ class SslCommerzPaymentController extends Controller
         $ids = explode(',', $booking_id);
         DB::table('bookings')
             ->whereIn('id', $ids)
-            ->update(['status' => 'Canceled']);
+            ->update([
+                'status' => 'Canceled',
+                'expires_at' => null,
+            ]);
 
         return redirect()->route('frontend.home')->with('error', 'Payment Canceled');
     }
 
     public function ipn(Request $request)
     {
+        $this->releaseExpiredPendingBookings();
+
         if ($request->input('value_b')) {
             Auth::loginUsingId($request->input('value_b'));
         }
@@ -177,15 +216,21 @@ class SslCommerzPaymentController extends Controller
             $tran_id = $request->input('tran_id');
             $booking_id = $request->input('value_a');
 
-            #Check order status in order tabel.
             $ids = explode(',', $booking_id);
-            $order_details = DB::table('bookings')
-                ->whereIn('id', $ids)
-                ->first();
+            $bookings = Booking::whereIn('id', $ids)->get();
 
-            if ($order_details->status == 'Pending') {
+            if ($bookings->isEmpty()) {
+                echo "Invalid Transaction";
+                return;
+            }
+
+            $order_details = $bookings->first();
+            $currentStatus = strtolower((string) $order_details->status);
+            $expectedAmount = $bookings->sum('amount');
+
+            if ($currentStatus == 'pending') {
                 $sslc = new SslCommerzNotification();
-                $validation = $sslc->orderValidate($request->all(), $tran_id, $order_details->amount, 'BDT');
+                $validation = $sslc->orderValidate($request->all(), $tran_id, $expectedAmount, 'BDT');
                 if ($validation == TRUE) {
                     $ticket_no = 'SB-' . date('y') . '-' . strtoupper(substr(md5(uniqid()), 0, 6));
 
@@ -193,13 +238,14 @@ class SslCommerzPaymentController extends Controller
                         ->whereIn('id', $ids)
                         ->update([
                             'status' => 'complete',
-                            'ticket_no' => $ticket_no
+                            'ticket_no' => $ticket_no,
+                            'expires_at' => null,
                         ]);
 
                     Payment::create([
                         'user_id' => $order_details->user_id,
                         'transaction_id' => $tran_id,
-                        'amount' => $order_details->amount,
+                        'amount' => $expectedAmount,
                         'payment_mathod' => 'SSLCommerz',
                     ]);
 
@@ -210,7 +256,7 @@ class SslCommerzPaymentController extends Controller
                     */
                     echo "Validation Failed";
                 }
-            } else if ($order_details->status == 'complete') {
+            } else if ($currentStatus == 'complete') {
 
                 #That means Order status already updated. No need to udate again.
                 echo "Transaction is already successfully Completed";

@@ -4,23 +4,35 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Booking;
-
+use App\Services\BookingExpiryService;
 use Illuminate\Support\Facades\DB;
 
 class TripBook extends Component
 {
     public $trip, $seats, $totalPrice = 0, $date, $time, $booked, $selectedSeats = [], $message = null, $demo = 0, $paymentMethod = 'online';
 
+    private function releaseExpiredPendingBookings()
+    {
+        app(BookingExpiryService::class)->releaseExpiredPending();
+    }
+
+    private function activeSeatLockQuery()
+    {
+        return Booking::where('trip_id', $this->trip->id)->activeSeatLock();
+    }
+
     public function mount($trip)
     {
+        $this->releaseExpiredPendingBookings();
+
         $this->trip = $trip;
         $this->date = $trip->date;
         $this->time = $trip->time;
         $this->seats = [];
-        $this->demo = Booking::where('trip_id', $this->trip->id)
+        $this->demo = $this->activeSeatLockQuery()
             ->where('user_id', auth()->id())
             ->count();
-        
+
         $this->searchSeat(true);
     }
 
@@ -36,8 +48,9 @@ class TripBook extends Component
 
     public function searchSeat($silent = false)
     {
-        $this->booked = Booking::where('trip_id', $this->trip->id)
-            ->get();
+        $this->releaseExpiredPendingBookings();
+
+        $this->booked = $this->activeSeatLockQuery()->get();
 
         $this->seats = $this->trip->bus->seats;
 
@@ -60,12 +73,14 @@ class TripBook extends Component
 
     public function book()
     {
+        $this->releaseExpiredPendingBookings();
+
         if (empty($this->selectedSeats)) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please choose at least one seat before booking.']);
             return;
         }
 
-        $currentBookingCount = Booking::where('trip_id', $this->trip->id)
+        $currentBookingCount = $this->activeSeatLockQuery()
             ->where('user_id', auth()->id())
             ->count();
 
@@ -74,12 +89,15 @@ class TripBook extends Component
             return;
         }
 
+        try {
             $bookingIds = [];
             $ticketNo = 'SB-' . date('y') . '-' . strtoupper(substr(md5(uniqid()), 0, 6));
+            $expiresAt = app(BookingExpiryService::class)->holdUntil($this->paymentMethod);
 
-            DB::transaction(function () use (&$bookingIds, $ticketNo) {
+            DB::transaction(function () use (&$bookingIds, $ticketNo, $expiresAt) {
                 // Final verification of seat availability
                 $alreadyBooked = Booking::where('trip_id', $this->trip->id)
+                    ->activeSeatLock()
                     ->whereIn('seat_id', $this->selectedSeats)
                     ->lockForUpdate()
                     ->exists();
@@ -98,7 +116,8 @@ class TripBook extends Component
                         'time' => $this->trip->time,
                         'amount' => $this->trip->fare,
                         'status' => 'Pending',
-                        'ticket_no' => $ticketNo
+                        'ticket_no' => $ticketNo,
+                        'expires_at' => $expiresAt,
                     ]);
                     $bookingIds[] = $booking->id;
                 }
@@ -111,8 +130,6 @@ class TripBook extends Component
 
             $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Reservation created! Please complete payment manually.']);
             return redirect()->route('booking.details');
-
-
         } catch (\Exception $e) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => $e->getMessage()]);
             $this->searchSeat(); // Refresh to show taken seats
