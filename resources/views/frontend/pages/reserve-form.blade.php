@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="section-wrap" style="padding-top: 60px;">
         <div style="max-width: 1200px; margin: 0 auto;">
             <livewire:trip />

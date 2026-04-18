@@ -26,7 +26,7 @@
             box-shadow: 0 0 0 3px rgba(162, 224, 67, 0.22), 0 0 18px rgba(162, 224, 67, 0.24), inset 0 0 0 1px rgba(0, 0, 0, 0.35);
         }
     </style>
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -101,7 +101,7 @@
                 <h4 style="color: #fff; margin: 0; font-weight: 800;">Available Trips ({{ $trips->count() }})</h4>
                 <div style="color: var(--muted); font-size: 13px;">Showing results for your selected route</div>
             </div>
-            
+
             <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 60px;">
                 @foreach ($trips as $trip)
                     <div class="ticket-card" style="flex-direction: row; align-items: stretch;">
@@ -150,7 +150,7 @@
                 @endforeach
             </div>
         </div>
-        
+
         @if ($trips->count() >= $perPage)
             <div class="text-center" style="margin-bottom: 100px;">
                 <button wire:click="loadMore" wire:loading.attr="disabled" class="sb-btn" style="padding: 16px 40px; font-weight: 700;">
