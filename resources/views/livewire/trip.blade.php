@@ -3,8 +3,8 @@
         .sb-search-input {
             width: 100%;
             height: 56px;
-            background: #1a1f1a;
-            border: 1px solid rgba(125, 95, 255, 0.2);
+            background: rgba(16, 22, 15, 0.96);
+            border: 2px solid rgba(212, 255, 130, 0.5);
             border-radius: 12px;
             padding: 0 20px;
             font-family: 'DM Sans', sans-serif;
@@ -12,10 +12,19 @@
             color: #fff;
             color-scheme: dark;
             outline: none;
-            transition: all .2s;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            transition: border-color .2s, box-shadow .2s, background-color .2s;
             cursor: pointer;
         }
-        .sb-search-input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(162, 224, 67, 0.1); }
+        .sb-search-input:hover {
+            border-color: rgba(212, 255, 130, 0.78);
+            background: rgba(24, 32, 23, 0.95);
+        }
+        .sb-search-input:focus {
+            border-color: #d2ff7a;
+            background: rgba(24, 32, 23, 1);
+            box-shadow: 0 0 0 3px rgba(162, 224, 67, 0.22), 0 0 18px rgba(162, 224, 67, 0.24), inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+        }
     </style>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">

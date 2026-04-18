@@ -1,6 +1,6 @@
 @extends('frontend.index')
 @section('content')
-    <div style="background: var(--paper); padding: 80px 40px; border-bottom: 1px solid var(--border);">
+    <div style="background: linear-gradient(135deg, #141c12 0%, #1d2818 55%, #11180f 100%); padding: 80px 40px; border-bottom: 1px solid rgba(162, 224, 67, 0.22); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.04);">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <span class="sb-badge" style="margin-bottom: 12px; background: rgba(141,198,63,0.1); color: var(--accent);">Ready to go?</span>
