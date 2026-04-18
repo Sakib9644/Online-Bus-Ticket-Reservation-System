@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $buses = Bus::all();
         $locations = Location::all();
-        $trips = Trip::with('bus')->latest()->take(3)->get();
+        $trips = Trip::with('bus')->withCount('bookings')->orderByDesc('bookings_count')->get();
         return view('frontend.pages.home', compact('buses', 'locations', 'trips'));
     }
     public function reserveForm()

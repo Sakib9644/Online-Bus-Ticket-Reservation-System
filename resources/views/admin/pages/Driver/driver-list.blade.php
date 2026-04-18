@@ -1,40 +1,60 @@
 @extends('admin.master')
 @section('content')
 
-    <h3>Driver list</h3>
+<div class="admin-card">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:32px;">
+        <div>
+            <h1 style="font-size:24px; font-weight:800; color:#0f172a; letter-spacing:-0.5px;">Driver Registry</h1>
+            <p style="color:var(--muted); font-size:14px; margin-top:4px;">Manage certified operators and vehicle assignments</p>
+        </div>
+        <a href="{{route('admin.driver.create')}}" class="btn-primary-admin">
+            <i class="fas fa-plus" style="font-size:12px;"></i> Add New Driver
+        </a>
+    </div>
 
-    <a href="{{route('admin.driver.create')}}" class="btn btn-success">Add Driver</a>
-    <br>
-    <br>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Driver Name</th>
-                <th scope="col">Driver Id</th>
-                <th scope="col">Driver Phone Number</th>
-                <th scope="col">Bus Name</th>
-                <th scope="col">Bus No</th>
-                <th scope="col">Action</th>
+    @if(session()->has('success'))
+        <div class="alert-success-admin">{{ session('success') }}</div>
+    @endif
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($drivers as $key=> $driver)
+<div class="admin-card">
+    <div class="admin-card-header">
+        <h5>All Registered Operators</h5>
+    </div>
+    <div style="padding: 24px;">
+        <table class="admin-table" id="driver-table" style="width:100% !important;">
+            <thead>
                 <tr>
-                    <th>{{ $key + 1 }}</th>
-                    <td>{{ $driver->driver_name }}</td>
-                    <td>{{ $driver->driver_id }}</td>
-                    <td>{{ $driver->driver_phone_number }}</td>
-                    <td>{{ $driver->bus_name }}</td>
-                    <td>{{ $driver->bus_no }}</td>
-                    <td>
-                        <a class="btn btn-primary" href="{{route('admin.driver.details',$driver->id)}}"><i class="fas fa-eye"></i></a>
-                        <a class="btn btn-info" href=""><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" href="{{route('admin.driver.delete',$driver->id)}}"><i class="fas fa-trash-alt"></i></a>
-                  </td>
+                    <th>SL</th>
+                    <th>Operator Details</th>
+                    <th>Assigned Vehicle</th>
+                    <th>Actions</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script src="{{ url('backend/vendor/jquery/jquery.min.js') }}"></script>
+<script>
+$(function() {
+    $('#driver-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('admin.driver') !!}',
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'driver_info', name: 'driver_name' },
+            { data: 'vehicle', name: 'coach_no' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+        ],
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search operators...",
+            lengthMenu: "Show _MENU_",
+        }
+    });
+});
+</script>
+</div>
+
 @endsection

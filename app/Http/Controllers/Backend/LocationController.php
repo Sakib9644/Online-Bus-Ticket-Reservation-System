@@ -15,8 +15,8 @@ class LocationController extends Controller
      }
 
      public function create(){
-
-        return view('admin.pages.Location.location-create');
+        $cities = \App\Models\City::all();
+        return view('admin.pages.Location.location-create', compact('cities'));
      }
      public function store(Request $request){
       $request->validate([
@@ -32,12 +32,10 @@ class LocationController extends Controller
    return redirect()->route('admin.location')->with('success','Location created successfully!');
 }
 public function locationEdit($id){
-   // dd($id);
    $location = Location::find($id);
-   // dd($location);
-   $locations = Location::all();
+   $cities = \App\Models\City::all();
    if ($location) {
-       return view('admin.pages.Location.location-edit',compact('location'));
+       return view('admin.pages.Location.location-edit', compact('location', 'cities'));
    }
 }
 public function locationUpdate(Request $request,$id){

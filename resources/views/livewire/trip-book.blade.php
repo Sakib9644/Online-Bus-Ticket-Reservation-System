@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <div class="mb-5 d-flex justify-content-center align-items-center" style="color: #fff; font-size: 20px; font-weight: 600; font-family: 'Syne', sans-serif;">
+    <div class="mb-5 d-flex justify-content-center align-items-center" style="color: #fff; font-size: 20px; font-weight: 600; font-family: 'DM Sans', sans-serif;">
         <a href="javascript:history.back()" style="color: var(--muted); text-decoration: none; margin-right: 16px; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50%; transition: all .2s;"><i class="fa fa-chevron-left" style="font-size: 14px;"></i></a>
         <span style="color: var(--muted);">{{ $trip->location_from }}</span>
         <i class="fa fa-exchange-alt mx-3" style="color: var(--muted); font-size: 12px;"></i>
@@ -26,7 +26,7 @@
         <div class="col-lg-3 mb-4">
             <div class="sb-card" style="padding: 24px; border-radius: 20px; background: #151814; border: 1px solid var(--border);">
                 <div style="font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; font-weight: 700; margin-bottom: 24px;">Trip Summary</div>
-                <h2 class="syne mb-4" style="font-size: clamp(18px, 2vw, 24px); font-weight: 800; color: #fff; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
+                <h2 class="mb-4" style="font-size: clamp(18px, 2vw, 24px); font-weight: 800; color: #fff; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
                     <span style="word-break: break-word;">{{ $trip->location_from }}</span> 
                     <i class="fa fa-arrow-right" style="font-size: 14px; color: var(--muted);"></i> 
                     <span style="word-break: break-word;">{{ $trip->location_to }}</span>
@@ -35,7 +35,7 @@
                 
                 <div style="display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center;">
                     <span style="color: var(--muted); font-size: 14px;">Fare</span>
-                    <span style="color: #fff; font-weight: 800; font-size: 20px; font-family: 'Syne', sans-serif;">৳{{ $trip->fare }}</span>
+                    <span style="color: #fff; font-weight: 800; font-size: 20px;">৳{{ $trip->fare }}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center;">
                     <span style="color: var(--muted); font-size: 14px;">Bus Name</span>
@@ -65,7 +65,7 @@
                 <div class="bus-cabin" style="background: #151814; padding: 40px 20px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); max-width: 100%;">
                     <!-- Header Section -->
                     <div style="text-align:center; margin-bottom:30px;">
-                        <h3 class="syne mb-1" style="font-size:20px; font-weight:800; color: #fff; text-transform: uppercase; letter-spacing: 1px;">{{ $trip->bus->bus_name ?? 'Select Your Seats' }}</h3>
+                        <h3 class="mb-1" style="font-size:20px; font-weight:800; color: #fff; text-transform: uppercase; letter-spacing: 1px;">{{ $trip->bus->bus_name ?? 'Select Your Seats' }}</h3>
                         <div style="display:flex; align-items:center; justify-content:center; gap:8px; font-size:12px; font-weight:600;">
                             <span style="color:var(--muted);">{{ $trip->location_from }}</span>
                             <span style="color:var(--muted); font-size:10px;"><i class="fa fa-arrow-right"></i></span>
@@ -127,7 +127,7 @@
             </button>
 
             <div class="booking-summary-fancy" style="position: sticky; top: 100px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-radius: 20px; background: #151814; border: 1px solid var(--border);">
-                <h4 class="syne" style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px;">Booked Summary</h4>
+                <h4 style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px;">Booked Summary</h4>
                 
                 @if(!empty($selectedSeats))
                     <div class="summary-row" style="display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 14px;">
@@ -136,9 +136,29 @@
                             {{ implode(', ', \App\Models\Seat::whereIn('id', $selectedSeats)->pluck('name')->toArray()) }}
                         </span>
                     </div>
-                    <div class="summary-row total" style="display: flex; justify-content: space-between; margin-bottom: 30px; font-size: 14px;">
+                    <div class="summary-row total" style="display: flex; justify-content: space-between; margin-bottom: 24px; font-size: 14px;">
                         <span style="color:var(--muted);">Total Price:</span>
-                        <span style="font-weight:800; color:var(--accent); font-size: 18px; font-family: 'Syne', sans-serif;">৳{{ $totalPrice }}</span>
+                        <span style="font-weight:800; color:var(--accent); font-size: 20px;">৳{{ $totalPrice }}</span>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; font-weight: 800; margin-bottom: 12px; display: block;">Payment Method</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <label style="cursor: pointer;">
+                                <input type="radio" wire:model.live="paymentMethod" value="online" style="display: none;">
+                                <div style="padding: 12px 8px; border-radius: 12px; border: 1px solid {{ $paymentMethod == 'online' ? 'var(--accent)' : 'var(--border)' }}; background: {{ $paymentMethod == 'online' ? 'rgba(162, 224, 67, 0.1)' : 'transparent' }}; text-align: center; transition: all 0.2s;">
+                                    <i class="fa fa-credit-card" style="display: block; font-size: 16px; margin-bottom: 6px; color: {{ $paymentMethod == 'online' ? 'var(--accent)' : 'var(--muted)' }};"></i>
+                                    <span style="font-size: 10px; font-weight: 800; color: {{ $paymentMethod == 'online' ? '#fff' : 'var(--muted)' }}; text-transform: uppercase;">Online</span>
+                                </div>
+                            </label>
+                            <label style="cursor: pointer;">
+                                <input type="radio" wire:model.live="paymentMethod" value="manual" style="display: none;">
+                                <div style="padding: 12px 8px; border-radius: 12px; border: 1px solid {{ $paymentMethod == 'manual' ? 'var(--accent)' : 'var(--border)' }}; background: {{ $paymentMethod == 'manual' ? 'rgba(162, 224, 67, 0.1)' : 'transparent' }}; text-align: center; transition: all 0.2s;">
+                                    <i class="fa fa-money-bill-wave" style="display: block; font-size: 16px; margin-bottom: 6px; color: {{ $paymentMethod == 'manual' ? 'var(--accent)' : 'var(--muted)' }};"></i>
+                                    <span style="font-size: 10px; font-weight: 800; color: {{ $paymentMethod == 'manual' ? '#fff' : 'var(--muted)' }}; text-transform: uppercase;">Manual</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
                     <button wire:click="book" wire:loading.attr="disabled" class="sb-btn-full" style="background: #a2e043; width: 100%; border: none; padding: 16px; border-radius: 12px; font-weight: 800; color: #0d1a09; font-size: 16px; box-shadow: 0 4px 15px rgba(141,198,63,0.2);">

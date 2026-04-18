@@ -84,11 +84,12 @@ Route::get ('/dashboard',[AdminController::class,'dashboard'])->name('admin.dash
 Route::get('/booking/list', [BookingController::class, 'list'])->name('admin.booking.list');
 Route::get('/booking/status/{id}', [BookingController::class,'bookingStatus'])->name('admin.booking.status');
 
-Route::delete('/booking/delete/{id}', [BookingController::class, 'bookingdelete'])->name('admin.booking.delete');
+Route::get('/booking/delete/{id}', [BookingController::class, 'bookingdelete'])->name('admin.booking.delete');
 
 
 // Passenger List
 Route::get('/user/list', [UserController::class, 'list'])->name('passenger');
+Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('passenger.delete');
 
 // Location
 Route::get('/location/list', [LocationController::class, 'list'])->name('admin.location');

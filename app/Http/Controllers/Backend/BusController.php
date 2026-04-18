@@ -9,10 +9,33 @@ use Illuminate\Http\Request;
 
 class BusController extends Controller
 {
-  public function list()
+  public function list(Request $request)
   {
-    $buses=Bus::latest()->paginate(5);
-    return view('admin.pages.Bus.bus-list',compact('buses'));
+    if ($request->ajax()) {
+        $buses = Bus::latest()->get();
+        return \Yajra\DataTables\Facades\DataTables::of($buses)
+            ->addIndexColumn()
+            ->addColumn('bus_info', function($row){
+                return '<div>
+                            <div style="font-weight:700; color:#1e293b; font-size:15px;">'.$row->bus_name.'</div>
+                            <div style="font-size:12px; color:var(--muted); margin-top:2px;">Added on '.$row->created_at->format('d M Y').'</div>
+                        </div>';
+            })
+            ->addColumn('type', function($row){
+                return '<span class="badge-info">'.strtoupper($row->bus_type).'</span>';
+            })
+            ->addColumn('actions', function($row){
+                $btn = '<div style="display:flex; gap:8px;">
+                            <a href="'.route('admin.bus.details', $row->id).'" class="btn-outline-admin" style="padding:8px 12px; font-size:12px; color:#3b82f6;"><i class="fas fa-eye"></i></a>
+                            <a href="'.route('admin.bus.edit', $row->id).'" class="btn-outline-admin" style="padding:8px 12px; font-size:12px; color:#8b5cf6;"><i class="fas fa-edit"></i></a>
+                            <a onclick="return confirm(\'Archive this vehicle?\')" href="'.route('admin.bus.delete', $row->id).'" class="btn-danger-admin" style="padding:8px 12px; font-size:12px;"><i class="fas fa-trash-alt"></i></a>
+                        </div>';
+                return $btn;
+            })
+            ->rawColumns(['bus_info', 'type', 'actions'])
+            ->make(true);
+    }
+    return view('admin.pages.Bus.bus-list');
   }
 
   public function create()
@@ -31,7 +54,7 @@ class BusController extends Controller
 
       $request->validate([
         'bus_name'=>'required',
-        'bus_no'=>'required|numeric',
+        'coach_no'=>'required',
         'bus_type'=>'required',
       ]);
 
@@ -40,7 +63,7 @@ class BusController extends Controller
 
       Bus::create ([
           'bus_name'=>$request->bus_name,
-          'bus_no'=>$request->bus_no,
+          'coach_no'=>$request->coach_no,
           'bus_type'=>$request->bus_type,
           'image'=>$filename
       ]);
@@ -66,7 +89,7 @@ class BusController extends Controller
         if ($bus) {
             $bus->update([
                 'bus_name'=>$request->bus_name,
-                'bus_no'=>$request->bus_no,
+                'coach_no'=>$request->coach_no,
                 'bus_type'=>$request->bus_type,
                 'image'=>$filename
             ]);

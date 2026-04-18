@@ -1,54 +1,59 @@
 @extends('admin.master')
 @section('content')
 
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
     <div>
-        <h1 class="syne" style="font-size:22px; font-weight:800;">Booking List</h1>
-        <p style="color:var(--muted); font-size:13px; margin-top:4px;">All passenger bookings</p>
+        <h1 style="font-size:24px; font-weight:800; color:#0f172a; letter-spacing:-0.5px;">User-Wise Bookings</h1>
+        <p style="color:var(--muted); font-size:14px; margin-top:4px;">Manage transactions and seat reservations</p>
     </div>
 </div>
-
-@if (session()->has('message'))
-    <div class="alert-success-admin"><i class="fas fa-check-circle" style="margin-right:8px;"></i>{{ session()->get('message') }}</div>
-@endif
 
 <div class="admin-card">
     <div class="admin-card-header">
-        <h5>All Bookings</h5>
-        <span style="font-size:13px; color:var(--muted);">{{ $bookings->count() ?? 0 }} total</span>
+        <h5>All Reservations</h5>
     </div>
-    <div style="overflow-x:auto;">
-        <table class="admin-table">
+    <div style="padding: 24px;">
+        <table class="admin-table" id="booking-table" style="width:100% !important;">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>SL</th>
+                    <th>Course Number</th>
                     <th>Passenger</th>
-                    <th>Route</th>
-                    <th>Seat</th>
-                    <th>Date</th>
+                    <th>Bus & Route</th>
+                    <th>Seats</th>
+                    <th>Total Amnt</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                @forelse($bookings as $i => $booking)
-                <tr>
-                    <td style="color:var(--muted); font-size:13px;">{{ $i+1 }}</td>
-                    <td style="font-weight:500;">{{ $booking->user->name ?? 'N/A' }}</td>
-                    <td>{{ $booking->trip->location_from ?? '' }} → {{ $booking->trip->location_to ?? '' }}</td>
-                    <td>{{ $booking->seat->seat_no ?? 'N/A' }}</td>
-                    <td style="color:var(--muted); font-size:13px;">{{ $booking->created_at->format('d M Y') }}</td>
-                    <td><span class="badge-success">Confirmed</span></td>
-                    <td>
-                        <a href="#" class="btn-outline-admin" style="font-size:12px; padding:6px 12px;">View</a>
-                    </td>
-                </tr>
-                @empty
-                <tr><td colspan="7" style="text-align:center; padding:48px; color:var(--muted);">No bookings found</td></tr>
-                @endforelse
-            </tbody>
         </table>
     </div>
 </div>
+
+<script src="{{ url('backend/vendor/jquery/jquery.min.js') }}"></script>
+<script>
+$(function() {
+    $('#booking-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('admin.booking.list') !!}',
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'pnr', name: 'ticket_no' },
+            { data: 'passenger', name: 'user.name' },
+            { data: 'bus_route', name: 'seat.bus.bus_name' },
+            { data: 'seats_display', name: 'seats_display', orderable: false, searchable: false },
+            { data: 'amount_display', name: 'total_amount', searchable: false },
+            { data: 'status_display', name: 'status' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+        ],
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search PNR, Passenger...",
+            lengthMenu: "Show _MENU_",
+        }
+    });
+});
+</script>
 
 @endsection

@@ -1,100 +1,82 @@
 @extends('admin.master')
 @section('content')
 
-<div class="col-12">
-    <h3 class="mb-4">Edit Trip</h3>   
+<div style="max-width:900px; margin:0 auto;">
+    <div style="margin-bottom:32px;">
+        <h1 style="font-size:24px; font-weight:800; color:#0f172a; letter-spacing:-0.5px;">Edit Trip Schedule</h1>
+        <p style="color:var(--muted); font-size:14px; margin-top:4px;">Modify the schedule, vehicle, or pricing for trip #{{ $trip->id }}</p>
+    </div>
+
+    @if ($errors->any())
+        <div class="alert-danger-admin" style="background:#fee2e2; border:1px solid #fecaca; border-radius:10px; padding:16px; color:#b91c1c; margin-bottom:24px; font-size:14px;">
+            <ul style="margin:0; padding-left:20px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="admin-form-card">
+        <form action="{{route('admin.trip.update',$trip->id)}}" method="POST">
+            @csrf
+            @method('put')
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                
+                <div class="admin-form-group">
+                    <label class="admin-label">Departure Terminal</label>
+                    <select class="admin-input admin-select" required name="location_from">
+                        @foreach ($cities as $city)
+                            <option value="{{ $city->name }}" {{ $trip->location_from == $city->name ? 'selected' : '' }}>{{ $city->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-label">Destination Terminal</label>
+                    <select class="admin-input admin-select" required name="location_to">
+                        @foreach ($cities as $city)
+                            <option value="{{ $city->name }}" {{ $trip->location_to == $city->name ? 'selected' : '' }}>{{ $city->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="admin-form-group" style="grid-column: span 2;">
+                    <label class="admin-label">Assigned Vehicle</label>
+                    <select class="admin-input admin-select" required name="bus_id">
+                        @foreach ($buses as $bus)
+                            <option value="{{ $bus->id }}" {{ $trip->bus_id == $bus->id ? 'selected' : '' }}>{{ $bus->bus_name }} ({{ $bus->bus_no }}) — {{ ucfirst($bus->bus_type) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-label">Departure Date</label>
+                    <input required name="date" type="date" value="{{ $trip->date }}" class="admin-input">
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-label">Departure Time</label>
+                    <input type="text" class="admin-input timepicker" required name="time" value="{{ $trip->time }}" placeholder="Choose time (e.g. 10:30 AM)">
+                </div>
+
+                <div class="admin-form-group" style="grid-column: span 2;">
+                    <label class="admin-label">Ticket Fare (BDT)</label>
+                    <div style="position:relative;">
+                        <span style="position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--muted); font-weight:700;">৳</span>
+                        <input required name="bus_fare" type="number" value="{{ $trip->fare }}" class="admin-input" placeholder="0.00" style="padding-left:32px;">
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px; border-top:1px solid var(--border); padding-top:32px;">
+                <a href="{{ route('admin.trip') }}" class="btn-outline-admin">Discard</a>
+                <button type="submit" class="btn-primary-admin" style="min-width:140px; justify-content:center;">Update Trip</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="col-12">
-    <div class="card shadow position-relative">
-        <div class="card-body">
-
-            <form action="{{route('admin.trip.update',$trip->id)}}" method="POST">
-                @csrf
-                @method('put')
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Enter Location From</label>
-                                <select class="form-control" value="{{ $trip->location_from}}" name="location from">
-                                    @foreach ($locations as $location)
-                                        <option value="{{ $location->location_from }}">{{ $location->location_from }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Enter Location To</label>
-                                <select class="form-control" value="{{ $trip->location_to}}"  name="location to">
-                                    @foreach ($locations as $location)
-                                        <option value="{{ $location->location_to }}">{{ $location->location_to }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Bus</label>
-                                <select class="form-control" value="{{ $trip->bus->bus_name}}" name="bus_id">
-                                    @foreach ($buses as $bus)
-                                        <option value="{{ $bus->id }}">{{ $bus->bus_name }} - {{  ucfirst($bus->bus_type) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Date</label>
-                                <input value="{{ $trip->date}}" name="date" type="date" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Time</label>
-                                <select class="form-control" value="{{ $trip->time}}" name="time">
-                                    <option value="">Time Period</option>
-                                    <option value="Morning (07:00AM)">Morning (07:00AM)</option>
-                                    <option value="Morning (09:00AM)">Morning (09:00AM)</option>
-                                    <option value="Morning (11:00AM)">Morning (11:00AM)</option>
-                                    <option value="Afternoon (01:00PM)">Afternoon (01:00PM)</option>
-                                    <option value="Afternoon (03:00PM)">Afternoon (03:00PM)</option>
-                                    <option value="Afternoon (05:00PM)">Afternoon (05:00PM)</option>
-                                    <option value="Night (07:00PM)">Night (07:00PM)</option>
-                                    <option value="Night (09:00PM)">Afternoon (09:00PM)</option>
-                                    <option value="Night (11:00PM)">Night (11:00PM)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Bus Fare</label>
-                                <input value="{{ $trip->fare}}" name="bus fare" type="number" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-primary btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                            </span>
-                            <span class="text">Submit</span>
-                        </button>
-                        <a href="{{ route('admin.trip') }}" class="btn btn-danger btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-times"></i>
-                            </span>
-                            <span class="text">Cancel</span>
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection

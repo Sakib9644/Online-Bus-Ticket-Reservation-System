@@ -2,262 +2,228 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>document</title>
+    <title>SwiftBus E-Ticket | Course #{{ $detail->seat->bus->coach_no }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary: #a2e043;
+            --dark: #0f120e;
+            --slate: #2d342c;
+            --text: #1a1e19;
+            --muted: #718096;
+        }
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'DM Sans', sans-serif; 
+            background: #f4f7f6; 
+            padding: 40px 20px;
+            color: var(--text);
+        }
+
+        .no-print {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-print {
+            background: var(--dark);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+        .btn-print:hover { opacity: 0.9; }
+
+        .ticket-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Ticket Header */
+        .ticket-header {
+            background: var(--dark);
+            padding: 40px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
+
+        .pnr-box { text-align: right; }
+        .pnr-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; }
+        .pnr-value { font-size: 24px; font-weight: 800; color: var(--primary); }
+
+        /* Ticket Body */
+        .ticket-body { padding: 40px; position: relative; }
+
+        .route-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .city-box .label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+        .city-box .val { font-size: 28px; font-weight: 800; }
+
+        .plane-icon { font-size: 24px; color: var(--primary); margin-top: 25px; opacity: 0.3; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .info-item .label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+        .info-item .val { font-size: 16px; font-weight: 700; }
+
+        /* Stub Section */
+        .passenger-section {
+            background: #f8fafc;
+            padding: 30px 40px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .passenger-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            background: #def7ec;
+            color: #03543f;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .footer-note {
+            padding: 20px 40px;
+            font-size: 12px;
+            color: var(--muted);
+            text-align: center;
+            background: #fff;
+        }
+
+        /* Print Overrides */
+        @media print {
+            body { background: #fff; padding: 0; }
+            .no-print { display: none; }
+            .ticket-container { box-shadow: none; border: 1px solid #eee; }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="header">
-            <div class="header-right">
-                <a class="" href="{{url('/')}}" style="margin-right: 15px;
-        text-decoration: none">Home</a>
+    <div class="no-print">
+        <a href="{{ route('frontend.home') }}" style="color: var(--dark); text-decoration: none; font-weight: 700;"><i class="fa fa-arrow-left"></i> Back to Home</a>
+        <button class="btn-print" onclick="window.print()">
+            <i class="fa fa-download"></i> DOWNLOAD E-TICKET
+        </button>
+    </div>
+
+    <div class="ticket-container" id="ticket">
+        <div class="ticket-header">
+            <div class="logo">Swift<span>Bus</span></div>
+            <div class="pnr-box">
+                <div class="pnr-label">Course Number</div>
+                <div class="pnr-value">{{ $detail->seat->bus->coach_no }}</div>
             </div>
         </div>
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
+        <div class="ticket-body">
+            <div class="route-row">
+                <div class="city-box">
+                    <div class="label">Departure From</div>
+                    <div class="val">{{ $trip->location_from ?? 'N/A' }}</div>
+                </div>
+                <i class="fa fa-bus plane-icon"></i>
+                <div class="city-box" style="text-align: right;">
+                    <div class="label">Arrival To</div>
+                    <div class="val">{{ $trip->location_to ?? 'N/A' }}</div>
+                </div>
+            </div>
 
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">Date</div>
+                    <div class="val">{{ date('D, M d Y', strtotime($detail->date)) }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Departure Time</div>
+                    <div class="val">{{ $detail->time }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Bus Name</div>
+                    <div class="val">{{ $detail->seat->bus->bus_name }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Seat Number(s)</div>
+                    <div class="val">
+                        @if(isset($details))
+                            @foreach($details as $d)
+                                {{ $d->seat->name }}{{ !$loop->last ? ', ' : '' }}
+                            @endforeach
+                        @else
+                            {{ $detail->seat->name }}
+                        @endif
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Total Amount</div>
+                    <div class="val">৳{{ $detail->amount }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Course Number</div>
+                    <div class="val">{{ $detail->seat->bus->coach_no }}</div>
+                </div>
+            </div>
+        </div>
 
-    .header {
-        overflow: hidden;
-        background-color: #f1f1f1;
-        padding: 20px 10px;
-    }
+        <div class="passenger-section">
+            <div class="passenger-row">
+                <div>
+                    <div style="font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700;">Main Passenger</div>
+                    <div style="font-size: 18px; font-weight: 800;">{{ $detail->user->name }}</div>
+                    <div style="font-size: 13px; color: var(--muted);">{{ $detail->user->email }}</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="status-badge">PAID & CONFIRMED</div>
+                    <div style="font-size: 11px; color: var(--muted); margin-top: 8px;">Issued on: {{ date('M d, Y') }}</div>
+                </div>
+            </div>
+        </div>
 
-    .header a {
-        float: left;
-        color: black;
-        text-align: center;
-        padding: 2px;
-        text-decoration: none;
-        font-size: 18px;
-        line-height: 25px;
-        border-radius: 4px;
-    }
-
-    .header a.logo {
-        font-size: 25px;
-        font-weight: bold;
-    }
-
-    .header a:hover {
-        background-color: #ddd;
-        color: black;
-    }
-
-    .header a.active {
-        background-color: dodgerblue;
-        color: white;
-    }
-
-    .header-right {
-        float: right;
-    }
-
-    @media screen and (max-width: 500px) {
-        .header a {
-            float: none;
-            display: block;
-            text-align: left;
-        }
-
-        .header-right {
-            float: none;
-        }
-    }
-
-    .card {
-        margin: auto;
-        border: solid 1px #dbdad7;
-        width: 40%;
-        padding-left: 10px !important;
-        padding-bottom: 10px !important;
-        padding-right: 10px !important;
-        padding-top: 0px !important
-    }
-
-    .card-title {
-        margin: auto;
-        padding: 15px;
-        background-color: #2f7fad;
-        color: white;
-        width: 80%
-    }
-
-    div.card-body {
-        padding: 0px
-    }
-
-    .custom-select {
-        width: 100%
-    }
-
-    .btn2 {
-        margin-left: 10%
-    }
-
-    input {
-        outline: 0 !important;
-        border-width: 0 0 2px !important;
-        border-color: #d1d1cf !important
-    }
-
-    input:focus {
-        border-color: #d1d1cf !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important
-    }
-
-    select {
-        outline: 0 !important;
-        border-width: 0 0 2px !important;
-        border-color: #d1d1cf !important
-    }
-
-    select:focus {
-        border-color: #d1d1cf !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important
-    }
-
-    .radiobtn {
-        margin-left: 3.5%
-    }
-
-    .icons {
-        margin: auto !important
-    }
-
-    .fa {
-        border-radius: 25px;
-        width: 10%;
-        margin-left: 5%;
-        border: solid 2px #dbdad7;
-        margin-top: 5%;
-        text-align: center
-    }
-
-    .fa-plane {
-        color: #1cad9f
-    }
-
-    .fa-taxi {
-        color: #c2f700
-    }
-
-    .fa-train {
-        color: red
-    }
-
-    @media only screen and (max-width: 600px) {
-        .card {
-            margin: auto;
-            border: solid 1px #dbdad7;
-            width: 90%;
-            padding-left: 10px !important;
-            padding-bottom: 10px !important;
-            padding-right: 10px !important;
-            padding-top: 0px !important
-        }
-
-        .fa {
-            border-radius: 25px;
-            width: 15%;
-            margin-left: 5%;
-            border: solid 2px #dbdad7;
-            margin-top: 5%;
-            text-align: center
-        }
-    }
-
-</style>
-
-<div style="margin-top:57px; margin-left: 61px;">
-    
-    @if(session()->has('message'))
-   <p class="alert alert-success">{{session()->get('message')}}</p>
-@endif
-
-     <form class="print_order">
-        <input class="btn btn-danger"  type="button" onClick="PrintDiv();" value="Print">
-     </form>
-
- <div id="divToPrint">
-    <h1>Booking Details </h1>
-   <div style="display:flex; align-items:center;">
-       <h4 style="font-weight: bold; padding-right: 15px;">Name:</h4>
-       <dd class="col-sm-9" style="font-size: 22px;">{{($detail->user->name)}}</dd>
-   </div>
-
-    <div style="display:flex; align-items:center;">
-         <h4 style="font-weight: bold; padding-right: 15px;">Email:</h4>
-         <dd class="col-sm-9"  style="font-size: 22px;"> {{($detail->user->email)}}</dd>
-    </div>
-      
-    <div style="display:flex; align-items:center;">
-
-            <h4 style="font-weight: bold; padding-right: 15px;">Bus Name: </h4>
-            <dd class="col-sm-9"  style="font-size: 22px;">{{($detail->seat->bus->bus_name)}}</dd>
-         
-    </div>
-      
-        
-    <div style="display:flex; align-items:center;">
-            <h4 style="font-weight: bold; padding-right: 15px;">Seat Number:</h4>  
-            <dd class="col-sm-9"  style="font-size: 22px;">{{($detail->seat->name)}}</dd>
+        <div class="footer-note">
+            In case you want to cancel your ticket online, please call 16374 before the Departure day. Thank you for choosing SwiftBus.
+        </div>
     </div>
 
-    <div style="display:flex; align-items:center;">
-        <h4 style="font-weight: bold; padding-right: 15px;">Date: </h4>
-          <dd class="col-sm-9"  style="font-size: 22px;">{{$detail->date}}</</dd>    
-  </div>
-
-  <div style="display:flex; align-items:center;">
-      <h4 style="font-weight: bold; padding-right: 15px;">Time: </h4>
-        <dd class="col-sm-9"  style="font-size: 22px;">{{$detail->time}}</</dd>    
-</div>
-
-    <div style="display:flex; align-items:center;">
-          <h4 style="font-weight: bold; padding-right: 15px;">Total Price: </h4>
-          <dd class="col-sm-9"  style="font-size: 22px;">{{$detail->amount}}</dd>
-    </div>
-    
-
-    User booking payment form
-
-    <p class="alert alert-success"  >In case you want to cancel your ticket online, please call 16374,before the Departure day,Thank You</p>
-
- </div>
-</div>     
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    
-<script language="javascript">
-    function PrintDiv() {
-        var divToPrint = document.getElementById('divToPrint');
-        var popupWin = window.open('', '_blank', 'width=1100,height=700');
-        popupWin.document.open();
-        popupWin.document.write('<html><head><link href="http://127.0.0.1:8000/Frontend/css/style.css" rel="stylesheet"></head><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
-        popupWin.document.close();
-    }
-</script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
 </body>
 </html>
-
-
-

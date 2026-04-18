@@ -1,45 +1,54 @@
 @extends('admin.master')
 @section('content')
 
-<h3>Payment Details</h3>
-<br>
-<table class="table table-striped table-bordered table-hover" >
-  <thead>
-    <tr id="1">
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Payment Mathod</th>
-      <th scope="col">Transection ID</th>
-      <th scope="col">Date</th>
-      {{-- <th scope="col">Time</th> --}}
-      <th scope="col">Amount</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($payment as $key => $detail)
-    <tr>
-      <th>{{ $key + 1 }}</th>
-      <td>{{optional($detail->userRelation)->name}}</td>
-      <td>{{optional($detail->userRelation)->email}}</td>
-      <td>{{$detail->payment_mathod}}</td>
-      <td>{{$detail->transaction_id}}</td>
-      <td>{{($detail->created_at)->toDateString()}}</td>
-      {{-- <td>{{($detail->created_at)->toTimeString()}}</td> --}}
-      <td>{{$detail->amount}}</td>
-     <td> <script type="text/javascript">   
-    function imprimir() {
-        var divToPrint=document.getElementById("1");
-        newWin= window.open("");
-        newWin.document.write(divToPrint.outerHTML);
-        newWin.print();
-        newWin.close();
-        <button>print</button>
-    }
-</script></td>
-    </tr>
-    @endforeach
-</tbody>
-</table>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
+    <div>
+        <h1 style="font-size:24px; font-weight:800; color:#0f172a; letter-spacing:-0.5px;">Financial Transactions</h1>
+        <p style="color:var(--muted); font-size:14px; margin-top:4px;">Monitor payments and passenger transaction history</p>
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="admin-card-header">
+        <h5>Payment History</h5>
+    </div>
+    <div style="padding: 24px;">
+        <table class="admin-table" id="payment-table" style="width:100% !important;">
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Passenger</th>
+                    <th>Method</th>
+                    <th>Transaction ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script src="{{ url('backend/vendor/jquery/jquery.min.js') }}"></script>
+<script>
+$(function() {
+    $('#payment-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('admin.payment') !!}',
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'passenger', name: 'userRelation.name' },
+            { data: 'method', name: 'payment_method' },
+            { data: 'transaction_id', name: 'transaction_id' },
+            { data: 'date', name: 'created_at' },
+            { data: 'amount_display', name: 'amount' }
+        ],
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search ID, Passenger...",
+            lengthMenu: "Show _MENU_",
+        }
+    });
+});
+</script>
 @endsection

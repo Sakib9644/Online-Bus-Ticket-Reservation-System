@@ -11,15 +11,15 @@
                     </div>
                     <div style="padding: 36px 30px;">
                         <div class="mb-4">
-                            <label style="color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:1px; font-weight: 700; margin-bottom: 6px; display: block;">Ticket Bundle Reference</label>
-                            <div style="font-weight:800; font-family: 'Syne', sans-serif; font-size:26px; color: #fff;">#BK-{{ str_pad($bookings->first()->id, 5, '0', STR_PAD_LEFT) }}</div>
+                            <label style="color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:1px; font-weight: 700; margin-bottom: 6px; display: block;">Bus Number</label>
+                            <div style="font-weight:800; font-size:20px; color: #fff;">{{ $bookings->first()->trip->bus->bus_no }}</div>
                             <div style="font-size:14px; color:var(--muted); margin-top: 4px;">Includes {{ $bookings->count() }} seat(s).</div>
                         </div>
 
                         <div style="background:rgba(255,255,255,0.02); padding:20px; border-radius:12px; border:1px solid var(--border); margin-bottom:30px;">
                             <div style="display:flex; justify-content:space-between; align-items: center; margin-bottom:12px;">
                                 <span style="color:var(--muted); font-weight: 500;">Total Bundle Amount</span>
-                                <span style="font-weight:800; font-family:'Syne',sans-serif; color:#fff; font-size:28px;">৳{{ $totalAmount }}</span>
+                                <span style="font-weight:800; color: var(--accent); font-size:24px;">৳{{ $totalAmount }}</span>
                             </div>
                             <div style="font-size:13px; color:var(--muted);">Inclusive of all service charges and {{ $bookings->count() }} seats</div>
                         </div>

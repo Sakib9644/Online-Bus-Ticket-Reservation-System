@@ -1,52 +1,38 @@
 @extends('admin.master')
-
 @section('content')
 
-    <h3 class="mb-4">Edit City</h3>
+<div style="max-width:600px; margin:0 auto;">
+    <div style="margin-bottom:32px;">
+        <h1 style="font-size:24px; font-weight:800; color:#0f172a; letter-spacing:-0.5px;">Update City Hub</h1>
+        <p style="color:var(--muted); font-size:14px; margin-top:4px;">Modify the official hub details for {{ $city->name }}</p>
+    </div>
 
     @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <div>
-                <p class="alert alert-danger">{{ $error }}</p>
-            </div>
-        @endforeach
-    @endif
-
-    @if (session()->has('msg'))
-        <p class="alert alert-success">{{ session()->get('msg') }}</p>
-    @endif
-
-    <form action="{{ route('admin.city.update', $city->id) }}" method="POST">
-        @csrf
-        @method('put')
-        <div class="col-lg-6">
-            <div class="card shadow position-relative">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Edit City Name</h6>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Name</label>
-                        <input type="text" class="form-control form-control-lg" value="{{ $city->name }}" name="name"
-                            placeholder="City Name" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-check"></i>
-                        </span>
-                        <span class="text">Submit</span>
-                    </button>
-                    <a href="{{ route('admin.city') }}" class="btn btn-danger btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-times"></i>
-                        </span>
-                        <span class="text">Cancel</span>
-                    </a>
-                </div>
-            </div>
-
+        <div class="alert-danger-admin" style="background:#fee2e2; border:1px solid #fecaca; border-radius:10px; padding:16px; color:#b91c1c; margin-bottom:24px; font-size:14px;">
+            <ul style="margin:0; padding-left:20px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+    @endif
 
-    </form>
+    <div class="admin-form-card">
+        <form action="{{ route('admin.city.update', $city->id) }}" method="POST">
+            @csrf
+            @method('put')
+            
+            <div class="admin-form-group">
+                <label class="admin-label">Official City Name</label>
+                <input type="text" class="admin-input" value="{{ $city->name }}" name="name" placeholder="City Name" required>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px; border-top:1px solid var(--border); padding-top:32px;">
+                <a href="{{ route('admin.city') }}" class="btn-outline-admin">Discard</a>
+                <button type="submit" class="btn-primary-admin" style="min-width:140px; justify-content:center;">Update City</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 @endsection

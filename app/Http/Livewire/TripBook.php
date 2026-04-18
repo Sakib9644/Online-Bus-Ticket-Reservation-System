@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class TripBook extends Component
 {
-    public $trip, $seats, $totalPrice = 0, $date, $time, $booked, $selectedSeats = [], $message = null, $demo = 0;
+    public $trip, $seats, $totalPrice = 0, $date, $time, $booked, $selectedSeats = [], $message = null, $demo = 0, $paymentMethod = 'online';
 
     public function mount($trip)
     {
@@ -17,7 +17,7 @@ class TripBook extends Component
         $this->date = $trip->date;
         $this->time = $trip->time;
         $this->seats = [];
-        $this->demo = Booking::where('bus_id', $this->trip->bus_id)
+        $this->demo = Booking::where('trip_id', $this->trip->id)
             ->where('user_id', auth()->id())
             ->count();
         
@@ -36,8 +36,7 @@ class TripBook extends Component
 
     public function searchSeat($silent = false)
     {
-        $this->booked = Booking::where('date', $this->date)
-            ->where('time', $this->time)
+        $this->booked = Booking::where('trip_id', $this->trip->id)
             ->get();
 
         $this->seats = $this->trip->bus->seats;
@@ -66,22 +65,23 @@ class TripBook extends Component
             return;
         }
 
-        $currentBookingCount = Booking::where('bus_id', $this->trip->bus_id)
+        $currentBookingCount = Booking::where('trip_id', $this->trip->id)
             ->where('user_id', auth()->id())
             ->count();
 
         if (($currentBookingCount + count($this->selectedSeats)) > 7) {
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You cannot book more than 7 seats in total.']);
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => "You cannot book more than 7 seats for this trip. (You already have $currentBookingCount seats, and you selected " . count($this->selectedSeats) . " more)"]);
             return;
         }
 
-        try {
-            DB::transaction(function () {
+            $bookingIds = [];
+            $ticketNo = 'SB-' . date('y') . '-' . strtoupper(substr(md5(uniqid()), 0, 6));
+
+            DB::transaction(function () use (&$bookingIds, $ticketNo) {
                 // Final verification of seat availability
-                $alreadyBooked = Booking::where('date', $this->trip->date)
-                    ->where('time', $this->trip->time)
+                $alreadyBooked = Booking::where('trip_id', $this->trip->id)
                     ->whereIn('seat_id', $this->selectedSeats)
-                    ->lockForUpdate() // Lock the rows to prevent race conditions
+                    ->lockForUpdate()
                     ->exists();
 
                 if ($alreadyBooked) {
@@ -89,24 +89,28 @@ class TripBook extends Component
                 }
 
                 foreach ($this->selectedSeats as $seatId) {
-                    Booking::create([
+                    $booking = Booking::create([
+                        'trip_id' => $this->trip->id,
                         'seat_id' => $seatId,
                         'user_id' => auth()->id(),
                         'bus_id' => $this->trip->bus_id,
                         'date' => $this->trip->date,
                         'time' => $this->trip->time,
                         'amount' => $this->trip->fare,
+                        'status' => 'Pending',
+                        'ticket_no' => $ticketNo
                     ]);
+                    $bookingIds[] = $booking->id;
                 }
             });
 
-            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Tickets booked successfully! You can book more seats or view your bookings later.']);
-            
-            $this->reset('selectedSeats');
-            $this->totalPrice = 0;
-            $this->searchSeat(); // Refresh the view to show newly booked seats as "Filled"
+            if ($this->paymentMethod == 'online') {
+                $idsString = implode(',', $bookingIds);
+                return redirect()->route('user.payment', ['id' => $idsString]);
+            }
 
-            // No redirect, stay on page as requested
+            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Reservation created! Please complete payment manually.']);
+            return redirect()->route('booking.details');
 
 
         } catch (\Exception $e) {

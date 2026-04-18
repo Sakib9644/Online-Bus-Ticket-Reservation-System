@@ -8,10 +8,23 @@ use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        $cities = City::latest()->get();
-        return view('admin.pages.City.list',compact('cities'));
+        if ($request->ajax()) {
+            $cities = City::latest()->get();
+            return \Yajra\DataTables\Facades\DataTables::of($cities)
+                ->addIndexColumn()
+                ->addColumn('actions', function($row){
+                    $btn = '<div style="display:flex; gap:8px;">
+                                <a href="'.route('admin.city.edit', $row->id).'" class="btn-outline-admin" style="padding:8px 12px; font-size:12px; color:#8b5cf6;"><i class="fas fa-edit"></i></a>
+                                <a onclick="return confirm(\'Delete this city/hub?\')" href="'.route('admin.city.delete', $row->id).'" class="btn-danger-admin" style="padding:8px 12px; font-size:12px;"><i class="fas fa-trash-alt"></i></a>
+                            </div>';
+                    return $btn;
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+        return view('admin.pages.City.list');
     }
      
     public function create()

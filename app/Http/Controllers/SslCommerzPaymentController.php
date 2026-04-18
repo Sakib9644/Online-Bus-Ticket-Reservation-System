@@ -87,6 +87,7 @@ class SslCommerzPaymentController extends Controller
         $amount = $request->input('amount');
         $currency = $request->input('currency');
         $booking_id = $request->input('value_a');
+        $ids = explode(',', $booking_id);
 
         $sslc = new SslCommerzNotification();
 
@@ -99,9 +100,14 @@ class SslCommerzPaymentController extends Controller
             $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
 
             if ($validation == TRUE) {
+                $ticket_no = 'SB-' . date('y') . '-' . strtoupper(substr(md5(uniqid()), 0, 6));
+
                 DB::table('bookings')
                     ->whereIn('id', $ids)
-                    ->update(['status' => 'complete']);
+                    ->update([
+                        'status' => 'complete',
+                        'ticket_no' => $ticket_no
+                    ]);
 
                 Payment::create([
                     'user_id' => $order_details->user_id,
@@ -172,22 +178,23 @@ class SslCommerzPaymentController extends Controller
             $booking_id = $request->input('value_a');
 
             #Check order status in order tabel.
+            $ids = explode(',', $booking_id);
             $order_details = DB::table('bookings')
-                ->where('id', $booking_id)
+                ->whereIn('id', $ids)
                 ->first();
 
             if ($order_details->status == 'Pending') {
                 $sslc = new SslCommerzNotification();
                 $validation = $sslc->orderValidate($request->all(), $tran_id, $order_details->amount, 'BDT');
                 if ($validation == TRUE) {
-                    /*
-                    That means IPN worked. Here you need to update order status
-                    in order table as Processing or Complete.
-                    Here you can also sent sms or email for successfull transaction to customer
-                    */
+                    $ticket_no = 'SB-' . date('y') . '-' . strtoupper(substr(md5(uniqid()), 0, 6));
+
                     DB::table('bookings')
-                        ->where('id', $booking_id)
-                        ->update(['status' => 'complete']);
+                        ->whereIn('id', $ids)
+                        ->update([
+                            'status' => 'complete',
+                            'ticket_no' => $ticket_no
+                        ]);
 
                     Payment::create([
                         'user_id' => $order_details->user_id,

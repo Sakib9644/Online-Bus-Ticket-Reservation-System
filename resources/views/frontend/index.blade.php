@@ -11,21 +11,22 @@
     <link href="{{ url('frontend/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     @livewireStyles
 
     <style>
         :root {
             --ink: #ffffff;
-            --paper: #121611; /* Deep forest black/green */
-            --card-bg: #1c201b; /* Dark greenish grey */
-            --accent: #8dc63f; /* Vibrant Lime Green from screenshot */
-            --cyan: #8dc63f; /* Deprecated */
-            --seat-cyan: #00e5ff; /* Aesthetic from 3rd image */
-            --seat-orange: #ff9800; /* Aesthetic from 3rd image */
-            --seat-red: #fe312b; /* Aesthetic from 3rd image */
+            --paper: #121611; /* Reverted to previous deep forest black */
+            --card-bg: #0e111a; /* Ideal Deep Midnight */
+            --accent: #a2e043; /* Reverted to Lime Green */
+            --cyan: #a2e043;
+            --seat-cyan: #00e5ff;
+            --seat-orange: #ff9800;
+            --seat-red: #fe312b;
             --orange: #2d332b; 
-            --seat-empty: #262b25; /* Dark olive for empty seats */
-            --border: rgba(255, 255, 255, 0.12);
+            --seat-empty: #262b25;
+            --border: rgba(162, 224, 67, 0.15);
             --muted: #8a9688;
         }
 
@@ -97,7 +98,7 @@
         /* ── CARDS ── */
         .sb-card {
             background: var(--card-bg);
-            border: 1px solid var(--border);
+            border: 1px solid #ffffff;
             border-radius: 28px;
             overflow: hidden;
             box-shadow: 0 8px 30px rgba(0,0,0,0.4);
@@ -159,6 +160,27 @@
         .contact-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 2px; }
         .contact-value { font-weight: 500; font-size: 15px; color: #fff; }
 
+        .sb-search-input {
+            width: 100%;
+            height: 56px;
+            background: rgba(44, 51, 42, 0.4);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 0 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            color: #fff;
+            color-scheme: dark;
+            outline: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .sb-search-input:hover { border-color: rgba(162, 224, 67, 0.4); }
+        .sb-search-input:focus { 
+            border-color: var(--accent); 
+            background: rgba(44, 51, 42, 0.8);
+            box-shadow: 0 0 15px rgba(162, 224, 67, 0.2);
+        }
         .sb-input {
             width: 100%;
             background: var(--seat-empty);
@@ -254,6 +276,8 @@
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        .trip-time { font-size: 16px; color: #fff; font-weight: 700; }
+
         .seat-item:hover .seat-visual { filter: brightness(1.2); transform: translateY(-1px); }
 
         /* Empty / Available (3D Blue) */
@@ -348,44 +372,209 @@
         .glass-card {
             background: rgba(28, 32, 27, 0.6);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #ffffff;
             border-radius: 20px;
         }
 
         .ticket-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid var(--border);
+            background: #0d110a;
+            border: 1px solid rgba(162, 224, 67, 0.25);
+            border-radius: 28px;
             overflow: hidden;
             display: flex;
+            flex-direction: column;
             position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .ticket-left { padding: 24px; flex: 1; }
-        .ticket-right { 
-            width: 150px; 
-            padding: 24px; 
-            background: rgba(141, 198, 63, 0.05); 
-            border-left: 2px dashed var(--border); 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center;
-            position: relative;
+        .ticket-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(162, 224, 67, 0.3);
+            box-shadow: 0 20px 60px rgba(162, 224, 67, 0.12);
         }
-
-        .ticket-right::before, .ticket-right::after {
+        .ticket-card::after {
             content: '';
             position: absolute;
-            left: -11px;
-            width: 20px;
-            height: 20px;
-            background: var(--paper);
-            border-radius: 50%;
-            border: 1px solid var(--border);
+            inset: 0;
+            background: linear-gradient(135deg, rgba(162, 224, 67, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
-        .ticket-right::before { top: -11px; }
-        .ticket-right::after { bottom: -11px; }
+
+        .ticket-header {
+            padding: 24px 28px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(162, 224, 67, 0.05);
+            background: rgba(255,255,255,0.01);
+        }
+        
+        .ticket-content {
+            padding: 28px;
+            flex: 1;
+        }
+
+        .ticket-footer {
+            padding: 20px 28px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(162, 224, 67, 0.05);
+        }
+
+        .route-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            position: relative;
+            margin: 20px 0;
+            padding-left: 24px;
+        }
+        .route-visual::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 10px;
+            bottom: 10px;
+            width: 1.5px;
+            background: linear-gradient(to bottom, var(--accent), rgba(162, 224, 67, 0.1));
+        }
+        .route-point {
+            position: relative;
+        }
+        .route-point::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 8px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .route-point.destination::before {
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            width: 7px;
+            height: 7px;
+            left: -23px;
+        }
+
+        .city-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            letter-spacing: 0;
+        }
+        .city-label {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .ticket-tag-green {
+            background: rgba(162, 224, 67, 0.08);
+            color: #a2e043;
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(162, 224, 67, 0.2);
+        }
+
+        .fare-badge {
+            text-align: right;
+        }
+        .fare-amount {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .fare-label {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .premium-btn {
+            background: var(--accent);
+            color: #0d1a09 !important;
+            padding: 12px 28px;
+            border-radius: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            box-shadow: 0 10px 20px rgba(162, 224, 67, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .premium-btn:hover {
+            background: #fff;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 15px 30px rgba(162, 224, 67, 0.3);
+        }
+
+        .trip-meta {
+            display: flex;
+            gap: 16px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .trip-meta i {
+            color: var(--accent);
+            opacity: 0.8;
+        }
+
+
+        .icon-text-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+        .icon-text-group i {
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        /* ── SWIPER CUSTOM ── */
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--accent);
+            background: rgba(44, 51, 42, 0.8);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid rgba(162, 224, 67, 0.3);
+            backdrop-filter: blur(8px);
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background: var(--accent);
+            color: #0d1a09;
+        }
+        .swiper-pagination-bullet-active {
+            background: var(--accent) !important;
+        }
 
         header {
             position: sticky;
@@ -496,5 +685,27 @@
     <script src="{{ url('frontend/js/functions.js') }}"></script>
 
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const swiper = new Swiper('.trips-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 24,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                autoHeight: false, /* Ensure cards stretch */
+                breakpoints: {
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

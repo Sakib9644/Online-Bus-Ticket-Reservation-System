@@ -8,11 +8,24 @@ use Illuminate\Http\Request;
 
 class CounterController extends Controller
 {
-    public function list(){
-      $counters=Counter::all();
-      //   dd($counters);
-     return view('admin.pages.Counter.counter-list',compact('counters'));
-  }
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            $counters = Counter::latest()->get();
+            return \Yajra\DataTables\Facades\DataTables::of($counters)
+                ->addIndexColumn()
+                ->addColumn('actions', function($row){
+                    $btn = '<div style="display:flex; gap:8px;">
+                                <a href="'.route('admin.counter.details', $row->id).'" class="btn-outline-admin" style="padding:8px 12px; font-size:12px; color:#3b82f6;"><i class="fas fa-eye"></i></a>
+                                <a onclick="return confirm(\'Delete this counter?\')" href="'.route('admin.counter.delete', $row->id).'" class="btn-danger-admin" style="padding:8px 12px; font-size:12px;"><i class="fas fa-trash-alt"></i></a>
+                            </div>';
+                    return $btn;
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+        return view('admin.pages.Counter.counter-list');
+    }
   
   public function create(){
      return view('admin.pages.Counter.counter-create');

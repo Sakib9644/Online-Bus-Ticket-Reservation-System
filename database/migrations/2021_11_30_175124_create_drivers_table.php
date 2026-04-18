@@ -19,7 +19,7 @@ class CreateDriversTable extends Migration
             $table->string('driver_id');
             $table->string('driver_phone_number');
             $table->string('bus_name');
-            $table->string('bus_no');
+            $table->string('coach_no');
             $table->timestamps();
         });
     }

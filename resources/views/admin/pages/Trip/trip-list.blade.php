@@ -1,88 +1,68 @@
 @extends('admin.master')
 @section('content')
 
-    <h3 class="mb-3">Trip list</h3>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
+    <div>
+        <h1 style="font-size:24px; font-weight:800; color:#0f172a; letter-spacing:-0.5px;">Trip Schedules</h1>
+        <p style="color:var(--muted); font-size:14px; margin-top:4px;">Define and monitor active bus routes and timings</p>
+    </div>
+    <a href="{{route('admin.trip.create')}}" class="btn-primary-admin">
+        <i class="fa fa-plus"></i> Create New Trip
+    </a>
+</div>
 
-    @if(session()->has('message'))
-    <p class="alert alert-success">{{session()->get('message')}}</p>
+@if(session()->has('message') || session()->has('msg') || session()->has('success'))
+    <div class="alert-success-admin">
+        <i class="fas fa-check-circle" style="margin-right:8px;"></i>
+        {{ session()->get('message') ?? session()->get('msg') ?? session()->get('success') }}
+    </div>
 @endif 
 
-@if(session()->has('msg'))
-    <p class="alert alert-danger">{{session()->get('msg')}}</p>
-@endif 
-
-@if(session()->has('success'))
-    <p class="alert alert-success">{{session()->get('success')}}</p>
-@endif 
-
-    <a href="{{route('admin.trip.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add Trip</a>
-<br>
-<br>
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">From Location</th>
-                <th scope="col">To Location</th>
-                <th scope="col">Bus</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time</th>
-                <th scope="col">Fare</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($trips as $key => $trip)
+<div class="admin-card">
+    <div class="admin-card-header">
+        <h5>Scheduled Trips</h5>
+    </div>
+    <div style="padding: 24px;">
+        <table class="admin-table" id="trip-table" style="width:100% !important;">
+            <thead>
                 <tr>
-                    <th>{{ $key + 1 }}</th>
-                    <td>{{ $trip->location_from}}</td>
-                    <td>{{ $trip->location_to}}</td>
-                    <td>{{ $trip->bus->bus_name}}</td>
-                    <td>{{ $trip->date}}</td>
-                    <td>{{ $trip->time}}</td>
-                    <td>{{ $trip->fare}}</td>
-                    <td><a href="{{route('admin.trip.edit',$trip->id)}}"><button
-                        class="btn btn-primary btn-sm">Edit</button></a></td>
-                    <td><button class="btn btn-danger btn-sm" data-toggle="modal"
-                            data-target="#exampleModal{{$trip->id}}">Delete</button>
-                    </td>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal{{$trip->id}}" tabindex="-1"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <form action="{{route('admin.trip.delete',$trip->id)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            id="exampleModalLabel{{$trip->id}}}}">Delete
-                                            confirmation
-                                        </h5>
-                                        <button type="button" class="close"
-                                            data-dismiss="modal" aria-label="Close">
-                                            <span aria-fidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-danger">Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <th>SL</th>
+                    <th>Route Map</th>
+                    <th>Vehicle (Course #)</th>
+                    <th>Schedule</th>
+                    <th>Fare (BDT)</th>
+                    <th>Actions</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-   
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script src="{{ url('backend/vendor/jquery/jquery.min.js') }}"></script>
+<script>
+$(function() {
+    $('#trip-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('admin.trip') !!}',
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'route_map', name: 'route_map' },
+            { data: 'vehicle', name: 'vehicle' },
+            { data: 'schedule', name: 'schedule' },
+            { data: 'fare_display', name: 'fare_display' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+        ],
+        language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search trips...",
+            lengthMenu: "Show _MENU_",
+        }
+    });
+});
+</script>
+        </table>
+    </div>
+</div>
 
 @endsection

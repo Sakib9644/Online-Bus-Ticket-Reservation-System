@@ -16,7 +16,7 @@ class CreateBusesTable extends Migration
         Schema::create('buses', function (Blueprint $table) {
             $table->id();
             $table->string('bus_name');
-            $table->integer('bus_no');
+            $table->string('coach_no');
             $table->string('bus_type');
             $table->string('image')->nullable();
             $table->timestamps();
