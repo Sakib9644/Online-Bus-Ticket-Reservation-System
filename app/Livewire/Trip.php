@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Location;
 use App\Models\Trip as ModelsTrip;
@@ -119,6 +119,7 @@ class Trip extends Component
             'times' => $this->times,
             'coachNumbers' => $this->coachNumbers,
             'busNames' => $this->busNames,
+            'hasFilters' => $hasFilters,
         ]);
     }
 }

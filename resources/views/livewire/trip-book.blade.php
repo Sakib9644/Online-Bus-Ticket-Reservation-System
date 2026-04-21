@@ -2,13 +2,13 @@
     @if (session()->has('message'))
         <!-- Modal Overlay -->
         <div id="flash-modal-popup" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 9999;">
-            <div style="background: #151814; border: 1px solid var(--border); border-radius: 20px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); max-width: 400px; text-align: center; position: relative;">
-                <div style="width: 60px; height: 60px; background: rgba(141,198,63,0.1); color: #a2e043; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 20px;">
+            <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); max-width: 400px; text-align: center; position: relative;">
+                <div style="width: 60px; height: 60px; background: rgba(162, 224, 67, 0.1); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 20px;">
                     <i class="fa fa-info-circle"></i>
                 </div>
                 <h3 class="syne" style="color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 12px;">Notice</h3>
                 <p style="color: var(--muted); font-size: 15px; margin-bottom: 24px;">{{ session('message') }}</p>
-                <button type="button" onclick="document.getElementById('flash-modal-popup').style.display='none'" class="sb-btn" style="background: #a2e043; color: #0d1a09; border: none; padding: 12px 30px; border-radius: 100px; font-weight: 800; width: 100%;">Acknowledge</button>
+                <button type="button" onclick="document.getElementById('flash-modal-popup').style.display='none'" class="sb-btn" style="background: var(--accent); color: #0d1a09; border: none; padding: 12px 30px; border-radius: 100px; font-weight: 800; width: 100%;">Acknowledge</button>
             </div>
         </div>
     @endif
@@ -24,7 +24,7 @@
         
         <!-- Left Column: Trip Summary -->
         <div class="col-lg-3 mb-4">
-            <div class="sb-card" style="padding: 24px; border-radius: 20px; background: #151814; border: 1px solid var(--border);">
+            <div class="sb-card" style="padding: 24px; border-radius: 20px; background: var(--card-bg); border: 1px solid var(--border);">
                 <div style="font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; font-weight: 700; margin-bottom: 24px;">Trip Summary</div>
                 <h2 class="mb-4" style="font-size: clamp(18px, 2vw, 24px); font-weight: 800; color: #fff; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
                     <span style="word-break: break-word;">{{ $trip->location_from }}</span> 
@@ -55,14 +55,14 @@
         <!-- Middle Column: Date + Cabin -->
         <div class="col-lg-5 mb-4">
             
-            <div style="background: #151814; padding: 20px 24px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px;">
+            <div style="background: var(--card-bg); padding: 20px 24px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px;">
                 <label style="font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; display: block; margin-bottom: 8px;">Departure Date</label>
                 <div style="font-weight: 800; font-size: 16px; color: #fff; margin-bottom: 4px;">{{ date('D, d M Y', strtotime($trip->date)) }}</div>
                 <div style="font-size: 13px; color: var(--muted);">{{ $trip->time }} (Scheduled)</div>
             </div>
 
             @if (count($seats) > 0)
-                <div class="bus-cabin" style="background: #151814; padding: 40px 20px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); max-width: 100%;">
+                <div class="bus-cabin" style="background: var(--card-bg); padding: 40px 20px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); max-width: 100%; border: 1px solid var(--border);">
                     <!-- Header Section -->
                     <div style="text-align:center; margin-bottom:30px;">
                         <h3 class="mb-1" style="font-size:20px; font-weight:800; color: #fff; text-transform: uppercase; letter-spacing: 1px;">{{ $trip->bus->bus_name ?? 'Select Your Seats' }}</h3>
@@ -81,7 +81,7 @@
                     </div>
 
                     <!-- Driver Box -->
-                    <div style="margin: 0 auto 40px; width: 140px; background: #262b25; border-radius: 8px; padding: 8px; text-align: center; font-size: 13px; font-weight: 700; color: #fff; box-shadow: inset 0 2px 2px rgba(255,255,255,0.05), 0 4px 6px rgba(0,0,0,0.3);">
+                    <div style="margin: 0 auto 40px; width: 140px; background: var(--seat-empty); border-radius: 8px; padding: 8px; text-align: center; font-size: 13px; font-weight: 700; color: #fff; box-shadow: inset 0 2px 2px rgba(255,255,255,0.05), 0 4px 6px rgba(0,0,0,0.3); border: 1px solid var(--border);">
                         Driver
                     </div>
 
@@ -121,12 +121,12 @@
 
         <!-- Right Column: Refresh & Summary -->
         <div class="col-lg-4 mb-4">
-            <button wire:click.prevent="searchSeat" wire:loading.attr="disabled" class="sb-btn" style="width: 100%; margin-bottom: 24px; background: #a2e043; color: #0d1a09; border: none; padding: 16px; border-radius: 100px; font-weight: 800; font-size: 15px; box-shadow: 0 4px 15px rgba(141,198,63,0.3); transition: transform 0.1s;">
+            <button wire:click.prevent="searchSeat" wire:loading.attr="disabled" class="sb-btn" style="width: 100%; margin-bottom: 24px; background: var(--accent); color: #0d1a09; border: none; padding: 16px; border-radius: 100px; font-weight: 800; font-size: 15px; box-shadow: 0 8px 25px rgba(162, 224, 67, 0.2); transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;">
                  <span wire:loading.remove wire:target="searchSeat">Refresh Availability</span>
-                 <span wire:loading wire:target="searchSeat">Checking Matrix...</span>
+                 <span wire:loading wire:target="searchSeat"><i class="fa fa-spinner fa-spin"></i> Checking Matrix...</span>
             </button>
 
-            <div class="booking-summary-fancy" style="position: sticky; top: 100px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-radius: 20px; background: #151814; border: 1px solid var(--border);">
+            <div class="booking-summary-fancy" style="position: sticky; top: 100px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-radius: 20px; background: var(--card-bg); border: 1px solid var(--border);">
                 <h4 style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px;">Booked Summary</h4>
                 
                 @if(!empty($selectedSeats))
@@ -161,7 +161,7 @@
                         </div>
                     </div>
 
-                    <button wire:click="book" wire:loading.attr="disabled" class="sb-btn-full" style="background: #a2e043; width: 100%; border: none; padding: 16px; border-radius: 12px; font-weight: 800; color: #0d1a09; font-size: 16px; box-shadow: 0 4px 15px rgba(141,198,63,0.2);">
+                    <button wire:click="book" wire:loading.attr="disabled" class="sb-btn-full" style="background: var(--accent); width: 100%; border: none; padding: 16px; border-radius: 12px; font-weight: 800; color: #0d1a09; font-size: 16px; box-shadow: 0 8px 25px rgba(162, 224, 67, 0.2); transition: all 0.3s;">
                         <span wire:loading.remove>Confirm Booking</span>
                         <span wire:loading><i class="fa fa-spinner fa-spin me-2"></i>Processing...</span>
                     </button>

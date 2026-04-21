@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Booking;
@@ -58,15 +58,16 @@ class TripBook extends Component
 
         if (!$silent) {
             if ($availableSeatsCount <= 0) {
-                $this->dispatchBrowserEvent('notify', [
-                    'type' => 'error',
-                    'message' => 'No seats available.'
-                ]);
+                // Livewire 3 syntax for browser events
+                $this->dispatch('notify', 
+                    type: 'error',
+                    message: 'No seats available.'
+                );
             } else {
-                $this->dispatchBrowserEvent('notify', [
-                    'type' => 'success',
-                    'message' => 'Seats are available.'
-                ]);
+                $this->dispatch('notify', 
+                    type: 'success',
+                    message: 'Seats are available.'
+                );
             }
         }
     }
@@ -76,7 +77,7 @@ class TripBook extends Component
         $this->releaseExpiredPendingBookings();
 
         if (empty($this->selectedSeats)) {
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please choose at least one seat before booking.']);
+            $this->dispatch('notify', type: 'error', message: 'Please choose at least one seat before booking.');
             return;
         }
 
@@ -85,7 +86,7 @@ class TripBook extends Component
             ->count();
 
         if (($currentBookingCount + count($this->selectedSeats)) > 7) {
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => "You cannot book more than 7 seats for this trip. (You already have $currentBookingCount seats, and you selected " . count($this->selectedSeats) . " more)"]);
+            $this->dispatch('notify', type: 'error', message: "You cannot book more than 7 seats for this trip. (You already have $currentBookingCount seats, and you selected " . count($this->selectedSeats) . " more)");
             return;
         }
 
@@ -128,12 +129,11 @@ class TripBook extends Component
                 return redirect()->route('user.payment', ['id' => $idsString]);
             }
 
-            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Reservation created! Please complete payment manually.']);
+            $this->dispatch('notify', type: 'success', message: 'Reservation created! Please complete payment manually.');
             return redirect()->route('booking.details');
         } catch (\Exception $e) {
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => $e->getMessage()]);
+            $this->dispatch('notify', type: 'error', message: $e->getMessage());
             $this->searchSeat(); // Refresh to show taken seats
         }
     }
 }
-

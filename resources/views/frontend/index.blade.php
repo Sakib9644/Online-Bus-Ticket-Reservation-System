@@ -16,18 +16,23 @@
 
     <style>
         :root {
+            /* Core Brand Colors */
+            --paper: #0b0d11; /* Even deeper foundation */
+            --card-bg: #14171d; /* Premium Midnight Indigo */
+            --accent: #a2e043; /* SwiftBus Lime Green */
+            --accent-hover: #b4f056;
+            
+            /* UI Elements */
             --ink: #ffffff;
-            --paper: #121611; /* Reverted to previous deep forest black */
-            --card-bg: #0e111a; /* Ideal Deep Midnight */
-            --accent: #a2e043; /* Reverted to Lime Green */
-            --cyan: #a2e043;
-            --seat-cyan: #00e5ff;
-            --seat-orange: #ff9800;
-            --seat-red: #fe312b;
-            --orange: #2d332b; 
-            --seat-empty: #262b25;
-            --border: rgba(162, 224, 67, 0.15);
-            --muted: #8a9688;
+            --muted: #8e99aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(162, 224, 67, 0.3);
+            
+            /* Seat Status (Legacy support + Redesign) */
+            --seat-available: #3871ce;
+            --seat-selected: #51a540;
+            --seat-booked: #d34539;
+            --seat-empty: #1c201b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -208,7 +213,7 @@
         .page-hero p { color: var(--muted); font-size: 16px; }
 
         /* ── SECTION WRAPPER ── */
-        .section-wrap { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .section-wrap { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
 
         /* ── BADGE ── */
         .sb-badge {
@@ -376,189 +381,6 @@
             border-radius: 20px;
         }
 
-        .ticket-card {
-            background: #0d110a;
-            border: 1px solid rgba(162, 224, 67, 0.25);
-            border-radius: 28px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            height: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .ticket-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(162, 224, 67, 0.3);
-            box-shadow: 0 20px 60px rgba(162, 224, 67, 0.12);
-        }
-        .ticket-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(162, 224, 67, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .ticket-header {
-            padding: 24px 28px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(162, 224, 67, 0.05);
-            background: rgba(255,255,255,0.01);
-        }
-        
-        .ticket-content {
-            padding: 28px;
-            flex: 1;
-        }
-
-        .ticket-footer {
-            padding: 20px 28px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.2);
-            border-top: 1px solid rgba(162, 224, 67, 0.05);
-        }
-
-        .route-visual {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            position: relative;
-            margin: 20px 0;
-            padding-left: 24px;
-        }
-        .route-visual::before {
-            content: '';
-            position: absolute;
-            left: 4px;
-            top: 10px;
-            bottom: 10px;
-            width: 1.5px;
-            background: linear-gradient(to bottom, var(--accent), rgba(162, 224, 67, 0.1));
-        }
-        .route-point {
-            position: relative;
-        }
-        .route-point::before {
-            content: '';
-            position: absolute;
-            left: -24px;
-            top: 8px;
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
-        }
-        .route-point.destination::before {
-            background: #fff;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
-            width: 7px;
-            height: 7px;
-            left: -23px;
-        }
-
-        .city-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.2;
-            letter-spacing: 0;
-        }
-        .city-label {
-            font-size: 10px;
-            color: var(--muted);
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-top: 2px;
-        }
-
-        .ticket-tag-green {
-            background: rgba(162, 224, 67, 0.08);
-            color: #a2e043;
-            padding: 5px 14px;
-            border-radius: 100px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid rgba(162, 224, 67, 0.2);
-        }
-
-        .fare-badge {
-            text-align: right;
-        }
-        .fare-amount {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1;
-        }
-        .fare-label {
-            font-size: 10px;
-            color: var(--muted);
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-top: 4px;
-        }
-
-        .premium-btn {
-            background: var(--accent);
-            color: #0d1a09 !important;
-            padding: 12px 28px;
-            border-radius: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            text-decoration: none;
-            font-size: 13px;
-            letter-spacing: 1px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: none;
-            box-shadow: 0 10px 20px rgba(162, 224, 67, 0.2);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .premium-btn:hover {
-            background: #fff;
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 15px 30px rgba(162, 224, 67, 0.3);
-        }
-
-        .trip-meta {
-            display: flex;
-            gap: 16px;
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .trip-meta i {
-            color: var(--accent);
-            opacity: 0.8;
-        }
-
-
-        .icon-text-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--muted);
-            font-weight: 600;
-        }
-        .icon-text-group i {
-            color: var(--accent);
-            font-size: 16px;
-        }
-
-        /* ── SWIPER CUSTOM ── */
         .swiper-button-next, .swiper-button-prev {
             color: var(--accent);
             background: rgba(44, 51, 42, 0.8);
@@ -647,7 +469,12 @@
             flex-shrink: 0;
         }
         .booking-bar-btn:hover { transform: scale(1.05); background: #8dc63f; }
-    </style>
+
+        /* Custom Scrollbar for Premium Feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--paper); }
+        ::-webkit-scrollbar-thumb { background: #2a2f3a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3a3f4a; }
     </style>
 </head>
 <body>
