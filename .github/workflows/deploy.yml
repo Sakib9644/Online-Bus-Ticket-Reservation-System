@@ -1,51 +1,19 @@
-name: Deploy via FTP
-
+name: Deploy project to our server
 on:
   push:
     branches:
-      - master  # Change this to 'master' if your default branch is named master
-
+      - main
 jobs:
-  deploy:
-    name: Build and Deploy
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
     runs-on: ubuntu-latest
-
     steps:
-      - name: 🚚 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 🐘 Setup PHP
-        uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@v2.1.0
         with:
-          php-version: '8.2'
-          extensions: mbstring, xml, ctype, iconv, mysql, zip
-          coverage: none
-
-      - name: 📦 Install Composer Dependencies
-        run: composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader
-
-      - name: 🟢 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: 🛠️ Build Assets (Laravel Mix)
-        run: |
-          npm install
-          npm run prod
-
-      - name: 🚀 Deploy via FTP
-        uses: SamKirschner/ftp-deploy-action@v4.3.5
+          fetch-depth: 2
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ftp.samadhan24.com
           username: samadhan@busticket.samadhan24.com
-          password: MQ435Ij;l5OJSGwl
-          server-dir: /  # Change this if you need to deploy to a specific folder like /public_html/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/tests/**
-            **/phpunit.xml
-            **/.env
-            **/storage/*.key
+          password: "MQ435Ij;l5OJSGwl"
