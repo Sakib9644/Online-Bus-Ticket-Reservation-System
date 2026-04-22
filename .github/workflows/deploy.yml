@@ -3,7 +3,7 @@ name: Deploy via FTP
 on:
   push:
     branches:
-      - main  # Change this to 'master' if your default branch is named master
+      - master  # Change this to 'master' if your default branch is named master
 
 jobs:
   deploy:
