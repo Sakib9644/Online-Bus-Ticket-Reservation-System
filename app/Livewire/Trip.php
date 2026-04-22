@@ -21,6 +21,7 @@ class Trip extends Component
     public $coachNumbers;
     public $busNames;
     public $perPage = 6;
+    public $showLogin = false;
 
     protected $listeners = [
         'load-more' => 'loadMore'

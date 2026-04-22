@@ -107,6 +107,8 @@ Route::get('/city/edit/{id}',[CityController::class,'cityEdit'])->name('admin.ci
 Route::put('/city/update/{id}',[CityController::class,'cityUpdate'])->name('admin.city.update');
 Route::get('/city/create', [CityController::class, 'create'])->name('admin.city.create');
 Route::post('/city/store', [CityController::class, 'store'])->name('admin.city.store');
+Route::get('/city/generate-image/{id}', [CityController::class, 'generateImage'])->name('admin.city.generate-image');
+Route::get('/city/generate-all', [CityController::class, 'generateAllMissing'])->name('admin.city.generate-all');
 
 // Driver
 Route::get('/driver/list', [DriverController::class, 'list'])->name('admin.driver');

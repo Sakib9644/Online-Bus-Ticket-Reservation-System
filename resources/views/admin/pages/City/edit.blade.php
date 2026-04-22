@@ -18,13 +18,26 @@
     @endif
 
     <div class="admin-form-card">
-        <form action="{{ route('admin.city.update', $city->id) }}" method="POST">
+        <form action="{{ route('admin.city.update', $city->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
             
             <div class="admin-form-group">
                 <label class="admin-label">Official City Name</label>
                 <input type="text" class="admin-input" value="{{ $city->name }}" name="name" placeholder="City Name" required>
+            </div>
+
+            <div class="admin-form-group" style="margin-top: 20px;">
+                <label class="admin-label">Destination Image (Natural/Landscape)</label>
+                
+                @if($city->image)
+                    <div style="margin-bottom: 12px; border-radius: 12px; overflow: hidden; width: 120px; height: 160px; border: 1px solid var(--border);">
+                        <img src="{{ url('/uploads/cities/'.$city->image) }}" alt="{{ $city->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                @endif
+
+                <input type="file" class="admin-input" name="image" accept="image/*" style="padding-top: 8px;">
+                <p style="color:#64748b; font-size:11px; margin-top:8px;">Recommended: 800x1200 high-quality nature photography.</p>
             </div>
 
             <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px; border-top:1px solid var(--border); padding-top:32px;">
