@@ -47,10 +47,10 @@ Route::post('user/payment/store/{id}',[UserPaymentController::class,'store'])->n
 
 // SSLCOMMERZ Start
 Route::get('/pay/{id}', [SslCommerzPaymentController::class, 'index'])->name('pay.sslcommerz');
-Route::post('/success', [SslCommerzPaymentController::class, 'success']);
-Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
-Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
-Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+Route::post('/success', [SslCommerzPaymentController::class, 'success'])->name('sslc.success');
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail'])->name('sslc.failure');
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel'])->name('sslc.cancel');
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn'])->name('sslc.ipn');
 //SSLCOMMERZ END
 
 

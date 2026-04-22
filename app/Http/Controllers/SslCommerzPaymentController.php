@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use AfzalSabbir\SSLaraCommerz\Library\SslCommerz\SslCommerzNotification;
+use Raziul\Sslcommerz\Facades\Sslcommerz;
 use App\Models\Booking;
 use App\Models\Payment;
 use App\Services\BookingExpiryService;
@@ -43,41 +43,7 @@ class SslCommerzPaymentController extends Controller
 
         $total_amount = $pendingBookings->sum('amount');
 
-        $post_data = array();
-        $post_data['total_amount'] = $total_amount;
-        $post_data['currency'] = "BDT";
-        $post_data['tran_id'] = uniqid();
-
-        # CUSTOMER INFORMATION
-        $post_data['cus_name'] = Auth::user()->name;
-        $post_data['cus_email'] = Auth::user()->email ?? 'customer@example.com';
-        $post_data['cus_add1'] = 'Customer Address';
-        $post_data['cus_add2'] = "";
-        $post_data['cus_city'] = "";
-        $post_data['cus_state'] = "";
-        $post_data['cus_postcode'] = "";
-        $post_data['cus_country'] = "Bangladesh";
-        $post_data['cus_phone'] = '8801XXXXXXXXX';
-        $post_data['cus_fax'] = "";
-
-        # SHIPMENT INFORMATION
-        $post_data['ship_name'] = "Store Test";
-        $post_data['ship_add1'] = "Dhaka";
-        $post_data['ship_add2'] = "Dhaka";
-        $post_data['ship_city'] = "Dhaka";
-        $post_data['ship_state'] = "Dhaka";
-        $post_data['ship_postcode'] = "1000";
-        $post_data['ship_phone'] = "";
-        $post_data['ship_country'] = "Bangladesh";
-
-        $post_data['shipping_method'] = "NO";
-        $post_data['product_name'] = "Bus Ticket";
-        $post_data['product_category'] = "Ticket";
-        $post_data['product_profile'] = "non-physical-goods";
-
-        # OPTIONAL PARAMETERS
-        $post_data['value_a'] = $id; // Store Comma-separated Booking IDs
-        $post_data['value_b'] = Auth::id();
+        $tran_id = uniqid();
 
         # Before going to initiate the payment order status need to update as Pending.
         DB::table('bookings')
@@ -86,13 +52,24 @@ class SslCommerzPaymentController extends Controller
                 'status' => 'Pending'
             ]);
 
-        $sslc = new SslCommerzNotification();
-        # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
-        $payment_options = $sslc->makePayment($post_data, 'hosted');
+        $response = Sslcommerz::setOrder($total_amount, $tran_id, 'Bus Ticket', 'Ticket')
+            ->setCustomer(
+                Auth::user()->name,
+                Auth::user()->email ?? 'customer@example.com',
+                '8801XXXXXXXXX',
+                'Customer Address'
+            )
+            ->makePayment([
+                'value_a' => $id,
+                'value_b' => Auth::id(),
+                'product_profile' => 'non-physical-goods',
+                'shipping_method' => 'NO',
+            ]);
 
-        if (!is_array($payment_options)) {
-            print_r($payment_options);
-            $payment_options = array();
+        if ($response->success()) {
+            return redirect($response->gatewayPageURL());
+        } else {
+            return redirect()->back()->with('error', $response->failedReason() ?? 'Payment initiation failed.');
         }
     }
 
@@ -111,8 +88,6 @@ class SslCommerzPaymentController extends Controller
         $booking_id = $request->input('value_a');
         $ids = explode(',', $booking_id);
 
-        $sslc = new SslCommerzNotification();
-
         $bookings = Booking::whereIn('id', $ids)->get();
 
         if ($bookings->isEmpty()) {
@@ -123,7 +98,7 @@ class SslCommerzPaymentController extends Controller
         $currentStatus = strtolower((string) $order_details->status);
 
         if ($currentStatus == 'pending') {
-            $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
+            $validation = Sslcommerz::validatePayment($request->all(), $tran_id, $amount, $currency);
 
             if ($validation == TRUE) {
                 $ticket_no = 'SB-' . date('y') . '-' . strtoupper(substr(md5(uniqid()), 0, 6));
@@ -229,8 +204,7 @@ class SslCommerzPaymentController extends Controller
             $expectedAmount = $bookings->sum('amount');
 
             if ($currentStatus == 'pending') {
-                $sslc = new SslCommerzNotification();
-                $validation = $sslc->orderValidate($request->all(), $tran_id, $expectedAmount, 'BDT');
+                $validation = Sslcommerz::validatePayment($request->all(), $tran_id, $expectedAmount, 'BDT');
                 if ($validation == TRUE) {
                     $ticket_no = 'SB-' . date('y') . '-' . strtoupper(substr(md5(uniqid()), 0, 6));
 

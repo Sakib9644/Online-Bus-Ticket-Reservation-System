@@ -1,26 +1,45 @@
 <?php
 
-// SSLCommerz configuration
+declare(strict_types=1);
+
+// config for Raziul/Sslcommerz
 
 return [
-    'projectPath' => env('PROJECT_PATH'),
-    // For Sandbox, use "https://sandbox.sslcommerz.com"
-    // For Live, use "https://securepay.sslcommerz.com"
-    'apiDomain' => env("SSLCZ_API_DOMAIN", "https://sandbox.sslcommerz.com"),
-    'apiCredentials' => [
-        'store_id' => env("SSLCZ_STORE_ID"),
-        'store_password' => env("SSLCZ_STORE_PASSWORD"),
+    /**
+     * Enable/Disable Sandbox mode
+     */
+    'sandbox' => env('SSLC_SANDBOX', true),
+
+    /**
+     * The API credentials given from SSLCommerz
+     */
+    'store' => [
+        'id' => env('SSLCZ_STORE_ID'),
+        'password' => env('SSLCZ_STORE_PASSWORD'),
+        'currency' => env('SSLC_STORE_CURRENCY', 'BDT'),
     ],
-    'apiUrl' => [
-        'make_payment' => "/gwprocess/v4/api.php",
-        'transaction_status' => "/validator/api/merchantTransIDvalidationAPI.php",
-        'order_validate' => "/validator/api/validationserverAPI.php",
-        'refund_payment' => "/validator/api/reundForm.php",
-        'refund_status' => "/validator/api/getRefundStat.php",
+
+    /**
+     * Route names for success/failure/cancel
+     */
+    'route' => [
+        'success' => 'sslc.success',
+        'failure' => 'sslc.failure',
+        'cancel' => 'sslc.cancel',
+        'ipn' => 'sslc.ipn',
     ],
-    'connect_from_localhost' => env("IS_LOCALHOST", true), // For Localhost, true. For Server, false
-    'success_url' => '/success',
-    'failed_url' => '/fail',
-    'cancel_url' => '/cancel',
-    'ipn_url' => '/ipn',
+
+    /**
+     * Product profile required from SSLC
+     * By default it is "general"
+     *
+     * AVAILABLE PROFILES
+     *  general
+     *  physical-goods
+     *  non-physical-goods
+     *  airline-tickets
+     *  travel-vertical
+     *  telecom-vertical
+     */
+    'product_profile' => 'general',
 ];
