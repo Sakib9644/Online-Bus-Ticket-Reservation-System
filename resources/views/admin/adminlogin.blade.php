@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Login – SwiftBus</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,7 +12,7 @@
             min-height: 100vh;
             background: #0d0d0d;
             display: flex; align-items: center; justify-content: center;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
             position: relative;
             overflow: hidden;
         }
@@ -53,7 +53,7 @@
             margin-bottom: 28px;
         }
         .admin-badge .dot { width: 6px; height: 6px; background: #ff4d1c; border-radius: 50%; }
-        h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px; color: #fff; margin-bottom: 8px; }
+        h1 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 32px; color: #fff; margin-bottom: 8px; }
         .subtitle { color: #444; font-size: 14px; margin-bottom: 36px; }
 
         .form-label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #444; margin-bottom: 8px; }
@@ -65,7 +65,7 @@
             border: 1px solid #2a2a2a;
             border-radius: 10px;
             padding: 13px 14px 13px 42px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 14px;
             color: #fff;
             outline: none;
@@ -78,7 +78,7 @@
             width: 100%; margin-top: 8px;
             background: #ff4d1c; color: #fff; border: none;
             border-radius: 10px; padding: 14px;
-            font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+            font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700;
             cursor: pointer; transition: background .2s, transform .15s;
         }
         .submit-btn:hover { background: #e03a0e; transform: translateY(-1px); }

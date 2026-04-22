@@ -1,12 +1,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif; background: #121611; color: #ffffff; padding: 40px 20px; }
+body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; background: #121611; color: #ffffff; padding: 40px 20px; }
 
 /* LAYOUT WRAPPER */
 .auth-container { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 32px; }
 
 /* TOP HEADER PANEL (Merged from Left Panel) */
 .auth-header { text-align: center; position: relative; }
-.auth-brand { display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: #fff; text-decoration: none; margin-bottom: 32px; }
+.auth-brand { display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 24px; color: #fff; text-decoration: none; margin-bottom: 32px; }
 .auth-brand-icon { width: 44px; height: 44px; background: #a2e043; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #0d1a09; font-size: 20px; box-shadow: 0 0 20px rgba(162, 224, 67, 0.2); }
 .auth-welcome h2 { font-weight: 800; font-size: 36px; color: #fff; line-height: 1.1; margin-bottom: 16px; letter-spacing: -1px; }
 .auth-welcome h2 span { color: #a2e043; }
@@ -25,7 +25,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; align-items: ce
 .form-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8a9688; margin-bottom: 8px; opacity: 0.8; }
 .form-field { position: relative; }
 .form-field i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #555; font-size: 14px; }
-.form-field input { width: 100%; background: #121611; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px 16px 14px 44px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: #ffffff; outline: none; transition: all .2s; }
+.form-field input { width: 100%; background: #121611; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px 16px 14px 44px; font-family: 'Poppins', sans-serif; font-size: 14px; color: #ffffff; outline: none; transition: all .2s; }
 .form-field input:focus { border-color: #a2e043; background: #1c201b; box-shadow: 0 0 0 4px rgba(162,224,67,0.1); }
 .form-field input::placeholder { color: #444; }
 

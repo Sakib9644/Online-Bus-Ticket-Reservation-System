@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login – SwiftBus</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('frontend/css/auth.css') }}">
 </head>
@@ -15,11 +15,11 @@
                 <div class="auth-brand-icon"><i class="fas fa-bus-simple"></i></div>
                 SwiftBus
             </a>
-            
+
             <div class="auth-welcome">
                 <h2>Welcome<br>back to<span> SwiftBus</span></h2>
                 <p>Your journey continues. Sign in to manage your bookings.</p>
-                
+
                 <div class="auth-meta">
                     <span class="meta-badge">Upcoming trips</span>
                     <span class="meta-badge">Ticket management</span>

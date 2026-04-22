@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SwiftBus – Ticket Reservation</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link href="{{ url('frontend/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
@@ -21,13 +21,13 @@
             --card-bg: #14171d; /* Premium Midnight Indigo */
             --accent: #a2e043; /* SwiftBus Lime Green */
             --accent-hover: #b4f056;
-            
+
             /* UI Elements */
             --ink: #ffffff;
             --muted: #8e99aa;
             --border: rgba(255, 255, 255, 0.08);
             --border-hover: rgba(162, 224, 67, 0.3);
-            
+
             /* Seat Status (Legacy support + Redesign) */
             --seat-available: #3871ce;
             --seat-selected: #51a540;
@@ -40,14 +40,14 @@
         body {
             background: var(--paper);
             color: var(--ink);
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-size: 15px;
             line-height: 1.6;
             min-height: 100vh;
         }
 
         h1, h2, h3, h4, h5, h6,
-        .syne { font-family: 'Syne', sans-serif; }
+        .syne, .sb-brand, .sb-logo-text { font-family: 'Poppins', sans-serif; font-weight: 700; }
 
         /* ── NAV ── */
         .sb-nav {
@@ -60,7 +60,7 @@
             border-bottom: 1px solid var(--border);
         }
         .sb-brand {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-weight: 800;
             font-size: 22px;
             color: #fff;
@@ -75,7 +75,7 @@
             display: flex; align-items: center; justify-content: center;
             color: #000; font-size: 16px;
         }
-        
+
         .sb-links {
             display: flex; align-items: center; gap: 8px;
             list-style: none;
@@ -181,8 +181,8 @@
             cursor: pointer;
         }
         .sb-search-input:hover { border-color: rgba(162, 224, 67, 0.4); }
-        .sb-search-input:focus { 
-            border-color: var(--accent); 
+        .sb-search-input:focus {
+            border-color: var(--accent);
             background: rgba(44, 51, 42, 0.8);
             box-shadow: 0 0 15px rgba(162, 224, 67, 0.2);
         }
@@ -286,7 +286,7 @@
         .seat-item:hover .seat-visual { filter: brightness(1.2); transform: translateY(-1px); }
 
         /* Empty / Available (3D Blue) */
-        .seat-item.available .seat-visual { 
+        .seat-item.available .seat-visual {
             background: linear-gradient(180deg, #3871ce 0%, #2251a3 100%);
             border: 1px solid #1a3c82;
             box-shadow: inset 0 2px 2px rgba(255,255,255,0.3), 0 5px 8px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.3);
@@ -326,8 +326,8 @@
             padding: 10px 0;
         }
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--muted); }
-        .legend-box { 
-            width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.6); 
+        .legend-box {
+            width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.6);
         }
         .legend-box.empty { background: linear-gradient(180deg, #3871ce 0%, #2251a3 100%); border: 1px solid #1a3c82; box-shadow: inset 0 1px 1px rgba(255,255,255,0.3); }
         .legend-box.chosen { background: linear-gradient(180deg, #51a540 0%, #307a22 100%); border: 1px solid #205c14; box-shadow: inset 0 1px 1px rgba(255,255,255,0.4); }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SwiftBus Admin</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link href="{{ url('backend/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ url('backend/css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -29,7 +29,7 @@
             --muted: #64748b;
         }
 
-        body { background: var(--paper); font-family: 'Inter', 'DM Sans', sans-serif; color: var(--ink); line-height: 1.5; }
+        body { background: var(--paper); font-family: 'Poppins', sans-serif; color: var(--ink); line-height: 1.5; }
 
         /* SIDEBAR */
         #sidebar {
@@ -48,7 +48,7 @@
             background: rgba(0,0,0,0.1);
         }
         .sb-logo-icon { width: 34px; height: 34px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 15px; flex-shrink: 0; }
-        .sb-logo-text { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 18px; color: #fff; letter-spacing: -0.5px; }
+        .sb-logo-text { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; color: #fff; letter-spacing: -0.5px; }
 
         .nav-section { padding: 24px 16px 8px; }
         .nav-section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; font-weight: 700; padding: 0 12px; margin-bottom: 12px; }
@@ -180,14 +180,14 @@
         .admin-input { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1.5px solid var(--border); background: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--ink); transition: all 0.2s; outline: none; }
         .admin-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
         .admin-input::placeholder { color: #94a3b8; }
-        
+
         .admin-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; background-size: 16px; padding-right: 40px; }
 
         .admin-form-card { background: #fff; border: 1.5px solid #ffffff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
 
         /* ALERTS */
         .alert-success-admin { background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; padding: 12px 16px; color: #2e7d32; font-size: 14px; margin-bottom: 20px; }
-        
+
         /* DATA TABLES OVERRIDES */
         .dataTables_wrapper .dataTables_paginate .paginate_button { padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border) !important; background: #fff !important; margin-left: 4px; }
         .dataTables_wrapper .dataTables_paginate .paginate_button.current { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
