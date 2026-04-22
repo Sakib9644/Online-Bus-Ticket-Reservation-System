@@ -141,25 +141,6 @@
                         <span style="font-weight:800; color:var(--accent); font-size: 20px;">৳{{ $totalPrice }}</span>
                     </div>
 
-                    <div style="margin-bottom: 24px;">
-                        <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; font-weight: 800; margin-bottom: 12px; display: block;">Payment Method</label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <label style="cursor: pointer;">
-                                <input type="radio" wire:model.live="paymentMethod" value="online" style="display: none;">
-                                <div style="padding: 12px 8px; border-radius: 12px; border: 1px solid {{ $paymentMethod == 'online' ? 'var(--accent)' : 'var(--border)' }}; background: {{ $paymentMethod == 'online' ? 'rgba(162, 224, 67, 0.1)' : 'transparent' }}; text-align: center; transition: all 0.2s;">
-                                    <i class="fa fa-credit-card" style="display: block; font-size: 16px; margin-bottom: 6px; color: {{ $paymentMethod == 'online' ? 'var(--accent)' : 'var(--muted)' }};"></i>
-                                    <span style="font-size: 10px; font-weight: 800; color: {{ $paymentMethod == 'online' ? '#fff' : 'var(--muted)' }}; text-transform: uppercase;">Online</span>
-                                </div>
-                            </label>
-                            <label style="cursor: pointer;">
-                                <input type="radio" wire:model.live="paymentMethod" value="manual" style="display: none;">
-                                <div style="padding: 12px 8px; border-radius: 12px; border: 1px solid {{ $paymentMethod == 'manual' ? 'var(--accent)' : 'var(--border)' }}; background: {{ $paymentMethod == 'manual' ? 'rgba(162, 224, 67, 0.1)' : 'transparent' }}; text-align: center; transition: all 0.2s;">
-                                    <i class="fa fa-money-bill-wave" style="display: block; font-size: 16px; margin-bottom: 6px; color: {{ $paymentMethod == 'manual' ? 'var(--accent)' : 'var(--muted)' }};"></i>
-                                    <span style="font-size: 10px; font-weight: 800; color: {{ $paymentMethod == 'manual' ? '#fff' : 'var(--muted)' }}; text-transform: uppercase;">Manual</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
 
                     <button wire:click="book" wire:loading.attr="disabled" class="sb-btn-full" style="background: var(--accent); width: 100%; border: none; padding: 16px; border-radius: 12px; font-weight: 800; color: #0d1a09; font-size: 16px; box-shadow: 0 8px 25px rgba(162, 224, 67, 0.2); transition: all 0.3s;">
                         <span wire:loading.remove>Confirm Booking</span>

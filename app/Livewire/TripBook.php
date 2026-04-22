@@ -124,13 +124,8 @@ class TripBook extends Component
                 }
             });
 
-            if ($this->paymentMethod == 'online') {
-                $idsString = implode(',', $bookingIds);
-                return redirect()->route('user.payment', ['id' => $idsString]);
-            }
-
-            $this->dispatch('notify', type: 'success', message: 'Reservation created! Please complete payment manually.');
-            return redirect()->route('booking.details');
+            $idsString = implode(',', $bookingIds);
+            return redirect()->route('user.payment', ['id' => $idsString]);
         } catch (\Exception $e) {
             $this->dispatch('notify', type: 'error', message: $e->getMessage());
             $this->searchSeat(); // Refresh to show taken seats
