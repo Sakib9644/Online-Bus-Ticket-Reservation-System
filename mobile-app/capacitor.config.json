@@ -1,0 +1,9 @@
+{
+  "appId": "com.swiftbus.app",
+  "appName": "SwiftBus",
+  "webDir": "www",
+  "server": {
+    "url": "https://busticket.samadhan24.com",
+    "cleartext": true
+  }
+}

@@ -94,7 +94,7 @@
                             @foreach ($group->take(2) as $seat)
                                 @php $isBooked = $booked->contains('seat_id', $seat->id); @endphp
                                 <label class="seat-item {{ $isBooked ? 'booked' : 'available' }}" title="Seat {{ $seat->name }}">
-                                    <input type="checkbox" value="{{ $seat->id }}" wire:model="selectedSeats" @if($isBooked) disabled @endif>
+                                    <input type="checkbox" value="{{ $seat->id }}" wire:model.live="selectedSeats" @if($isBooked) disabled @endif>
                                     <span class="seat-visual" style="font-size: 13px;">{{ $isBooked ? '✖' : $seat->name }}</span>
                                 </label>
                             @endforeach
@@ -104,7 +104,7 @@
                             @foreach ($group->slice(2) as $seat)
                                 @php $isBooked = $booked->contains('seat_id', $seat->id); @endphp
                                 <label class="seat-item {{ $isBooked ? 'booked' : 'available' }}" title="Seat {{ $seat->name }}">
-                                    <input type="checkbox" value="{{ $seat->id }}" wire:model="selectedSeats" @if($isBooked) disabled @endif>
+                                    <input type="checkbox" value="{{ $seat->id }}" wire:model.live="selectedSeats" @if($isBooked) disabled @endif>
                                     <span class="seat-visual" style="font-size: 13px;">{{ $isBooked ? '✖' : $seat->name }}</span>
                                 </label>
                             @endforeach
