@@ -210,7 +210,6 @@
                     </div>
                     @endforeach
                 </div>
-                <!-- Pagination -->
                 <div class="swiper-pagination"></div>
             </div>
 
