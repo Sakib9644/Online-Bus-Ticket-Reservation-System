@@ -22,7 +22,7 @@ class GeminiService
         if ($this->apiKey) {
             $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" . $this->apiKey;
             $response = Http::post($url, [
-                "contents" => [["parts" => [["text" => "Return a comma-separated list of 10 specific keywords for a real-world high-quality photograph representing the actual historical landmarks, ancient architecture, and heritage sites of {$destination}, Bangladesh. Focus on historical authenticity. Return ONLY the words."]]]]
+                "contents" => [["parts" => [["text" => "Return a comma-separated list of 10 specific keywords for a real-world high-quality photograph representing the actual ancient architecture, palaces (Rajbari), Zamindar Bari, and historical monuments of the {$destination} district, Bangladesh. Focus on historical buildings and ruins. Return ONLY the words."]]]]
             ]);
 
             if ($response->successful()) {
@@ -42,7 +42,7 @@ class GeminiService
      */
     public function generateVisualDescription($destination)
     {
-        $promptText = "First, identify the most famous historical landmark or ancient heritage site in the {$destination} district, Bangladesh. Then, provide a 50-word visual description of that specific place for a documentary photographer. Focus on its unique architectural features, weathered textures, and natural surroundings. Describe the scene as it would look through a camera lens in real life. NO humans. Return only the description.";
+        $promptText = "Identify a specific, world-famous historical monument in {$destination}, Bangladesh (e.g., Lalbagh Fort, Ahsan Manzil, Sixty Dome Mosque). Provide a 50-word visual description focusing ENTIRELY on its ancient Mughal or Colonial architecture, red brickwork, ornate domes, and historical grandeur. ABSOLUTELY NO modern apartment buildings, NO generic city streets, NO modern canals, and NO modern vehicles. The image must look like a National Geographic heritage feature. NO humans. Return only the description.";
 
         if ($this->apiKey) {
             $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" . $this->apiKey;
@@ -72,7 +72,7 @@ class GeminiService
             $response = Http::timeout(60)->post($url, [
                 "instances" => [
                     [
-                        "prompt" => "A professional, high-resolution RAW photograph of the historical site in {$destination}, Bangladesh: {$description}. The image must capture the authentic architectural details, weathered surfaces, and natural environment of this specific landmark. Shot on 35mm film, documentary style, realistic natural lighting. NO digital art, NO vibrant filters, NO CGI, NO artificial saturation. National Geographic documentary photography."
+                        "prompt" => "A majestic RAW photograph of the specific historical monument in {$destination}, Bangladesh: {$description}. FOCUS: Ancient Mughal architecture, ornate red bricks, domes, and heritage masonry. FORBIDDEN: No modern buildings, No apartments, No skyscrapers, No generic streets, No modern trash, No modern boats, No modern vehicles. This must be a clean, professional heritage site photograph. Shot on 35mm film, realistic natural lighting. National Geographic style."
                     ]
                 ],
                 "parameters" => [
