@@ -142,11 +142,11 @@ class CityController extends Controller
             return false;
         }
 
-        // Generate actual image URL using Gemini (with DALL-E 3 fallback for quality)
+        // Generate actual image URL using Gemini Imagen 3 (Exclusively)
         $imageUrl = $this->gemini->generateImage($city->name);
 
         if (empty($imageUrl)) {
-            Log::error("DALL-E failed to generate image URL for {$city->name}");
+            Log::error("Gemini failed to generate image URL for {$city->name}");
             return false;
         }
 
@@ -197,7 +197,7 @@ class CityController extends Controller
                 ]);
                 return true;
             } else {
-                Log::warning("Failed to download AI image from OpenAI URL: {$imageUrl}");
+                Log::warning("Failed to download AI image from Gemini URL: {$imageUrl}");
             }
         } catch (\Exception $e) {
             Log::error('Image generation failed for ' . $city->name . ': ' . $e->getMessage());

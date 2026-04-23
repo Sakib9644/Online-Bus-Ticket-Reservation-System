@@ -15,15 +15,14 @@ class GeminiService
     }
 
     /**
-     * Generate keywords for a destination using Gemini or OpenAI fallback
+     * Generate keywords for a destination focusing on historical significance
      */
     public function generateKeywords($destination)
     {
-        // Try Gemini first
         if ($this->apiKey) {
             $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" . $this->apiKey;
             $response = Http::post($url, [
-                "contents" => [["parts" => [["text" => "Return a comma-separated list of 10 specific keywords for a real-world high-quality photograph representing the actual landscape and landmarks of {$destination}, Bangladesh. Focus on geographical authenticity. Return ONLY the words."]]]]
+                "contents" => [["parts" => [["text" => "Return a comma-separated list of 10 specific keywords for a real-world high-quality photograph representing the actual historical landmarks, ancient architecture, and heritage sites of {$destination}, Bangladesh. Focus on historical authenticity. Return ONLY the words."]]]]
             ]);
 
             if ($response->successful()) {
@@ -31,31 +30,19 @@ class GeminiService
             }
             
             if ($response->status() === 403) {
-                Log::warning("Gemini API Key reported as LEAKED. Please update your GEMINI_API_KEY in .env.");
+                Log::warning("Gemini API Key reported as LEAKED or Invalid. Please update your GEMINI_API_KEY in .env.");
             }
         }
 
-        // Fallback to OpenAI if Gemini fails
-        $openaiKey = config('services.openai.key');
-        if ($openaiKey) {
-            $response = Http::withHeaders(['Authorization' => 'Bearer ' . $openaiKey])
-                ->post("https://api.openai.com/v1/chat/completions", [
-                    "model" => "gpt-4o-mini",
-                    "messages" => [["role" => "user", "content" => "List 10 comma-separated keywords for a realistic, non-artificial photograph of {$destination}, Bangladesh. Focus on actual geography."]]
-                ]);
-            if ($response->successful()) {
-                return $response->json('choices.0.message.content');
-            }
-        }
-
-        return "bangladesh,landscape,authentic,{$destination}";
+        return "bangladesh,history,heritage,landmark,{$destination}";
     }
 
     /**
+     * Generate a visual description focusing on a specific historical landmark
      */
     public function generateVisualDescription($destination)
     {
-        $promptText = "Describe the authentic real-world geography, natural features, and actual landmarks of {$destination}, Bangladesh for a documentary photographer. Focus on realistic textures, honest representation, and genuine lighting conditions. Avoid any 'cinematic' or 'artistic' language. Describe the scene as it would look through a camera lens in real life. NO humans. 50 words.";
+        $promptText = "First, identify the most famous historical landmark or ancient heritage site in the {$destination} district, Bangladesh. Then, provide a 50-word visual description of that specific place for a documentary photographer. Focus on its unique architectural features, weathered textures, and natural surroundings. Describe the scene as it would look through a camera lens in real life. NO humans. Return only the description.";
 
         if ($this->apiKey) {
             $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" . $this->apiKey;
@@ -68,20 +55,7 @@ class GeminiService
             }
         }
 
-        // Fallback to OpenAI
-        $openaiKey = config('services.openai.key');
-        if ($openaiKey) {
-            $response = Http::withHeaders(['Authorization' => 'Bearer ' . $openaiKey])
-                ->post("https://api.openai.com/v1/chat/completions", [
-                    "model" => "gpt-4o-mini",
-                    "messages" => [["role" => "user", "content" => $promptText]]
-                ]);
-            if ($response->successful()) {
-                return $response->json('choices.0.message.content');
-            }
-        }
-
-        return "A realistic, high-resolution photograph of the natural landscape in {$destination}, Bangladesh, capturing authentic textures and natural sunlight.";
+        return "A realistic, high-resolution photograph of a major historical landmark in the {$destination} district, Bangladesh, capturing ancient textures and natural sunlight.";
     }
 
     /**
@@ -98,7 +72,7 @@ class GeminiService
             $response = Http::timeout(60)->post($url, [
                 "instances" => [
                     [
-                        "prompt" => "A 100% authentic, unedited RAW photograph of {$destination}, Bangladesh. {$description}. Shot on 35mm film, documentary style, realistic natural lighting, authentic colors. This must look like a real-world photo taken by a traveler, NOT a digital render. Sharp details, natural atmospheric haze, NO vibrant filters, NO excessive saturation, NO CGI, NO digital art. National Geographic style."
+                        "prompt" => "A professional, high-resolution RAW photograph of the historical site in {$destination}, Bangladesh: {$description}. The image must capture the authentic architectural details, weathered surfaces, and natural environment of this specific landmark. Shot on 35mm film, documentary style, realistic natural lighting. NO digital art, NO vibrant filters, NO CGI, NO artificial saturation. National Geographic documentary photography."
                     ]
                 ],
                 "parameters" => [
@@ -123,43 +97,17 @@ class GeminiService
     }
 
     /**
-     * Main method to generate an image URL or Base64
+     * Main method to generate an image URL or Base64 (Exclusively Gemini)
      */
     public function generateImage($destination)
     {
-        // Try Gemini Imagen 3 first as requested
+        // Use Gemini Imagen 3 as requested
         $imagenData = $this->generateImagen3($destination);
         if ($imagenData) {
             return $imagenData;
         }
 
-        // Fallback to DALL-E 3
-        $description = $this->generateVisualDescription($destination);
-        $openaiKey = config('services.openai.key');
-
-        if ($openaiKey) {
-            try {
-                $response = Http::withHeaders(['Authorization' => 'Bearer ' . $openaiKey])
-                    ->post("https://api.openai.com/v1/images/generations", [
-                        "model" => "dall-e-3",
-                        "prompt" => "An ultra-realistic, professional DSLR raw photograph of the natural landscape and city view of {$destination}, Bangladesh. {$description}. The image must look like a genuine, unprocessed photo taken with a high-end camera. Authentic natural colors, realistic textures, natural sunlight. NO digital art, NO CGI, NO 3D render, NO illustrations, NO filters. National Geographic documentary style.",
-                        "n" => 1,
-                        "size" => "1024x1024",
-                        "quality" => "hd",
-                        "style" => "natural"
-                    ]);
-
-                if ($response->successful()) {
-                    return $response->json('data.0.url');
-                }
-                
-                Log::error("DALL-E image generation failed: " . $response->body());
-            } catch (\Exception $e) {
-                Log::error("DALL-E Generation Error: " . $e->getMessage());
-            }
-        }
-
-        // Final fallback
+        // Final fallback to a generic search if Gemini fails (No OpenAI)
         $keywords = $this->generateKeywords($destination);
         $encodedKeywords = urlencode(str_replace(',', ' ', $keywords));
         return "https://loremflickr.com/1200/800/{$encodedKeywords}/all";
