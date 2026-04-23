@@ -146,7 +146,7 @@ class CityController extends Controller
         $imageUrl = $this->gemini->generateImage($city->name);
 
         if (empty($imageUrl)) {
-            Log::error("Gemini failed to generate image URL for {$city->name}");
+            Log::error("Gemini service returned empty image path for {$city->name}");
             return false;
         }
 
@@ -159,12 +159,12 @@ class CityController extends Controller
                     $imageContent = base64_decode($data[1]);
                 }
             } else {
-                // Handle URL (DALL-E 3)
-                $response = Http::timeout(60)->get($imageUrl);
+                // Handle URL (Fallback images)
+                $response = Http::timeout(120)->get($imageUrl);
                 if ($response->successful()) {
                     $imageContent = $response->body();
                 } else {
-                    Log::warning("Failed to download AI image from URL: {$imageUrl}");
+                    Log::warning("Failed to download image from URL: {$imageUrl}");
                 }
             }
 
@@ -174,7 +174,9 @@ class CityController extends Controller
                 $isDuplicate = City::where('image_hash', $hash)->exists();
 
                 if ($isDuplicate) {
-                    Log::info("Duplicate AI image detected for {$city->name}, retrying...");
+                    Log::info("Duplicate AI image detected for {$city->name}, retrying... (Attempt: " . ($retryCount + 1) . ")");
+                    // Add a slight delay to help avoid getting the same image back from some APIs
+                    sleep(1);
                     return $this->performImageGeneration($city, $retryCount + 1);
                 }
 

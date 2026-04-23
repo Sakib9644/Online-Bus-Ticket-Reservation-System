@@ -102,6 +102,7 @@ class GeminiService
      */
     public function generateImage($destination)
     {
+        Log::info("Starting image generation for: {$destination}");
         // Use Gemini Imagen 3 as requested
         $imagenData = $this->generateImagen3($destination);
         if ($imagenData) {
