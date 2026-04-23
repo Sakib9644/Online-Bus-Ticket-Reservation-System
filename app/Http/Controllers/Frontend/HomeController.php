@@ -44,9 +44,9 @@ class HomeController extends Controller
             'Cox\'s Bazar' => url('/uploads/cities/coxs_bazar.png'), 
             'Rangamati' => url('/uploads/cities/rangamati.png'), 
             'Bandarban' => url('/uploads/cities/bandarban.png'), 
-            'Cumilla' => 'https://images.unsplash.com/photo-1541123437809-9fd124f52191?q=80&w=800', 
-            'Bogura' => 'https://images.unsplash.com/photo-1629906604084-25b443310023?q=80&w=800', 
-            'Noakhali' => 'https://images.unsplash.com/photo-1470252649358-96bf518a442d?q=80&w=800' 
+            'Cumilla' => url('/uploads/cities/cumilla.png'), 
+            'Bogura' => url('/uploads/cities/bogura.png'), 
+            'Noakhali' => url('/uploads/cities/noakhali.png') 
         ];
 
         $descMap = [

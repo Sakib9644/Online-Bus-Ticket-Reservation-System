@@ -5,17 +5,16 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use Illuminate\Http\Request;
-use App\Services\OpenAIService;
+use App\Services\GeminiService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class CityController extends Controller
 {
-    protected $openai;
-
-    public function __construct(OpenAIService $openai)
+    protected $gemini;
+    public function __construct(GeminiService $gemini)
     {
-        $this->openai = $openai;
+        $this->gemini = $gemini;
     }
 
     public function list(Request $request)
@@ -143,8 +142,8 @@ class CityController extends Controller
             return false;
         }
 
-        // Generate actual image URL using OpenAI DALL-E 3
-        $imageUrl = $this->openai->generateImagePrompt($city->name);
+        // Generate actual image URL using Gemini (with DALL-E 3 fallback for quality)
+        $imageUrl = $this->gemini->generateImage($city->name);
 
         if (empty($imageUrl)) {
             Log::error("DALL-E failed to generate image URL for {$city->name}");
@@ -152,12 +151,24 @@ class CityController extends Controller
         }
 
         try {
-            // Download the generated image from OpenAI
-            $response = Http::timeout(60)->get($imageUrl);
+            $imageContent = null;
+            if (str_starts_with($imageUrl, 'data:image')) {
+                // Handle base64 data (Gemini Imagen)
+                $data = explode(',', $imageUrl);
+                if (isset($data[1])) {
+                    $imageContent = base64_decode($data[1]);
+                }
+            } else {
+                // Handle URL (DALL-E 3)
+                $response = Http::timeout(60)->get($imageUrl);
+                if ($response->successful()) {
+                    $imageContent = $response->body();
+                } else {
+                    Log::warning("Failed to download AI image from URL: {$imageUrl}");
+                }
+            }
 
-            if ($response->successful()) {
-                $imageContent = $response->body();
-
+            if ($imageContent) {
                 // Calculate md5 hash for uniqueness
                 $hash = md5($imageContent);
                 $isDuplicate = City::where('image_hash', $hash)->exists();
