@@ -28,13 +28,13 @@ class GeminiService
             if ($response->successful()) {
                 return $response->json('candidates.0.content.parts.0.text');
             }
-            
+
             if ($response->status() === 403) {
                 Log::warning("Gemini API Key reported as LEAKED or Invalid. Please update your GEMINI_API_KEY in .env.");
             }
         }
 
-        return "bangladesh,history,heritage,landmark,{$destination}";
+        return "bangladesh,heritage,architecture,ancient,landmark,{$destination}";
     }
 
     /**
@@ -63,7 +63,8 @@ class GeminiService
      */
     public function generateImagen3($destination)
     {
-        if (!$this->apiKey) return null;
+        if (!$this->apiKey)
+            return null;
 
         $description = $this->generateVisualDescription($destination);
         $url = "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=" . $this->apiKey;
@@ -87,7 +88,7 @@ class GeminiService
                     return 'data:' . $response->json('predictions.0.mimeType', 'image/png') . ';base64,' . $base64;
                 }
             }
-            
+
             Log::error("Gemini Imagen 3 failed: " . $response->body());
         } catch (\Exception $e) {
             Log::error("Gemini Imagen 3 Error: " . $e->getMessage());
@@ -109,7 +110,8 @@ class GeminiService
 
         // Final fallback to a generic search if Gemini fails (No OpenAI)
         $keywords = $this->generateKeywords($destination);
-        $encodedKeywords = urlencode(str_replace(',', ' ', $keywords));
+        $safeKeywords = "bangladesh," . str_replace(',', ',bangladesh,', $keywords);
+        $encodedKeywords = urlencode(str_replace(',', ' ', $safeKeywords));
         return "https://loremflickr.com/1200/800/{$encodedKeywords}/all";
     }
 }
