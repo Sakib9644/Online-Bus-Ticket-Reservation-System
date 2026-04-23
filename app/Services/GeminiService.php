@@ -52,7 +52,6 @@ class GeminiService
     }
 
     /**
-     * Generate a highly descriptive visual prompt for maximum realism
      */
     public function generateVisualDescription($destination)
     {
