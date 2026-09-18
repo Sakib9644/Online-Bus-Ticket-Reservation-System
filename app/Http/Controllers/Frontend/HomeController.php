@@ -14,7 +14,8 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $buses = Bus::all();
+        return redirect()->route('frontend.reserve');
+       
         $locations = Location::all();
         
         $divisionNames = ['Dhaka', 'Chattogram', 'Rajshahi', 'Khulna', 'Barishal', 'Sylhet', 'Rangpur', 'Mymensingh'];

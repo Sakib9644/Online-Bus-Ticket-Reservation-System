@@ -60,6 +60,12 @@ class Trip extends Component
         $this->perPage = 6;
     }
 
+    public function resetFilters()
+    {
+        $this->reset(['from', 'to', 'date', 'time', 'type', 'coach_no', 'bus_name']);
+        $this->perPage = 6;
+    }
+
     public function render()
     {
         $query = ModelsTrip::query();
