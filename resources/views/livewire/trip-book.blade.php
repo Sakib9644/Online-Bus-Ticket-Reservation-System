@@ -238,7 +238,9 @@
             <div style="background: var(--card-bg); padding: 20px 24px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px;">
                 <label style="font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; display: block; margin-bottom: 8px;">Departure Date</label>
                 <div style="font-weight: 800; font-size: 16px; color: #fff; margin-bottom: 4px;">{{ date('D, d M Y', strtotime($trip->date)) }}</div>
-                <div style="font-size: 13px; color: var(--muted);">{{ $trip->time }} (Scheduled)</div>
+                <div style="font-size: 13px; color: var(--muted);">
+                    {{ $trip->time }}@if(!empty($trip->arrival_time)) <span style="color:var(--accent);">→</span> {{ $trip->arrival_time }}@endif (Scheduled)
+                </div>
             </div>
 
             @if (count($seats) > 0)

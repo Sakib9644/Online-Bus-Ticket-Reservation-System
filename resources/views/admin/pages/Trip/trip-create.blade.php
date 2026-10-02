@@ -59,16 +59,21 @@
                 </div>
 
                 <div class="admin-form-group">
-                    <label class="admin-label">Departure Time</label>
-                    <input type="text" class="admin-input timepicker" required name="time" placeholder="Choose time (e.g. 10:30 AM)">
-                </div>
-
-                <div class="admin-form-group" style="grid-column: span 2;">
                     <label class="admin-label">Ticket Fare (BDT)</label>
                     <div style="position:relative;">
                         <span style="position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--muted); font-weight:700;">৳</span>
                         <input required name="bus_fare" type="number" class="admin-input" placeholder="0.00" style="padding-left:32px;">
                     </div>
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-label">Departure Time</label>
+                    <input type="text" class="admin-input timepicker" required name="time" placeholder="Choose departure time (e.g. 12:00 PM)">
+                </div>
+
+                <div class="admin-form-group">
+                    <label class="admin-label">Arrival Time (Destination)</label>
+                    <input type="text" class="admin-input timepicker" name="arrival_time" placeholder="Choose arrival time (e.g. 05:00 PM)">
                 </div>
 
             </div>

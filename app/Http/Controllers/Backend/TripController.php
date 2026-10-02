@@ -34,9 +34,13 @@ class TripController extends Controller
                 })
                 ->addColumn('schedule', function($row){
                     $date = \Carbon\Carbon::parse($row->date)->format('d M, Y');
+                    $timeDisplay = e($row->time);
+                    if (!empty($row->arrival_time)) {
+                        $timeDisplay .= ' <span style="color:#64748b; font-size:11px;">→</span> <span style="color:#059669; font-weight:600;">' . e($row->arrival_time) . '</span>';
+                    }
                     return '<div>
                                 <div style="font-weight:700; color:#0f172a; font-size:13px;">'.$date.'</div>
-                                <div style="font-size:12px; color:var(--muted); margin-top:2px;">'.$row->time.'</div>
+                                <div style="font-size:12px; color:var(--muted); margin-top:2px;">'.$timeDisplay.'</div>
                             </div>';
                 })
                 ->addColumn('fare_display', function($row){
@@ -74,6 +78,7 @@ class TripController extends Controller
             'bus_id' => 'required',
             'date' => 'required|date',
             'time' => 'required',
+            'arrival_time' => 'nullable|string',
             'bus_fare' => 'required|numeric',
         ]);
 
@@ -83,6 +88,7 @@ class TripController extends Controller
             'bus_id' => $request->bus_id,
             'date' => $request->date,
             'time' => $request->time,
+            'arrival_time' => $request->arrival_time,
             'fare' => $request->bus_fare,
         ]);
         return redirect()->route('admin.trip')->with('message', 'Trip created successfully!');
@@ -102,12 +108,23 @@ class TripController extends Controller
     {
         $trip = Trip::find($id);
         if ($trip) {
+            $request->validate([
+                'location_from' => 'required',
+                'location_to' => 'required',
+                'bus_id' => 'required',
+                'date' => 'required|date',
+                'time' => 'required',
+                'arrival_time' => 'nullable|string',
+                'bus_fare' => 'required|numeric',
+            ]);
+
             $trip->update([
                 'location_from' => $request->location_from,
                 'location_to' => $request->location_to,
                 'bus_id' => $request->bus_id,
                 'date' => $request->date,
                 'time' => $request->time,
+                'arrival_time' => $request->arrival_time,
                 'fare' => $request->bus_fare,
             ]);
             return redirect()->route('admin.trip')->with('success', 'Trip Updated!');

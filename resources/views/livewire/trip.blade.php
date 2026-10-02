@@ -610,14 +610,36 @@
                                 $timeRaw = $trip->time;
                                 preg_match('/(\d{1,2}:\d{2}\s?(AM|PM))/i', $timeRaw, $matches);
                                 $timeToParse = $matches[0] ?? $timeRaw;
+                                $durationText = '5h 0m';
                                 try {
                                     $startTime = \Carbon\Carbon::parse($timeToParse);
-                                    $endTime = $startTime->copy()->addHours(8);
                                     $displayStart = $startTime->format('h:i A');
-                                    $displayEnd = $endTime->format('h:i A');
+
+                                    if (!empty($trip->arrival_time)) {
+                                        preg_match('/(\d{1,2}:\d{2}\s?(AM|PM))/i', $trip->arrival_time, $arrMatches);
+                                        $arrToParse = $arrMatches[0] ?? $trip->arrival_time;
+                                        try {
+                                            $endTime = \Carbon\Carbon::parse($arrToParse);
+                                            $displayEnd = $endTime->format('h:i A');
+                                            $diffMins = $startTime->diffInMinutes($endTime);
+                                            if ($endTime->lessThan($startTime)) {
+                                                $diffMins += 24 * 60; // Next-day arrival
+                                            }
+                                            $hours = floor($diffMins / 60);
+                                            $mins = $diffMins % 60;
+                                            $durationText = ($hours > 0 ? "{$hours}h " : "") . "{$mins}m";
+                                        } catch (\Exception $e) {
+                                            $displayEnd = $trip->arrival_time;
+                                        }
+                                    } else {
+                                        $endTime = $startTime->copy()->addHours(6);
+                                        $displayEnd = $endTime->format('h:i A');
+                                        $durationText = '6h 0m';
+                                    }
                                 } catch (\Exception $e) {
                                     $displayStart = $timeRaw;
-                                    $displayEnd = '--:--';
+                                    $displayEnd = $trip->arrival_time ?: '--:--';
+                                    $durationText = '--';
                                 }
                                 $totalSeats = $trip->bus->seats->count();
                                 $availSeats = $totalSeats - $trip->bookings->count();
@@ -654,7 +676,7 @@
 
                                     {{-- Timeline --}}
                                     <div class="schedule-timeline">
-                                        <span class="timeline-duration">5h 0m</span>
+                                        <span class="timeline-duration">{{ $durationText }}</span>
                                         <div class="timeline-track">
                                             <div class="timeline-line"></div>
                                             <div class="timeline-bus-icon">
