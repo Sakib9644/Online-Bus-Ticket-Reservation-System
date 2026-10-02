@@ -170,7 +170,7 @@
             width: 100%;
             height: 44px;
             border-radius: 10px;
-            background: #00ff66;
+            background: #a2e043;
             color: #000000;
             border: none;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
@@ -184,7 +184,7 @@
         }
 
         .custom-modal-btn:hover {
-            background: #2aff7b;
+            background: #b5ec58;
             transform: translateY(-1px);
         }
 
