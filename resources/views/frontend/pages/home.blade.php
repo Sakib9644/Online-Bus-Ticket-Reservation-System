@@ -78,7 +78,7 @@
         .shohoz-search-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1.25fr) minmax(0, 1.15fr) auto;
-            align-items: center;
+            align-items: stretch;
             gap: 12px;
             background: #000000;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -92,9 +92,11 @@
             gap: 14px;
             padding: 10px 16px;
             background: #0a0a0a;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
             border-radius: 14px;
-            height: 64px;
+            min-height: 64px;
+            height: auto;
+            position: relative;
             transition: all 0.25s ease;
         }
 
@@ -106,8 +108,46 @@
 
         .shohoz-segment.field-error {
             border-color: #ef4444 !important;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5) !important;
+            background: rgba(239, 68, 68, 0.08) !important;
+            box-shadow: 0 0 0 1px #ef4444, 0 0 20px rgba(239, 68, 68, 0.4) !important;
             animation: segmentShake 0.35s ease;
+        }
+
+        .shohoz-segment.field-error .shohoz-segment-icon {
+            color: #ef4444 !important;
+            text-shadow: 0 0 12px rgba(239, 68, 68, 0.7) !important;
+        }
+
+        .shohoz-segment.field-error .shohoz-segment-label {
+            color: #f87171 !important;
+        }
+
+        .shohoz-segment.field-error .custom-select-trigger,
+        .shohoz-segment.field-error .custom-select-text,
+        .shohoz-segment.field-error .shohoz-date-input {
+            color: #fca5a5 !important;
+        }
+
+        .field-error-msg {
+            display: none;
+            color: #ef4444;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 3px;
+            align-items: center;
+            gap: 4px;
+            letter-spacing: 0.2px;
+        }
+
+        .shohoz-segment.field-error .field-error-msg {
+            display: flex;
+            animation: errorFadeIn 0.2s ease forwards;
+        }
+
+        @keyframes errorFadeIn {
+            from { opacity: 0; transform: translateY(-2px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes segmentShake {
@@ -335,7 +375,8 @@
         .shohoz-btn-wrap {
             display: flex;
             align-items: center;
-            height: 64px;
+            min-height: 64px;
+            height: 100%;
         }
 
         .shohoz-search-btn {
@@ -347,6 +388,7 @@
             letter-spacing: 1.5px;
             border-radius: 14px;
             padding: 0 36px;
+            min-height: 64px;
             height: 100%;
             border: none;
             cursor: pointer;
@@ -434,13 +476,16 @@
                                 <i class="fa-solid fa-location-arrow"></i>
                             </div>
                             <div class="shohoz-segment-content">
-                                <span class="shohoz-segment-label">FROM</span>
+                                <span class="shohoz-segment-label">FROM <span style="color:#ef4444; font-size:12px; font-weight:800;">*</span></span>
                                 <input type="hidden" name="from" id="hero-origin-val" value="{{ request('from') }}">
                                 <div class="custom-select-trigger" id="fromTrigger">
                                     <span class="custom-select-text" id="fromTriggerText">
                                         {{ request('from') ?: 'Select Origin (City)' }}
                                     </span>
                                     <i class="fa-solid fa-chevron-down custom-select-arrow"></i>
+                                </div>
+                                <div class="field-error-msg">
+                                    <i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> This field is required
                                 </div>
                             </div>
                             {{-- Custom Options Dropdown --}}
@@ -471,13 +516,16 @@
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <div class="shohoz-segment-content">
-                                <span class="shohoz-segment-label">TO</span>
+                                <span class="shohoz-segment-label">TO <span style="color:#ef4444; font-size:12px; font-weight:800;">*</span></span>
                                 <input type="hidden" name="to" id="hero-dest-val" value="{{ request('to') }}">
                                 <div class="custom-select-trigger" id="toTrigger">
                                     <span class="custom-select-text" id="toTriggerText">
                                         {{ request('to') ?: 'Select Destination' }}
                                     </span>
                                     <i class="fa-solid fa-chevron-down custom-select-arrow"></i>
+                                </div>
+                                <div class="field-error-msg">
+                                    <i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> This field is required
                                 </div>
                             </div>
                             {{-- Custom Options Dropdown --}}
@@ -502,10 +550,13 @@
                             </div>
                             <div class="shohoz-segment-content">
                                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                                    <span class="shohoz-segment-label">JOURNEY DATE</span>
+                                    <span class="shohoz-segment-label">JOURNEY DATE <span style="color:#ef4444; font-size:12px; font-weight:800;">*</span></span>
                                     <span class="shohoz-return-hint">+ ADD RETURN</span>
                                 </div>
                                 <input type="date" name="date" class="shohoz-date-input" value="{{ request('date', date('Y-m-d')) }}" min="{{ date('Y-m-d') }}">
+                                <div class="field-error-msg">
+                                    <i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> This field is required
+                                </div>
                             </div>
                         </div>
 
@@ -733,13 +784,27 @@
             const heroSearchForm = document.getElementById('heroSearchForm');
             if (heroSearchForm) {
                 const dateInput = heroSearchForm.querySelector('input[name="date"]');
+                const fromDropdown = document.getElementById('fromDropdown');
+                const toDropdown = document.getElementById('toDropdown');
+                const dateSegment = heroSearchForm.querySelector('.date-segment');
+
                 if (dateInput) {
-                    dateInput.addEventListener('change', function() {
-                        if (this.value) {
-                            heroSearchForm.querySelector('.date-segment')?.classList.remove('field-error');
-                        }
+                    ['input', 'change', 'focus', 'click'].forEach(evt => {
+                        dateInput.addEventListener(evt, function() {
+                            if (this.value) {
+                                dateSegment?.classList.remove('field-error');
+                            }
+                        });
                     });
                 }
+
+                document.getElementById('fromTrigger')?.addEventListener('click', function() {
+                    fromDropdown?.classList.remove('field-error');
+                });
+
+                document.getElementById('toTrigger')?.addEventListener('click', function() {
+                    toDropdown?.classList.remove('field-error');
+                });
 
                 heroSearchForm.addEventListener('submit', function(e) {
                     const fromInput = document.getElementById('hero-origin-val');
@@ -748,42 +813,37 @@
                     const toVal = toInput ? toInput.value.trim() : '';
                     const dateVal = dateInput ? dateInput.value.trim() : '';
 
-                    let missing = [];
+                    let hasError = false;
+                    let firstErrorElem = null;
+
                     if (!fromVal) {
-                        missing.push('Departure Terminal (FROM)');
-                        document.getElementById('fromDropdown')?.classList.add('field-error');
+                        hasError = true;
+                        fromDropdown?.classList.add('field-error');
+                        if (!firstErrorElem) firstErrorElem = fromDropdown;
                     } else {
-                        document.getElementById('fromDropdown')?.classList.remove('field-error');
+                        fromDropdown?.classList.remove('field-error');
                     }
 
                     if (!toVal) {
-                        missing.push('Destination Terminal (TO)');
-                        document.getElementById('toDropdown')?.classList.add('field-error');
+                        hasError = true;
+                        toDropdown?.classList.add('field-error');
+                        if (!firstErrorElem) firstErrorElem = toDropdown;
                     } else {
-                        document.getElementById('toDropdown')?.classList.remove('field-error');
+                        toDropdown?.classList.remove('field-error');
                     }
 
                     if (!dateVal) {
-                        missing.push('Journey Date');
-                        heroSearchForm.querySelector('.date-segment')?.classList.add('field-error');
+                        hasError = true;
+                        dateSegment?.classList.add('field-error');
+                        if (!firstErrorElem) firstErrorElem = dateSegment;
                     } else {
-                        heroSearchForm.querySelector('.date-segment')?.classList.remove('field-error');
+                        dateSegment?.classList.remove('field-error');
                     }
 
-                    if (missing.length > 0) {
+                    if (hasError) {
                         e.preventDefault();
-                        if (typeof Swal !== 'undefined') {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Required Fields Missing',
-                                html: '<div style="color:#cbd5e1; font-size:15px; margin-top:8px;">Please select all 3 required search details:<br><br><span style="color:#a2e043; font-weight:700;">' + missing.join('</span><br><span style="color:#a2e043; font-weight:700;">') + '</span></div>',
-                                confirmButtonText: 'Select Fields',
-                                customClass: {
-                                    popup: 'sb-swal-popup'
-                                }
-                            });
-                        } else {
-                            alert('Please select: ' + missing.join(', ') + ' before searching.');
+                        if (firstErrorElem) {
+                            firstErrorElem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                         }
                         return false;
                     }
