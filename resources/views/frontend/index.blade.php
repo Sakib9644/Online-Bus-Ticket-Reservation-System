@@ -18,23 +18,27 @@
     <style>
         :root {
             color-scheme: dark;
-            /* Core Brand Colors */
-            --paper: #0b0d11; /* Even deeper foundation */
-            --card-bg: #14171d; /* Premium Midnight Indigo */
-            --accent: #a2e043; /* SwiftBus Lime Green */
-            --accent-hover: #b4f056;
+            /* Core Brand Colors - Pure Pitch Black & Electric Neon Green */
+            --paper: #000000; /* Pure Black Foundation */
+            --bg-black: #000000;
+            --card-bg: #070707; /* Ultra Deep Obsidian */
+            --accent: #00ff66; /* Vibrant Electric Neon Green */
+            --accent-hover: #33ff85;
+            --neon: #00ff66;
+            --neon-glow: 0 0 20px rgba(0, 255, 102, 0.45);
+            --neon-glow-lg: 0 0 35px rgba(0, 255, 102, 0.7), 0 0 70px rgba(0, 255, 102, 0.25);
 
             /* UI Elements */
             --ink: #ffffff;
-            --muted: #8e99aa;
+            --muted: #94a3b8;
             --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(162, 224, 67, 0.3);
+            --border-hover: rgba(0, 255, 102, 0.5);
 
-            /* Seat Status (Legacy support + Redesign) */
-            --seat-available: #3871ce;
-            --seat-selected: #51a540;
-            --seat-booked: #d34539;
-            --seat-empty: #1c201b;
+            /* Seat Status */
+            --seat-available: #1e3a8a;
+            --seat-selected: #00ff66;
+            --seat-booked: #dc2626;
+            --seat-empty: #0e0e0e;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,12 +48,12 @@
         }
 
         select option, option {
-            background-color: #14171d !important;
+            background-color: #070707 !important;
             color: #ffffff !important;
         }
 
         body {
-            background: var(--paper);
+            background: #000000 !important;
             color: var(--ink);
             font-family: 'Poppins', sans-serif;
             font-size: 15px;
@@ -66,9 +70,9 @@
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 40px;
             height: 68px;
-            background: rgba(11,11,11,0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.96) !important;
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .sb-brand {
             font-family: 'Poppins', sans-serif;
@@ -78,13 +82,17 @@
             text-decoration: none;
             display: flex; align-items: center; gap: 10px;
         }
-        .sb-brand .dot { color: var(--accent); }
+        .sb-brand .dot {
+            color: var(--neon);
+            text-shadow: 0 0 15px rgba(0, 255, 102, 0.7);
+        }
         .sb-logo-icon {
             width: 36px; height: 36px;
-            background: #fff;
+            background: var(--neon);
             border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             color: #000; font-size: 16px;
+            box-shadow: 0 0 16px rgba(0, 255, 102, 0.6);
         }
 
         .sb-links {
@@ -98,26 +106,48 @@
             font-weight: 500;
             padding: 8px 16px;
             border-radius: 6px;
-            transition: background .18s;
+            transition: background .18s, color .18s;
         }
-        .sb-links a:hover { background: var(--card-bg); color: #fff; }
+        .sb-links a:hover { background: #111111; color: var(--neon); }
         .sb-links .btn-accent-nav {
-            background: var(--accent);
-            color: #fff;
-            border-radius: 100px; /* Pill shape */
+            background: var(--neon) !important;
+            color: #000000 !important;
+            font-weight: 800 !important;
+            border-radius: 100px;
+            padding: 10px 22px;
+            box-shadow: var(--neon-glow) !important;
+            transition: all 0.25s ease;
         }
-        .sb-links .btn-accent-nav:hover { background: #d71f1a; }
+        .sb-links .btn-accent-nav:hover {
+            background: var(--accent-hover) !important;
+            box-shadow: var(--neon-glow-lg) !important;
+            transform: translateY(-2px);
+            color: #000000 !important;
+        }
+        .sb-links .btn-primary-nav {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff !important;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 100px;
+            padding: 8px 18px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .sb-links .btn-primary-nav:hover {
+            background: rgba(255, 255, 255, 0.16);
+            color: #fff;
+        }
 
         /* ── MAIN ── */
-        main { padding-top: 68px; min-height: calc(100vh - 68px); }
+        main { padding-top: 68px; min-height: calc(100vh - 68px); background: #000000; }
 
         /* ── CARDS ── */
         .sb-card {
             background: var(--card-bg);
-            border: 1px solid #ffffff;
+            border: 1px solid var(--border);
             border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.8);
         }
 
         /* ── FOOTER ── */
@@ -353,36 +383,61 @@
 
         .sb-btn-full {
             width: 100%;
-            background: var(--accent);
-            color: #fff;
+            background: var(--neon);
+            color: #000000 !important;
             border: none;
             padding: 18px;
-            border-radius: 100px;
+            border-radius: 14px;
             font-family: 'DM Sans', sans-serif;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 900;
             cursor: pointer;
-            transition: background .2s, transform 0.1s;
+            transition: all .25s ease;
             text-align: center;
             display: flex; align-items: center; justify-content: center; gap: 10px;
+            box-shadow: var(--neon-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .sb-btn-full:hover { background: #7ab32f; transform: scale(0.99); }
+        .sb-btn-full:hover { 
+            background: var(--accent-hover); 
+            box-shadow: var(--neon-glow-lg); 
+            transform: translateY(-2px); 
+            color: #000000 !important;
+        }
 
         .sb-btn {
-            background: var(--card-bg);
-            color: #fff;
-            border: 1px solid var(--border);
+            background: #0d0d0d;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.12);
             padding: 14px 28px;
             border-radius: 100px;
             font-family: 'DM Sans', sans-serif;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all .2s;
+            transition: all .25s ease;
         }
-        .sb-btn:hover { background: var(--border); }
-        .sb-btn-accent { background: var(--accent); border-color: var(--accent); color: #0d1a09; }
-        .sb-btn-accent:hover { background: #7ab32f; border-color: #7ab32f; color: #0d1a09; }
+        .sb-btn:hover { 
+            border-color: var(--neon); 
+            color: var(--neon); 
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.3);
+            transform: translateY(-1px);
+        }
+        .sb-btn-accent, .sb-btn-primary { 
+            background: var(--neon) !important; 
+            border-color: var(--neon) !important; 
+            color: #000000 !important; 
+            font-weight: 900 !important;
+            box-shadow: var(--neon-glow) !important;
+        }
+        .sb-btn-accent:hover, .sb-btn-primary:hover { 
+            background: var(--accent-hover) !important; 
+            border-color: var(--accent-hover) !important; 
+            color: #000000 !important; 
+            box-shadow: var(--neon-glow-lg) !important;
+            transform: translateY(-2px) !important;
+        }
 
         /* BOOKING SITE SPECIFIC UTILITIES */
         .glass-card {
@@ -489,11 +544,11 @@
 
         /* Premium SweetAlert2 Custom Styling */
         .sb-swal-popup {
-            background: linear-gradient(145deg, #151b24, #0f131a) !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+            background: #080808 !important;
+            border: 1.5px solid rgba(0, 255, 102, 0.35) !important;
             border-radius: 26px !important;
             padding: 38px 30px !important;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.85), 0 0 40px rgba(162, 224, 67, 0.1) !important;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 45px rgba(0, 255, 102, 0.2) !important;
         }
         .sb-swal-popup .swal2-title {
             color: #ffffff !important;
@@ -511,20 +566,21 @@
             margin: 12px 0 24px !important;
         }
         .sb-swal-popup .swal2-confirm {
-            background: linear-gradient(135deg, #a2e043, #7ab32f) !important;
-            color: #0c1200 !important;
-            font-weight: 800 !important;
+            background: var(--neon) !important;
+            color: #000000 !important;
+            font-weight: 900 !important;
             font-size: 15px !important;
             border-radius: 12px !important;
             padding: 14px 34px !important;
-            box-shadow: 0 6px 20px rgba(162, 224, 67, 0.3) !important;
+            box-shadow: var(--neon-glow) !important;
             border: none !important;
             cursor: pointer !important;
-            transition: all 0.2s !important;
+            transition: all 0.25s ease !important;
         }
         .sb-swal-popup .swal2-confirm:hover {
+            background: var(--accent-hover) !important;
             transform: translateY(-2px) !important;
-            box-shadow: 0 10px 25px rgba(162, 224, 67, 0.45) !important;
+            box-shadow: var(--neon-glow-lg) !important;
         }
     </style>
 </head>
@@ -554,9 +610,9 @@
             confirmButtonText: 'Understood',
             position: 'center',
             toast: false,
-            background: '#151b24',
+            background: '#080808',
             color: '#ffffff',
-            iconColor: isSuccess ? '#a2e043' : (isWarning ? '#fbbf24' : '#ff4d4d'),
+            iconColor: isSuccess ? '#00ff66' : (isWarning ? '#00ff66' : '#ff4d4d'),
             customClass: {
                 popup: 'sb-swal-popup'
             }
