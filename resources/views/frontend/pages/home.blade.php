@@ -9,7 +9,7 @@
             -webkit-backdrop-filter: blur(28px);
             border: 1.5px solid rgba(162, 224, 67, 0.35);
             border-radius: 18px;
-            padding: 14px 18px;
+            padding: 20px 22px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.92), 0 0 30px rgba(162, 224, 67, 0.12);
             position: relative;
             z-index: 20;
@@ -449,16 +449,77 @@
                 min-height: 48px;
             }
         }
+
+        /* ─── HERO SLIDER ─── */
+        .hero-slider-track {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-slider-dots {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 15;
+        }
+        .hero-slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            border: 1.5px solid rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .hero-slider-dot.active {
+            background: #a2e043;
+            border-color: #a2e043;
+            box-shadow: 0 0 12px rgba(162, 224, 67, 0.6);
+            transform: scale(1.2);
+        }
     </style>
 
-    {{-- HERO SECTION WITH SHOHOZ-STYLE SEARCH BAR --}}
+    {{-- HERO SECTION WITH SLIDER + SEARCH BAR --}}
     @php
         $heroBackground = setting('hero_image') ? asset(setting('hero_image')) : asset('frontend/images/hero_bg.png');
+        $hasSliders = isset($heroSliders) && $heroSliders->count() > 0;
     @endphp
     <section
-        style="min-height: 85vh; padding: 120px 40px 100px; position:relative; overflow:visible; z-index: 30; display: flex; align-items: center; background: #0b0d11 url('{{ $heroBackground }}') center/cover no-repeat;">
+        style="min-height: 85vh; padding: 120px 40px 100px; position:relative; overflow:hidden; z-index: 30; display: flex; align-items: center; {{ !$hasSliders ? "background: #0b0d11 url('" . $heroBackground . "') center/cover no-repeat;" : 'background: #0b0d11;' }}">
+
+        {{-- SLIDER IMAGES (only if admin added sliders) --}}
+        @if($hasSliders)
+            <div class="hero-slider-track" id="heroSliderTrack">
+                @foreach($heroSliders as $idx => $slide)
+                    <div class="hero-slide {{ $idx === 0 ? 'active' : '' }}" style="background-image: url('{{ asset($slide->image_path) }}');"></div>
+                @endforeach
+            </div>
+            @if($heroSliders->count() > 1)
+                <div class="hero-slider-dots" id="heroSliderDots">
+                    @foreach($heroSliders as $idx => $slide)
+                        <div class="hero-slider-dot {{ $idx === 0 ? 'active' : '' }}" data-index="{{ $idx }}"></div>
+                    @endforeach
+                </div>
+            @endif
+        @endif
+
+        {{-- Light bottom gradient only (for text readability) --}}
         <div
-            style="position:absolute; inset:0; background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.15) 100%), linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 40%, rgba(11, 13, 17, 0.95) 100%); pointer-events:none;">
+            style="position:absolute; inset:0; background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 30%, rgba(11, 13, 17, 0.85) 100%); pointer-events:none; z-index: 1;">
         </div>
 
         <div style="max-width:1200px; margin:0 auto; position:relative; z-index: 10; width: 100%;">
