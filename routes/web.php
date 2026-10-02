@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\DriverController;
 use App\Http\Controllers\Backend\BusRouteController;
 use App\Http\Controllers\Backend\LocationController;
 use App\Http\Controllers\Backend\PaymentController;
+use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\AdminLoginController  as AdminUserController;
 
 
@@ -160,6 +161,10 @@ Route::delete('/trip/delete/{id}', [TripController::class, 'delete'])->name('adm
 
 // Payment
 Route::get('/payment', [PaymentController::class,'payment'])->name('admin.payment');
+
+// Settings
+Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings');
+Route::post('/settings', [SettingController::class, 'update'])->name('admin.settings.update');
 
 });
 });

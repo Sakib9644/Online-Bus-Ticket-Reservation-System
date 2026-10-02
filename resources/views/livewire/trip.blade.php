@@ -1,9 +1,18 @@
 <div>
     <style>
-        .sb-search-input option {
-            background-color: #000;
-            color: #fff;
-            padding: 12px;
+        select.mini-input,
+        .mini-input,
+        .sb-search-input {
+            color-scheme: dark;
+        }
+
+        select.mini-input option,
+        .mini-input option,
+        .sb-search-input option,
+        option {
+            background-color: #14171d !important;
+            color: #ffffff !important;
+            padding: 10px 14px;
         }
         
         /* ─── LAYOUT GRID ─── */
@@ -125,24 +134,33 @@
             flex-direction: column;
             justify-content: center;
             position: relative;
+            box-sizing: border-box;
         }
 
         .segment-left {
-            flex: 0.9;
+            width: 250px;
+            min-width: 250px;
+            max-width: 250px;
+            flex-shrink: 0;
             border-right: 1px solid rgba(255,255,255,0.05);
-            padding-left: 32px;
+            padding-left: 28px;
+            padding-right: 20px;
         }
         .segment-middle {
-            flex: 1.8;
+            flex: 1;
+            min-width: 0;
             border-right: 1px solid rgba(255,255,255,0.05);
             align-items: flex-start;
             padding: 20px 28px;
         }
         .segment-right {
-            flex: 0.7;
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+            flex-shrink: 0;
             align-items: center;
             justify-content: center;
-            padding: 20px 28px;
+            padding: 20px 24px;
         }
 
         /* ─── BUS ICON ─── */
@@ -377,26 +395,30 @@
         .btn-book {
             background: linear-gradient(135deg, #a2e043, #7ab32f);
             color: #0c1200 !important;
-            width: 100%;
-            padding: 13px 16px;
+            width: 130px;
+            height: 42px;
+            box-sizing: border-box;
             border-radius: 12px;
             font-weight: 800;
+            font-family: 'Poppins', sans-serif;
             text-transform: uppercase;
             font-size: 11px;
             letter-spacing: 1.2px;
             text-align: center;
             text-decoration: none !important;
             transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             border: none;
             cursor: pointer;
-            margin-top: 16px;
+            margin-top: 14px;
             box-shadow: 0 4px 16px rgba(162, 224, 67, 0.2);
             position: relative;
             overflow: hidden;
+            line-height: 1;
+            flex-shrink: 0;
         }
         .btn-book::after {
             content: '→';
@@ -440,6 +462,7 @@
             border-radius: 12px;
             padding: 13px 14px 13px 40px;
             color: #fff;
+            color-scheme: dark;
             font-size: 13px;
             outline: none;
             transition: all 0.25s ease;
@@ -568,11 +591,21 @@
                 min-height: auto;
             }
             .segment-left, .segment-middle, .segment-right {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
                 border-right: none;
                 border-bottom: 1px solid rgba(255,255,255,0.04);
                 padding: 18px 20px;
             }
-            .segment-right { border-bottom: none; }
+            .segment-right { 
+                border-bottom: none; 
+                align-items: center;
+            }
+            .btn-book {
+                width: 100%;
+                max-width: 220px;
+            }
             .journey-hero { flex-wrap: wrap; gap: 10px; }
             .journey-node { min-width: 65px; }
             .journey-time { font-size: 22px; }

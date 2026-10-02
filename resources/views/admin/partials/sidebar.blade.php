@@ -52,5 +52,7 @@
 
 <div class="nav-section">
     <div class="nav-section-label">System</div>
-    <a class="nav-item" href="#"><i class="fas fa-cog"></i> Settings</a>
+    <a class="nav-item {{ request()->routeIs('admin.settings') ? 'active' : '' }}" href="{{ route('admin.settings') }}">
+        <i class="fas fa-sliders"></i> Website Settings
+    </a>
 </div>

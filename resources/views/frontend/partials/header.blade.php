@@ -1,7 +1,7 @@
 <nav class="sb-nav">
     <a class="sb-brand" href="{{ route('frontend.home') }}">
         <div class="sb-logo-icon"><i class="fas fa-bus-simple"></i></div>
-        Swift<span class="dot">Bus</span>
+        {{ setting('site_logo_prefix', 'Swift') }}<span class="dot">{{ setting('site_logo_suffix', 'Bus') }}</span>
     </a>
     <ul class="sb-links">
         <li><a href="{{ route('frontend.home') }}">Home</a></li>

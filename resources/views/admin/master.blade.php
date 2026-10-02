@@ -112,6 +112,27 @@
         }
         .logout-btn:hover { background: #fee2e2; }
 
+        .btn-visit-frontend {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #10b981;
+            color: #ffffff !important;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
+        }
+        .btn-visit-frontend:hover {
+            background: #059669;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            color: #ffffff !important;
+        }
+
         /* MAIN */
         #main {
             margin-left: var(--sidebar-w);
@@ -209,7 +230,12 @@
 
 <!-- TOPBAR -->
 <header id="topbar">
-    <span class="topbar-title">Admin Panel</span>
+    <div style="display: flex; align-items: center; gap: 18px;">
+        <span class="topbar-title">Admin Panel</span>
+        <a href="{{ route('frontend.home') }}" target="_blank" class="btn-visit-frontend" title="View Frontend Landing Page">
+            <i class="fas fa-globe"></i> View Website <i class="fas fa-arrow-up-right-from-square" style="font-size: 10px;"></i>
+        </a>
+    </div>
     <div class="topbar-right">
         @if(auth()->user())
         <div class="topbar-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
