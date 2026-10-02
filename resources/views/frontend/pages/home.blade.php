@@ -401,18 +401,18 @@
         }
 
         .shohoz-swap-btn {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            background: #0a0a0a;
-            border: 1.5px solid rgba(162, 224, 67, 0.4);
+            background: #030503;
+            border: 1.5px solid #a2e043;
             color: #a2e043;
             font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 0 12px rgba(162, 224, 67, 0.2);
+            box-shadow: 0 0 14px rgba(162, 224, 67, 0.3);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -421,46 +421,85 @@
             color: #000000;
             border-color: #a2e043;
             transform: rotate(180deg) scale(1.12);
-            box-shadow: 0 0 20px rgba(162, 224, 67, 0.65);
+            box-shadow: 0 0 25px rgba(162, 224, 67, 0.7);
         }
 
         /* ─── SEARCH BUTTON ─── */
         .shohoz-btn-wrap {
             display: flex;
             align-items: center;
-            height: 52px;
+            height: 58px;
         }
 
         .shohoz-search-btn {
-            background: #a2e043 !important;
-            color: #000000 !important;
+            background: linear-gradient(135deg, #a2e043 0%, #89ce2c 100%) !important;
+            color: #050d03 !important;
             font-weight: 900;
-            font-size: 13.5px;
+            font-size: 14.5px;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            border-radius: 11px;
-            padding: 0 26px;
-            height: 52px;
-            min-height: 52px;
+            border-radius: 12px;
+            padding: 0 30px;
+            height: 58px;
+            min-height: 58px;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             transition: all 0.25s ease;
-            box-shadow: 0 0 20px rgba(162, 224, 67, 0.4);
+            box-shadow: 0 0 24px rgba(162, 224, 67, 0.45);
             white-space: nowrap;
         }
 
         .shohoz-search-btn:hover {
-            background: #b5ec58 !important;
+            background: #b2f24a !important;
             transform: translateY(-2px);
-            box-shadow: 0 0 35px rgba(162, 224, 67, 0.7);
+            box-shadow: 0 0 40px rgba(162, 224, 67, 0.75);
+        }
+
+        /* ─── CARD FOOTER TRUST PERKS ─── */
+        .shohoz-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 16px;
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            flex-wrap: wrap;
+        }
+
+        .shohoz-feature-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .shohoz-feature-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #a2e043;
+            box-shadow: 0 0 8px #a2e043;
+            display: inline-block;
         }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 992px) {
+            .shohoz-card-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .shohoz-type-selector {
+                justify-content: center;
+                width: 100%;
+            }
             .shohoz-search-grid {
                 grid-template-columns: 1fr;
                 gap: 8px;
@@ -477,8 +516,13 @@
             }
             .shohoz-btn-wrap, .shohoz-search-btn {
                 width: 100%;
-                height: 48px;
-                min-height: 48px;
+                height: 52px;
+                min-height: 52px;
+            }
+            .shohoz-card-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
         }
 
@@ -531,7 +575,7 @@
         $hasSliders = isset($heroSliders) && $heroSliders->count() > 0;
     @endphp
     <section
-        style="min-height: 92vh; padding: 0; position:relative; overflow:visible; z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #0b0d11;">
+        style="min-height: 80vh; padding: 0; position:relative; overflow:visible; z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #070907;">
 
         {{-- SLIDER IMAGES --}}
         @if($hasSliders)
@@ -550,48 +594,42 @@
         @endif
 
         {{-- Clip wrapper --}}
-        <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #0b0d11 url(\'' . $heroBackground . '\') center/cover no-repeat;' : '' }}"></div>
-        {{-- Rich multi-layer overlay for premium depth --}}
+        <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #070907 url(\'' . $heroBackground . '\') center/cover no-repeat;' : '' }}"></div>
+        {{-- Rich multi-layer overlay for depth without heavy dark blocks --}}
         <div style="position:absolute; inset:0; pointer-events:none; z-index:1;
             background:
-                linear-gradient(to bottom, rgba(5,7,10,0.52) 0%, rgba(5,7,10,0.1) 40%, rgba(5,7,10,0.72) 100%),
-                linear-gradient(to right, rgba(5,7,10,0.45) 0%, transparent 60%);"></div>
+                linear-gradient(to bottom, rgba(5,7,5,0.45) 0%, rgba(5,7,5,0.08) 40%, rgba(5,7,5,0.65) 100%),
+                linear-gradient(to right, rgba(5,7,5,0.35) 0%, transparent 60%);"></div>
 
-        {{-- Center content container --}}
-        <div style="position:relative; z-index: 9999; width:100%; max-width:1100px; margin:0 auto; padding: 140px 40px 80px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+        {{-- Center content container (Clean, centered search widget) --}}
+        <div style="position:relative; z-index: 9999; width:100%; max-width:1120px; margin:0 auto; padding: 100px 24px 60px; display:flex; flex-direction:column; align-items:center;">
 
-            {{-- Badge --}}
-            <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(162,224,67,0.1); border:1px solid rgba(162,224,67,0.3); border-radius:30px; padding:6px 18px; margin-bottom:24px; backdrop-filter: blur(8px);">
-                <span style="width:6px;height:6px;border-radius:50%;background:#a2e043;box-shadow:0 0 10px #a2e043;display:inline-block;"></span>
-                <span style="font-size:11px;font-weight:800;color:#a2e043;letter-spacing:2px;text-transform:uppercase;">✦ Reimagining Travel in Bangladesh</span>
-            </div>
-
-            {{-- Headline --}}
-            <h1 class="syne" style="font-size:clamp(42px,6.5vw,88px); line-height:1.0; margin:0 0 20px 0; font-weight:900; color:#fff; letter-spacing:-3px; max-width:860px;">
-                Journey to your<br>
-                <span style="color:#a2e043; text-shadow: 0 0 40px rgba(162,224,67,0.5), 0 0 80px rgba(162,224,67,0.2);">Happy Place.</span>
-            </h1>
-
-            {{-- Subtitle --}}
-            <p style="color:rgba(255,255,255,0.62); font-size:16.5px; line-height:1.7; max-width:520px; margin:0 0 38px 0; font-weight:400;">
-                Premium intercity bus reservations across Bangladesh.<br>Comfort, safety, and speed — guaranteed.
-            </p>
-
-            {{-- CENTERED SEARCH WIDGET --}}
-            <div class="shohoz-search-card" style="max-width:980px; width:100%;">
+            {{-- LUXURY BLACK & NEON SEARCH WIDGET --}}
+            <div class="shohoz-search-card">
                 <form action="{{ route('frontend.reserve') }}" method="GET" id="heroSearchForm">
-                    <div class="shohoz-type-selector">
-                        <label class="shohoz-type-option">
-                            <input type="radio" name="trip_type" value="oneway" checked>
-                            <span class="shohoz-radio-dot"></span>
-                            <span class="shohoz-type-label">One Way</span>
-                        </label>
-                        <label class="shohoz-type-option">
-                            <input type="radio" name="trip_type" value="round">
-                            <span class="shohoz-radio-dot"></span>
-                            <span class="shohoz-type-label">Round Way</span>
-                        </label>
+                    
+                    {{-- Card Header: Service Pill + Trip Type Selector --}}
+                    <div class="shohoz-card-header">
+                        <div class="shohoz-service-pill">
+                            <i class="fa-solid fa-bus-simple"></i>
+                            <span>Online Bus Ticket Reservation</span>
+                        </div>
+
+                        <div class="shohoz-type-selector">
+                            <label class="shohoz-type-option">
+                                <input type="radio" name="trip_type" value="oneway" checked>
+                                <span class="shohoz-radio-dot"></span>
+                                <span class="shohoz-type-label">One Way</span>
+                            </label>
+                            <label class="shohoz-type-option">
+                                <input type="radio" name="trip_type" value="round">
+                                <span class="shohoz-radio-dot"></span>
+                                <span class="shohoz-type-label">Round Trip</span>
+                            </label>
+                        </div>
                     </div>
+
+                    {{-- Search Fields Grid --}}
                     <div class="shohoz-search-grid">
 
                         {{-- FROM SEGMENT --}}
@@ -686,10 +724,31 @@
                         <div class="shohoz-btn-wrap">
                             <button type="submit" class="shohoz-search-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                <span>SEARCH</span>
+                                <span>SEARCH BUSES</span>
                             </button>
                         </div>
                     </div>{{-- /.shohoz-search-grid --}}
+
+                    {{-- Trust perks footer inside card --}}
+                    <div class="shohoz-card-footer">
+                        <div class="shohoz-feature-item">
+                            <span class="shohoz-feature-dot"></span>
+                            <span>Instant E-Ticket Delivery</span>
+                        </div>
+                        <div class="shohoz-feature-item">
+                            <span class="shohoz-feature-dot"></span>
+                            <span>100% Verified Bus Operators</span>
+                        </div>
+                        <div class="shohoz-feature-item">
+                            <span class="shohoz-feature-dot"></span>
+                            <span>bKash Direct Checkout</span>
+                        </div>
+                        <div class="shohoz-feature-item">
+                            <span class="shohoz-feature-dot"></span>
+                            <span>24/7 Helpline: <strong>{{ setting('helpline', '16374') }}</strong></span>
+                        </div>
+                    </div>
+
                 </form>
             </div>{{-- /.shohoz-search-card --}}
         </div>{{-- /.container --}}
