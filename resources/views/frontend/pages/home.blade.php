@@ -818,8 +818,9 @@
 
                 if (!wrap || !trigger || !text || !input || !menu) return;
 
-                // Toggle menu on trigger or segment click
-                trigger.addEventListener('click', function(e) {
+                // Toggle menu on entire segment click (not just the arrow)
+                wrap.addEventListener('click', function(e) {
+                    if (e.target.closest('.custom-select-menu')) return;
                     e.stopPropagation();
                     const wasOpen = wrap.classList.contains('is-open');
                     // Close any other open dropdowns first
@@ -852,6 +853,21 @@
 
             setupCustomDropdown('fromDropdown', 'fromTrigger', 'fromTriggerText', 'hero-origin-val', 'fromMenu');
             setupCustomDropdown('toDropdown', 'toTrigger', 'toTriggerText', 'hero-dest-val', 'toMenu');
+
+            // Click anywhere on date segment to open date picker
+            const dateSegment = document.querySelector('.date-segment');
+            const dateInput = document.querySelector('.shohoz-date-input');
+            if (dateSegment && dateInput) {
+                dateSegment.addEventListener('click', function(e) {
+                    if (e.target !== dateInput) {
+                        if (typeof dateInput.showPicker === 'function') {
+                            try { dateInput.showPicker(); } catch(err) { dateInput.focus(); }
+                        } else {
+                            dateInput.focus();
+                        }
+                    }
+                });
+            }
 
             // Click outside closes any open dropdown
             document.addEventListener('click', function(e) {
