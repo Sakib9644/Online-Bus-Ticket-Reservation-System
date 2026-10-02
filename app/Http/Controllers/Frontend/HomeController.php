@@ -93,12 +93,17 @@ class HomeController extends Controller
             return strcasecmp($a['name'], $b['name']);
         });
 
+        $origins = Trip::select('location_from')->distinct()->whereNotNull('location_from')->pluck('location_from');
+        $destinationsList = Trip::select('location_to')->distinct()->whereNotNull('location_to')->pluck('location_to');
+
         $trips = Trip::with('bus')->withCount('bookings')->orderByDesc('bookings_count')->get();
-        return view('frontend.pages.home', compact('buses', 'locations', 'trips', 'destinations'));
+        return view('frontend.pages.home', compact('buses', 'locations', 'trips', 'destinations', 'origins', 'destinationsList'));
     }
+
     public function reserveForm(Request $request)
     {
-        return redirect()->route('frontend.home', array_merge($request->query(), ['#find-trips']));
+        $locations = Location::all();
+        return view('frontend.pages.reserve-form', compact('locations'));
     }
 
     public function order(Request  $request)
