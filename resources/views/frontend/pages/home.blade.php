@@ -518,7 +518,7 @@
         @endif
 
         {{-- Clip wrapper: contains background + slider so they stay bounded while dropdowns can overflow --}}
-        <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #0b0d11 url(' . $heroBackground . ') center/cover no-repeat;' : '' }}"></div>
+        <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #0b0d11 url(\'' . $heroBackground . '\') center/cover no-repeat;' : '' }}"></div>
         {{-- Subtle overlay for text readability --}}
         <div style="position:absolute; inset:0; background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 35%, rgba(11,13,17,0.75) 100%); pointer-events:none; z-index: 1;"></div>
 
