@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Models\HeroSlider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -20,6 +21,31 @@ class SettingController extends Controller
         $uploadDir = public_path('uploads/settings');
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
+        }
+
+        // Handle Hero Slider Images (multiple upload)
+        if ($request->hasFile('slider_images')) {
+            $sliderDir = public_path('uploads/sliders');
+            if (!file_exists($sliderDir)) {
+                mkdir($sliderDir, 0777, true);
+            }
+
+            $titles = array_filter(explode("\n", $request->input('slider_titles', '')));
+            $currentMaxOrder = HeroSlider::max('sort_order') ?? 0;
+
+            foreach ($request->file('slider_images') as $idx => $file) {
+                if ($file->isValid() && $file->getSize() <= 5 * 1024 * 1024) {
+                    $filename = 'slider_' . time() . '_' . $idx . '.' . $file->getClientOriginalExtension();
+                    $file->move($sliderDir, $filename);
+
+                    HeroSlider::create([
+                        'image_path' => 'uploads/sliders/' . $filename,
+                        'title' => trim($titles[$idx] ?? ''),
+                        'sort_order' => $currentMaxOrder + $idx + 1,
+                        'is_active' => true,
+                    ]);
+                }
+            }
         }
 
         // Handle Hero Background Image
@@ -102,5 +128,23 @@ class SettingController extends Controller
         Cache::forget('all_settings_map');
 
         return redirect()->route('admin.settings')->with('message', 'Website images and payment configurations updated successfully!');
+    }
+
+    /**
+     * Delete a hero slider image.
+     */
+    public function deleteSlider($id)
+    {
+        $slider = HeroSlider::findOrFail($id);
+
+        // Delete the physical file
+        $filePath = public_path($slider->image_path);
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        $slider->delete();
+
+        return redirect()->route('admin.settings')->with('message', 'Slider image removed successfully.');
     }
 }

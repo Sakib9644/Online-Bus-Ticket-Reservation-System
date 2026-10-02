@@ -165,6 +165,7 @@ Route::get('/payment', [PaymentController::class,'payment'])->name('admin.paymen
 // Settings
 Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings');
 Route::post('/settings', [SettingController::class, 'update'])->name('admin.settings.update');
+Route::get('/slider/delete/{id}', [SettingController::class, 'deleteSlider'])->name('admin.slider.delete');
 
 });
 });
