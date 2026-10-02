@@ -936,4 +936,44 @@
         });
     </script>
 
+    {{-- HERO SLIDER AUTO-ROTATION --}}
+    @if(isset($heroSliders) && $heroSliders->count() > 1)
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var slides = document.querySelectorAll('.hero-slide');
+        var dots = document.querySelectorAll('.hero-slider-dot');
+        var currentIndex = 0;
+        var totalSlides = slides.length;
+        var intervalMs = 5000;
+        var sliderInterval;
+
+        function goToSlide(index) {
+            slides.forEach(function(s) { s.classList.remove('active'); });
+            dots.forEach(function(d) { d.classList.remove('active'); });
+            currentIndex = index;
+            slides[currentIndex].classList.add('active');
+            if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide((currentIndex + 1) % totalSlides);
+        }
+
+        function startAutoPlay() {
+            sliderInterval = setInterval(nextSlide, intervalMs);
+        }
+
+        dots.forEach(function(dot) {
+            dot.addEventListener('click', function() {
+                clearInterval(sliderInterval);
+                goToSlide(parseInt(this.getAttribute('data-index')));
+                startAutoPlay();
+            });
+        });
+
+        startAutoPlay();
+    });
+    </script>
+    @endif
+
 @endsection
