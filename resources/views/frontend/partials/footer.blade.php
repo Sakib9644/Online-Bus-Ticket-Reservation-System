@@ -58,7 +58,11 @@
     </div>
 
     <div class="sb-footer-bottom" style="margin-top:60px; border-top:1px solid #1a1a1a; padding-top:28px; max-width:1100px; margin-left:auto; margin-right:auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
-        <span>{{ setting('footer_copyright', '© ' . date('Y') . ' SwiftBus. All rights reserved.') }}</span>
+        @php
+            $copyrightText = setting('footer_copyright', '© ' . date('Y') . ' SwiftBus. All rights reserved.');
+            $copyrightText = str_replace(['2024', '{year}'], date('Y'), $copyrightText);
+        @endphp
+        <span>{{ $copyrightText }}</span>
         <div class="sb-social" style="display:flex; gap:10px;">
             @if(setting('facebook_url'))
                 <a href="{{ setting('facebook_url') }}" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>

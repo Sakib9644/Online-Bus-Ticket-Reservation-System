@@ -227,7 +227,7 @@
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px;">
                 <div>
                     <span class="sb-badge" style="margin-bottom:16px;">Explore Bangladesh</span>
-                    <h2 class="syne" style="font-size:36px; font-weight:800; color:#fff;">Trending Destinations</h2>
+                    <h2 class="syne" style="font-size:36px; font-weight:800; color:#fff;">Destinations</h2>
                 </div>
                 <div style="display: flex; gap: 12px; align-items: center;">
                     <button class="dest-prev thick-arrow">

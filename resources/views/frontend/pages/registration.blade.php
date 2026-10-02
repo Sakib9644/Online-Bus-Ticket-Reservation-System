@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <div class="auth-footer">© 2024 SwiftBus</div>
+        <div class="auth-footer">© {{ date('Y') }} {{ setting('site_name', 'SwiftBus') }}. All rights reserved.</div>
     </div>
 </body>
 </html>

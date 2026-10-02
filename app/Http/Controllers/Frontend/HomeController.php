@@ -17,10 +17,7 @@ class HomeController extends Controller
         $buses = Bus::all();
         $locations = Location::all();
         
-        $divisionNames = ['Dhaka', 'Chattogram', 'Rajshahi', 'Khulna', 'Barishal', 'Sylhet', 'Rangpur', 'Mymensingh'];
-        $popularDistricts = ['Cox\'s Bazar', 'Rangamati', 'Bandarban', 'Cumilla', 'Bogura', 'Noakhali'];
-
-        // Fetch cities from database to use their uploaded images
+        // Fetch all cities from database with their uploaded images
         $citiesFromDb = City::all()->keyBy('name');
 
         // Calculate Popular Destinations based on Ticket Sales (Bookings)
@@ -67,23 +64,33 @@ class HomeController extends Controller
         ];
 
         $destinations = [];
-        $allItems = array_merge($divisionNames, $popularDistricts);
+        $allCityNames = City::pluck('name')->toArray();
+        $locationToNames = Location::distinct()->pluck('location_to')->filter()->toArray();
+        $tripToNames = Trip::distinct()->pluck('location_to')->filter()->toArray();
+
+        // Combine all destinations without any limit
+        $allItems = array_values(array_unique(array_filter(array_merge($allCityNames, $locationToNames, $tripToNames))));
         
         foreach ($allItems as $name) {
             $dbCity = $citiesFromDb->get($name);
-            $img = ($dbCity && $dbCity->image) ? url('/uploads/cities/'.$dbCity->image) : ($imageMap[$name] ?? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800');
+            $img = ($dbCity && $dbCity->image) 
+                ? (str_starts_with($dbCity->image, 'http') ? $dbCity->image : url('/uploads/cities/'.$dbCity->image)) 
+                : ($imageMap[$name] ?? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800');
             
             $destinations[] = [
                 'name' => $name,
                 'img' => $img,
-                'desc' => $descMap[$name] ?? 'Explore the beauty of ' . $name,
+                'desc' => $descMap[$name] ?? 'Explore the beauty and culture of ' . $name,
                 'sales' => $popularBySales[$name] ?? 0
             ];
         }
 
-        // Sort destinations by sales count (descending)
+        // Sort destinations by sales count (descending), then alphabetically
         usort($destinations, function($a, $b) {
-            return $b['sales'] <=> $a['sales'];
+            if ($b['sales'] !== $a['sales']) {
+                return $b['sales'] <=> $a['sales'];
+            }
+            return strcasecmp($a['name'], $b['name']);
         });
 
         $trips = Trip::with('bus')->withCount('bookings')->orderByDesc('bookings_count')->get();
