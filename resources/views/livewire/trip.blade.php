@@ -80,357 +80,253 @@
         .sidebar-title i { color: #a2e043; }
 
         /* ─── TRIP CARD (TRUE GLASS WITH VISIBLE BORDER) ─── */
+        /* ─── SHOHOZ / BUSBD STYLE TICKET CARD ─── */
         .ticket-card {
             position: relative;
-            background: #080808;
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1.5px solid rgba(162, 224, 67, 0.35);
-            border-radius: 20px;
+            background: #11141a;
+            border: 1.5px solid rgba(255, 255, 255, 0.09);
+            border-radius: 16px;
             display: flex;
-            align-items: stretch;
-            overflow: hidden;
-            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            margin-bottom: 18px;
-            min-height: 170px;
-            width: 100% !important;
-            max-width: 100% !important;
-            z-index: 1;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            animation: cardIn 0.5s ease-out both;
-            animation-delay: calc(var(--card-index, 0) * 0.07s);
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 26px;
+            margin-bottom: 16px;
+            gap: 20px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            animation: cardIn 0.4s ease-out both;
+            animation-delay: calc(var(--card-index, 0) * 0.05s);
         }
 
         @keyframes cardIn {
-            from { opacity: 0; transform: translateY(24px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* Vibrant left accent strip (always visible) */
-        .ticket-card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(180deg, #a2e043 0%, #6C5CE7 100%);
-            opacity: 1;
-            z-index: 2;
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .ticket-card:hover {
-            background: #0d0d0d;
-            border-color: #a2e043;
-            transform: translateY(-4px);
-            box-shadow: 0 20px 50px -12px rgba(162, 224, 67, 0.3), 0 0 25px rgba(162, 224, 67, 0.2);
+            border-color: rgba(162, 224, 67, 0.45);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(162, 224, 67, 0.12);
         }
 
-        /* ─── CARD SEGMENTS ─── */
-        .card-segment {
-            padding: 22px 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            box-sizing: border-box;
+        /* ─── SEGMENT LEFT: OPERATOR & ROUTE ─── */
+        .segment-operator {
+            flex: 0 0 280px;
+            max-width: 280px;
+            min-width: 240px;
         }
 
-        .segment-left {
-            width: 250px;
-            min-width: 250px;
-            max-width: 250px;
-            flex-shrink: 0;
-            border-right: 1px solid rgba(162, 224, 67, 0.15);
-            padding-left: 28px;
-            padding-right: 20px;
-        }
-        .segment-middle {
-            flex: 1;
-            min-width: 0;
-            border-right: 1px solid rgba(162, 224, 67, 0.15);
-            align-items: flex-start;
-            padding: 20px 28px;
-        }
-        .segment-right {
-            width: 180px;
-            min-width: 180px;
-            max-width: 180px;
-            flex-shrink: 0;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 24px;
-        }
-
-        /* ─── BUS ICON ─── */
-        .bus-icon-wrap {
+        .operator-header {
             display: flex;
             align-items: center;
             gap: 14px;
-            margin-bottom: 14px;
+            margin-bottom: 8px;
         }
-        .bus-icon-circle {
+
+        .operator-logo {
             width: 44px;
             height: 44px;
-            flex-shrink: 0;
-            background: linear-gradient(135deg, rgba(162, 224, 67, 0.15), rgba(162, 224, 67, 0.05));
-            border-radius: 14px;
+            border-radius: 12px;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1.5px solid rgba(239, 68, 68, 0.35);
+            color: #ef4444;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #a2e043;
             font-size: 20px;
-            border: 1px solid rgba(162, 224, 67, 0.1);
+            flex-shrink: 0;
         }
-        .bus-meta { flex: 1; min-width: 0; }
-        .bus-name {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
+
+        .operator-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 3px 0;
             line-height: 1.2;
-            display: block;
+            letter-spacing: -0.2px;
+        }
+
+        .operator-subline {
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .operator-route {
+            font-size: 12px;
+            color: #8e99aa;
+            line-height: 1.4;
+            margin-top: 5px;
+        }
+
+        .operator-route strong {
+            color: #cbd5e1;
+            font-weight: 700;
+        }
+
+        /* ─── SEGMENT MIDDLE: TIMELINE & SCHEDULE ─── */
+        .segment-schedule {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 24px;
+            border-left: 1px solid rgba(255, 255, 255, 0.07);
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .schedule-node {
+            display: flex;
+            flex-direction: column;
+            min-width: 105px;
+        }
+
+        .schedule-time {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .schedule-date {
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 600;
+            margin: 3px 0 2px;
+        }
+
+        .schedule-city {
+            font-size: 13px;
+            color: #cbd5e1;
+            font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-        .bus-coach {
-            font-size: 12px;
-            color: rgba(255,255,255,0.3);
-            font-weight: 500;
-            display: block;
-            margin-top: 1px;
+            max-width: 135px;
         }
 
-        /* ─── BADGES ─── */
-        .badge-row {
+        /* Shohoz Journey Timeline Progress Bar */
+        .schedule-timeline {
             display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        .badge {
-            padding: 4px 10px;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 9px;
-            letter-spacing: 0.7px;
-            text-transform: uppercase;
-        }
-        .badge-ac {
-            background: linear-gradient(135deg, #a2e043, #8cc93a);
-            color: #0c1200;
-            box-shadow: 0 2px 8px rgba(162, 224, 67, 0.2);
-        }
-        .badge-non-ac {
-            background: rgba(255,255,255,0.04);
-            color: rgba(255,255,255,0.35);
-            border: 1px solid rgba(255,255,255,0.06);
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 110px;
+            max-width: 160px;
         }
 
-        /* ─── JOURNEY (HERO) ─── */
-        .journey-hero {
+        .timeline-duration {
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .timeline-track {
+            position: relative;
+            width: 100%;
+            height: 24px;
             display: flex;
             align-items: center;
+        }
+
+        .timeline-line {
             width: 100%;
-            gap: 16px;
+            height: 2.5px;
+            background: #e67e22;
+            border-radius: 2px;
         }
-        .journey-node {
-            text-align: center;
-            flex-shrink: 0;
-            min-width: 80px;
+
+        .timeline-bus-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e67e22;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            box-shadow: 0 0 10px rgba(230, 126, 34, 0.4);
         }
-        .journey-time {
+
+        .timeline-endpoint {
+            position: absolute;
+            right: 0;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #e67e22;
+        }
+
+        /* ─── SEGMENT RIGHT: FARE & BOOK TICKET ─── */
+        .segment-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 170px;
+            gap: 6px;
+        }
+
+        .fare-amount {
             font-size: 26px;
             font-weight: 800;
-            color: #fff;
+            color: #ffffff;
             line-height: 1;
-            letter-spacing: -0.5px;
-            display: block;
-        }
-        .journey-city {
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255,255,255,0.5);
-            display: block;
-            margin-top: 6px;
-            white-space: nowrap;
-        }
-        .journey-arrow {
-            flex: 1;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            min-width: 60px;
-        }
-        .journey-line {
-            width: 100%;
-            height: 2px;
-            background: rgba(255,255,255,0.06);
-            position: relative;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .journey-line-fill {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 60%;
-            background: linear-gradient(90deg, #a2e043, rgba(162, 224, 67, 0.2));
-            border-radius: 2px;
-        }
-        .journey-dot {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            border-radius: 50%;
-            background: #a2e043;
-            z-index: 2;
-            box-shadow: 0 0 12px rgba(162, 224, 67, 0.3);
-        }
-        .journey-dot.start { left: -1px; }
-        .journey-dot.end { 
-            right: -1px; 
-            background: rgba(162, 224, 67, 0.2);
-            box-shadow: none;
-        }
-        .journey-bus-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(11, 12, 16, 0.9);
-            backdrop-filter: blur(8px);
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            color: #a2e043;
-            font-size: 13px;
-            z-index: 3;
-            border: 1.5px solid rgba(162, 224, 67, 0.12);
-            transition: all 0.3s ease;
-        }
-        .ticket-card:hover .journey-bus-icon {
-            border-color: rgba(162, 224, 67, 0.3);
-            box-shadow: 0 0 24px rgba(162, 224, 67, 0.12);
-        }
-        .journey-duration {
-            font-size: 10px;
-            color: rgba(255,255,255,0.2);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            text-align: center;
-            display: block;
-            margin-top: 6px;
-        }
-
-        /* ─── SEAT STATUS ROW ─── */
-        .seat-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            width: 100%;
-        }
-        .seat-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #a2e043;
-            flex-shrink: 0;
-            box-shadow: 0 0 8px rgba(162, 224, 67, 0.3);
-        }
-        .seat-text {
-            font-size: 12px;
-            color: rgba(255,255,255,0.4);
-            font-weight: 500;
-        }
-        .seat-text strong {
-            color: #a2e043;
-            font-weight: 700;
-        }
-
-        /* ─── PRICE ─── */
-        .price-wrap {
-            text-align: center;
-        }
-        .price-label {
-            font-size: 9px;
-            color: rgba(255,255,255,0.25);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            display: block;
             margin-bottom: 4px;
         }
-        .price-amount {
-            font-size: 32px;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            letter-spacing: -0.5px;
-        }
-        .price-amount .currency {
-            font-size: 18px;
-            color: #a2e043;
+
+        .fare-amount .currency {
+            font-size: 22px;
             font-weight: 700;
+            color: #a2e043;
+            margin-right: 2px;
         }
 
-        /* ─── BOOK BUTTON ─── */
-        .btn-book {
-            background: linear-gradient(135deg, #a2e043, #7ab32f);
-            color: #0c1200 !important;
-            width: 130px;
-            height: 42px;
-            box-sizing: border-box;
-            border-radius: 12px;
+        .btn-book-ticket {
+            background: #00a65a;
+            color: #ffffff !important;
             font-weight: 800;
-            font-family: 'Poppins', sans-serif;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 1.2px;
-            text-align: center;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            padding: 12px 28px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
             text-decoration: none !important;
-            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            border: none;
-            cursor: pointer;
-            margin-top: 14px;
-            box-shadow: 0 4px 16px rgba(162, 224, 67, 0.2);
-            position: relative;
-            overflow: hidden;
-            line-height: 1;
-            flex-shrink: 0;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(0, 166, 90, 0.35);
+            text-transform: uppercase;
         }
-        .btn-book::after {
-            content: '→';
-            transition: transform 0.3s ease;
+
+        .btn-book-ticket:hover {
+            background: #00be67;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0, 166, 90, 0.5);
+            color: #ffffff !important;
         }
-        .btn-book:hover {
-            background: linear-gradient(135deg, #b4f056, #8cc93a);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(162, 224, 67, 0.3);
-            color: #0c1200 !important;
+
+        .seats-avail-tag {
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 2px;
         }
-        .btn-book:hover::after {
-            transform: translateX(4px);
+
+        .seats-avail-tag strong {
+            color: #ffffff;
+            font-weight: 800;
         }
 
         /* ─── MINI FORM ─── */
@@ -584,30 +480,35 @@
         }
 
         /* ─── RESPONSIVE ─── */
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .ticket-card {
                 flex-direction: column;
-                min-height: auto;
+                align-items: stretch;
+                padding: 20px;
+                gap: 16px;
             }
-            .segment-left, .segment-middle, .segment-right {
-                width: 100% !important;
-                min-width: 0 !important;
-                max-width: 100% !important;
-                border-right: none;
-                border-bottom: 1px solid rgba(162, 224, 67, 0.15);
-                padding: 18px 20px;
-            }
-            .segment-right { 
-                border-bottom: none; 
-                align-items: center;
-            }
-            .btn-book {
+            .segment-operator {
+                max-width: 100%;
                 width: 100%;
-                max-width: 220px;
             }
-            .journey-hero { flex-wrap: wrap; gap: 10px; }
-            .journey-node { min-width: 65px; }
-            .journey-time { font-size: 22px; }
+            .segment-schedule {
+                border-left: none;
+                border-right: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.06);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                padding: 16px 0;
+                width: 100%;
+            }
+            .segment-action {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+            .btn-book-ticket {
+                width: auto;
+                min-width: 150px;
+            }
             .drawer { width: 100%; right: -100%; padding: 50px 24px; }
             .trip-layout-grid { margin-left: 0; }
         }
@@ -702,71 +603,66 @@
                             @endphp
 
                             <div class="ticket-card" style="--card-index: {{ $index }};">
-                                <div class="card-segment segment-left">
-                                    <div class="bus-icon-wrap">
-                                        <div class="bus-icon-circle">
+                                {{-- 1. LEFT: Operator Logo, Name, Subline, Route --}}
+                                <div class="segment-operator">
+                                    <div class="operator-header">
+                                        <div class="operator-logo">
                                             <i class="fa-solid fa-bus"></i>
                                         </div>
-                                        <div class="bus-meta">
-                                            <span class="bus-name">{{ $trip->bus->bus_name }}</span>
-                                            <span class="bus-coach">Coach {{ $trip->bus->coach_no }}</span>
+                                        <div class="operator-meta">
+                                            <h4 class="operator-title">{{ $trip->bus->bus_name }}</h4>
+                                            <div class="operator-subline">
+                                                Coach {{ $trip->bus->coach_no }} • {{ strtoupper($trip->bus->bus_type) }}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="badge-row">
-                                        @if(strtolower($trip->bus->bus_type) == 'ac')
-                                            <span class="badge badge-ac">AC</span>
-                                            <span class="badge badge-non-ac">Non-AC</span>
-                                        @else
-                                            <span class="badge badge-non-ac">AC</span>
-                                            <span class="badge badge-ac">Non-AC</span>
-                                        @endif
+                                    <div class="operator-route">
+                                        <strong>Route:</strong> {{ $trip->location_from }} - {{ $trip->location_to }}
                                     </div>
                                 </div>
 
-                                <div class="card-segment segment-middle">
-                                    <div class="journey-hero">
-                                        <div class="journey-node">
-                                            <span class="journey-time">{{ $displayStart }}</span>
-                                            <span class="journey-city">{{ $trip->location_from }}</span>
-                                        </div>
-                                        <div class="journey-arrow">
-                                            <div class="journey-line">
-                                                <div class="journey-line-fill"></div>
+                                {{-- 2. MIDDLE: Departure, Progress Timeline, Arrival --}}
+                                <div class="segment-schedule">
+                                    {{-- Departure Node --}}
+                                    <div class="schedule-node departure">
+                                        <span class="schedule-time">{{ $displayStart }}</span>
+                                        <span class="schedule-date">{{ date('D, j M', strtotime($trip->date)) }}</span>
+                                        <span class="schedule-city">{{ $trip->location_from }}</span>
+                                    </div>
+
+                                    {{-- Timeline --}}
+                                    <div class="schedule-timeline">
+                                        <span class="timeline-duration">5h 0m</span>
+                                        <div class="timeline-track">
+                                            <div class="timeline-line"></div>
+                                            <div class="timeline-bus-icon">
+                                                <i class="fa-solid fa-bus"></i>
                                             </div>
-                                            <div class="journey-dot start"></div>
-                                            <div class="journey-dot end"></div>
-                                            <div class="journey-bus-icon">
-                                                <i class="fa-solid fa-shuttle-van"></i>
-                                            </div>
-                                        </div>
-                                        <div class="journey-node">
-                                            <span class="journey-time">{{ $displayEnd }}</span>
-                                            <span class="journey-city">{{ $trip->location_to }}</span>
+                                            <div class="timeline-endpoint"></div>
                                         </div>
                                     </div>
-                                    <div class="journey-duration">≈ 8 hours travel time</div>
 
-                                    <div class="seat-row">
-                                        <div class="seat-dot"></div>
-                                        <span class="seat-text">
-                                            <strong>{{ $availSeats }}</strong> seats available
-                                            <span style="color: rgba(255,255,255,0.2);">· {{ $seatPct }}% full</span>
-                                        </span>
+                                    {{-- Arrival Node --}}
+                                    <div class="schedule-node arrival">
+                                        <span class="schedule-time">{{ $displayEnd }}</span>
+                                        <span class="schedule-date">{{ date('D, j M', strtotime($trip->date)) }}</span>
+                                        <span class="schedule-city">{{ $trip->location_to }}</span>
                                     </div>
                                 </div>
 
-                                <div class="card-segment segment-right">
-                                    <div class="price-wrap">
-                                        <span class="price-label">Starting from</span>
-                                        <div class="price-amount">
-                                            <span class="currency">৳</span>{{ number_format($trip->fare) }}
-                                        </div>
+                                {{-- 3. RIGHT: Fare, Book Button, Available Seats --}}
+                                <div class="segment-action">
+                                    <div class="fare-amount">
+                                        <span class="currency">৳</span>{{ number_format($trip->fare) }}
                                     </div>
                                     @auth
-                                        <a href="{{ route('frontend.bookTrip', $trip->id) }}" class="btn-book">Book</a>
+                                        <a href="{{ route('frontend.bookTrip', $trip->id) }}" class="btn-book-ticket">BOOK TICKET</a>
                                     @else
-                                        <button onclick="toggleDrawer()" class="btn-book">Book</button>
+                                        <button onclick="toggleDrawer()" class="btn-book-ticket">BOOK TICKET</button>
                                     @endauth
+                                    <div class="seats-avail-tag">
+                                        <strong>{{ $availSeats }}</strong> Seat(s) Available
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
