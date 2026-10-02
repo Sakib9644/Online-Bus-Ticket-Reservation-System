@@ -1,3 +1,4 @@
+<div>
     <!-- Custom Seat Limit & Alert Modal -->
     <div id="seat-limit-modal" class="custom-modal-overlay" style="display: none;" onclick="if(event.target === this) closeSeatLimitModal()">
         <div class="custom-modal-card">
