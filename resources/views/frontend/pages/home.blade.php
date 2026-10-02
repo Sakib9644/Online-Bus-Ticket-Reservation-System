@@ -7,10 +7,10 @@
             background: #080808;
             backdrop-filter: blur(28px);
             -webkit-backdrop-filter: blur(28px);
-            border: 1.5px solid rgba(0, 255, 102, 0.35);
+            border: 1.5px solid rgba(162, 224, 67, 0.35);
             border-radius: 24px;
             padding: 24px 28px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 255, 102, 0.15);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95), 0 0 40px rgba(162, 224, 67, 0.15);
             position: relative;
             z-index: 20;
             width: 100%;
@@ -50,8 +50,8 @@
         }
 
         .shohoz-type-option input:checked + .shohoz-radio-dot {
-            border-color: #00ff66;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.6);
+            border-color: #a2e043;
+            box-shadow: 0 0 15px rgba(162, 224, 67, 0.6);
         }
 
         .shohoz-type-option input:checked + .shohoz-radio-dot::after {
@@ -59,8 +59,8 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: #00ff66;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.8);
+            background: #a2e043;
+            box-shadow: 0 0 10px rgba(162, 224, 67, 0.8);
         }
 
         .shohoz-type-label {
@@ -99,15 +99,15 @@
         }
 
         .shohoz-segment:focus-within {
-            border-color: #00ff66;
-            background: rgba(0, 255, 102, 0.04);
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.25);
+            border-color: #a2e043;
+            background: rgba(162, 224, 67, 0.04);
+            box-shadow: 0 0 20px rgba(162, 224, 67, 0.25);
         }
 
         .shohoz-segment-icon {
             font-size: 18px;
-            color: #00ff66;
-            text-shadow: 0 0 12px rgba(0, 255, 102, 0.5);
+            color: #a2e043;
+            text-shadow: 0 0 12px rgba(162, 224, 67, 0.5);
             width: 28px;
             display: flex;
             align-items: center;
@@ -127,7 +127,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: #00ff66;
+            color: #a2e043;
             margin-bottom: 2px;
         }
 
@@ -135,8 +135,8 @@
             font-size: 9px;
             font-weight: 800;
             letter-spacing: 0.8px;
-            color: #00ff66;
-            text-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+            color: #a2e043;
+            text-shadow: 0 0 8px rgba(162, 224, 67, 0.4);
             text-transform: uppercase;
             cursor: pointer;
         }
@@ -174,13 +174,13 @@
 
         .custom-dropdown-wrap.is-open .custom-select-arrow {
             transform: rotate(180deg);
-            color: #00ff66;
+            color: #a2e043;
         }
 
         .custom-dropdown-wrap.is-open {
-            border-color: #00ff66 !important;
-            background: rgba(0, 255, 102, 0.05) !important;
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.25) !important;
+            border-color: #a2e043 !important;
+            background: rgba(162, 224, 67, 0.05) !important;
+            box-shadow: 0 0 20px rgba(162, 224, 67, 0.25) !important;
         }
 
         .custom-select-menu {
@@ -190,10 +190,10 @@
             right: 0;
             min-width: 250px;
             background: #080808;
-            border: 1.5px solid rgba(0, 255, 102, 0.35);
+            border: 1.5px solid rgba(162, 224, 67, 0.35);
             border-radius: 14px;
             padding: 6px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 255, 102, 0.15);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.95), 0 0 25px rgba(162, 224, 67, 0.15);
             max-height: 250px;
             overflow-y: auto;
             z-index: 9999;
@@ -226,12 +226,12 @@
         }
 
         .custom-select-menu::-webkit-scrollbar-thumb {
-            background: rgba(0, 255, 102, 0.3);
+            background: rgba(162, 224, 67, 0.3);
             border-radius: 8px;
         }
 
         .custom-select-menu::-webkit-scrollbar-thumb:hover {
-            background: #00ff66;
+            background: #a2e043;
         }
 
         .custom-select-option {
@@ -254,22 +254,22 @@
         }
 
         .custom-select-option:hover {
-            background: rgba(0, 255, 102, 0.12);
-            color: #00ff66;
+            background: rgba(162, 224, 67, 0.12);
+            color: #a2e043;
         }
 
         .custom-select-option:hover .option-icon {
-            color: #00ff66;
+            color: #a2e043;
         }
 
         .custom-select-option.selected {
-            background: rgba(0, 255, 102, 0.18);
-            color: #00ff66;
+            background: rgba(162, 224, 67, 0.18);
+            color: #a2e043;
             font-weight: 800;
         }
 
         .custom-select-option.selected .option-icon {
-            color: #00ff66;
+            color: #a2e043;
         }
 
         .shohoz-date-input {
@@ -297,23 +297,23 @@
             height: 44px;
             border-radius: 50%;
             background: #0a0a0a;
-            border: 1.5px solid rgba(0, 255, 102, 0.4);
-            color: #00ff66;
+            border: 1.5px solid rgba(162, 224, 67, 0.4);
+            color: #a2e043;
             font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+            box-shadow: 0 0 15px rgba(162, 224, 67, 0.2);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .shohoz-swap-btn:hover {
-            background: #00ff66;
+            background: #a2e043;
             color: #000000;
-            border-color: #00ff66;
+            border-color: #a2e043;
             transform: rotate(180deg) scale(1.12);
-            box-shadow: 0 0 25px rgba(0, 255, 102, 0.65);
+            box-shadow: 0 0 25px rgba(162, 224, 67, 0.65);
         }
 
         /* ─── SEARCH BUTTON ─── */
@@ -324,7 +324,7 @@
         }
 
         .shohoz-search-btn {
-            background: #00ff66 !important;
+            background: #a2e043 !important;
             color: #000000 !important;
             font-weight: 900;
             font-size: 16px;
@@ -340,14 +340,14 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.25s ease;
-            box-shadow: 0 0 25px rgba(0, 255, 102, 0.45);
+            box-shadow: 0 0 25px rgba(162, 224, 67, 0.45);
             white-space: nowrap;
         }
 
         .shohoz-search-btn:hover {
-            background: #33ff85 !important;
+            background: #b5ec58 !important;
             transform: translateY(-2px);
-            box-shadow: 0 0 45px rgba(0, 255, 102, 0.75);
+            box-shadow: 0 0 45px rgba(162, 224, 67, 0.75);
         }
 
         /* ─── RESPONSIVE ─── */
@@ -386,7 +386,7 @@
                     Reimagining Travel</span>
                 <h1 class="syne"
                     style="font-size:clamp(44px,6vw,84px); line-height:1.05; margin-bottom:20px; font-weight:800; color:#fff; letter-spacing: -2px;">
-                    Journey to your <br><span style="color:var(--neon); text-shadow: 0 0 25px rgba(0, 255, 102, 0.55);">Happy Place.</span>
+                    Journey to your <br><span style="color:var(--neon); text-shadow: 0 0 25px rgba(162, 224, 67, 0.55);">Happy Place.</span>
                 </h1>
                 <p
                     style="color:rgba(255,255,255,0.75); font-size:19px; line-height:1.6; max-width: 580px; margin: 0;">
@@ -552,7 +552,7 @@
                                             {{ $dest['name'] }}</h4>
                                         <p style="color:rgba(255,255,255,0.7); font-size:14px; font-weight: 500; margin-bottom: 24px; line-height: 1.4;">{{ $dest['desc'] }}</p>
                                         
-                                        <div style="color: var(--neon); text-shadow: 0 0 10px rgba(0, 255, 102, 0.6); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; transition: gap 0.3s;">
+                                        <div style="color: var(--neon); text-shadow: 0 0 10px rgba(162, 224, 67, 0.6); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; transition: gap 0.3s;">
                                             FIND TRIPS <i class="fa fa-arrow-right" style="font-size: 11px;"></i>
                                         </div>
                                     </div>
