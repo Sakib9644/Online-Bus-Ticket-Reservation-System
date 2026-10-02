@@ -181,6 +181,7 @@
             border-color: #a2e043 !important;
             background: rgba(162, 224, 67, 0.05) !important;
             box-shadow: 0 0 20px rgba(162, 224, 67, 0.25) !important;
+            z-index: 100 !important;
         }
 
         .custom-select-menu {
@@ -188,15 +189,15 @@
             top: calc(100% + 8px);
             left: 0;
             right: 0;
-            min-width: 250px;
-            background: #080808;
-            border: 1.5px solid rgba(162, 224, 67, 0.35);
+            min-width: 260px;
+            background: #090b0e;
+            border: 1.5px solid rgba(162, 224, 67, 0.45);
             border-radius: 14px;
-            padding: 6px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.95), 0 0 25px rgba(162, 224, 67, 0.15);
-            max-height: 250px;
+            padding: 8px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.98), 0 0 30px rgba(162, 224, 67, 0.2);
+            max-height: 280px;
             overflow-y: auto;
-            z-index: 9999;
+            z-index: 99999;
             display: none;
         }
 
@@ -374,7 +375,7 @@
 
     {{-- HERO SECTION WITH SHOHOZ-STYLE SEARCH BAR --}}
     <section
-        style="min-height: 85vh; padding: 120px 40px 90px; position:relative; overflow:hidden; display: flex; align-items: center; background: #0b0d11 url('{{ asset('frontend/images/hero_bg.png') }}') center/cover no-repeat;">
+        style="min-height: 85vh; padding: 120px 40px 100px; position:relative; overflow:visible; z-index: 30; display: flex; align-items: center; background: #0b0d11 url('{{ asset('frontend/images/hero_bg.png') }}') center/cover no-repeat;">
         <div
             style="position:absolute; inset:0; background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.15) 100%), linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 40%, rgba(11, 13, 17, 0.95) 100%); pointer-events:none;">
         </div>
@@ -508,7 +509,7 @@
     </section>
 
     {{-- TOP DESTINATIONS SECTION --}}
-    <section id="destinations" style="padding:100px 40px; background: var(--paper); position: relative; scroll-margin-top: 70px;">
+    <section id="destinations" style="padding:100px 40px; background: var(--paper); position: relative; z-index: 1; scroll-margin-top: 70px;">
         <div
             style="position: absolute; top:0; right:0; width: 400px; height: 400px; background: var(--accent); filter: blur(200px); opacity: 0.03; pointer-events:none;">
         </div>
