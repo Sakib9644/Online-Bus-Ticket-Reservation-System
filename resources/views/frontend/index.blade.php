@@ -18,25 +18,25 @@
     <style>
         :root {
             color-scheme: dark;
-            /* Core Brand Colors - Pure Pitch Black & Electric Neon Green */
+            /* Core Brand Colors - Pure Pitch Black & Neon Lime */
             --paper: #000000; /* Pure Black Foundation */
             --bg-black: #000000;
-            --card-bg: #070707; /* Ultra Deep Obsidian */
-            --accent: #00ff66; /* Vibrant Electric Neon Green */
-            --accent-hover: #33ff85;
-            --neon: #00ff66;
-            --neon-glow: 0 0 20px rgba(0, 255, 102, 0.45);
-            --neon-glow-lg: 0 0 35px rgba(0, 255, 102, 0.7), 0 0 70px rgba(0, 255, 102, 0.25);
+            --card-bg: #070707; /* Deep Obsidian */
+            --accent: #a2e043; /* Neon Lime from original design */
+            --accent-hover: #b5ec58;
+            --neon: #a2e043;
+            --neon-glow: 0 0 20px rgba(162, 224, 67, 0.45);
+            --neon-glow-lg: 0 0 35px rgba(162, 224, 67, 0.7), 0 0 70px rgba(162, 224, 67, 0.25);
 
             /* UI Elements */
             --ink: #ffffff;
             --muted: #94a3b8;
             --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(0, 255, 102, 0.5);
+            --border-hover: rgba(162, 224, 67, 0.5);
 
             /* Seat Status */
             --seat-available: #1e3a8a;
-            --seat-selected: #00ff66;
+            --seat-selected: #a2e043;
             --seat-booked: #dc2626;
             --seat-empty: #0e0e0e;
         }
@@ -84,7 +84,7 @@
         }
         .sb-brand .dot {
             color: var(--neon);
-            text-shadow: 0 0 15px rgba(0, 255, 102, 0.7);
+            text-shadow: 0 0 15px rgba(162, 224, 67, 0.7);
         }
         .sb-logo-icon {
             width: 36px; height: 36px;
@@ -92,7 +92,7 @@
             border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             color: #000; font-size: 16px;
-            box-shadow: 0 0 16px rgba(0, 255, 102, 0.6);
+            box-shadow: 0 0 16px rgba(162, 224, 67, 0.6);
         }
 
         .sb-links {
@@ -421,7 +421,7 @@
         .sb-btn:hover { 
             border-color: var(--neon); 
             color: var(--neon); 
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.3);
+            box-shadow: 0 0 20px rgba(162, 224, 67, 0.3);
             transform: translateY(-1px);
         }
         .sb-btn-accent, .sb-btn-primary { 
@@ -545,10 +545,10 @@
         /* Premium SweetAlert2 Custom Styling */
         .sb-swal-popup {
             background: #080808 !important;
-            border: 1.5px solid rgba(0, 255, 102, 0.35) !important;
+            border: 1.5px solid rgba(162, 224, 67, 0.35) !important;
             border-radius: 26px !important;
             padding: 38px 30px !important;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 45px rgba(0, 255, 102, 0.2) !important;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 45px rgba(162, 224, 67, 0.2) !important;
         }
         .sb-swal-popup .swal2-title {
             color: #ffffff !important;
@@ -612,7 +612,7 @@
             toast: false,
             background: '#080808',
             color: '#ffffff',
-            iconColor: isSuccess ? '#00ff66' : (isWarning ? '#00ff66' : '#ff4d4d'),
+            iconColor: isSuccess ? '#a2e043' : (isWarning ? '#a2e043' : '#ff4d4d'),
             customClass: {
                 popup: 'sb-swal-popup'
             }
