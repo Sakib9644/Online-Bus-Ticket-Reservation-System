@@ -114,8 +114,8 @@
             backdrop-filter: blur(28px);
             -webkit-backdrop-filter: blur(28px);
             border: 1.5px solid rgba(140, 228, 41, 0.38);
-            border-radius: 22px;
-            padding: 16px 20px 20px 20px;
+            border-radius: 24px;
+            padding: 14px 18px;
             box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 25px rgba(140, 228, 41, 0.12);
             position: relative;
             z-index: 9999;
@@ -124,59 +124,6 @@
             margin: 0 auto;
             align-self: center;
             overflow: visible;
-        }
-
-        /* ─── TRIP TYPE TOGGLE (One Way / Round Way) ─── */
-        .search-trip-type-row {
-            display: flex;
-            align-items: center;
-            gap: 22px;
-            padding: 0 4px 14px 4px;
-        }
-
-        .trip-type-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .trip-type-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.35);
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .trip-type-label.active .trip-type-dot {
-            border-color: #8ce429;
-            box-shadow: 0 0 10px rgba(140, 228, 41, 0.4);
-        }
-
-        .trip-type-label.active .trip-type-dot::after {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #8ce429;
-        }
-
-        .trip-type-text {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -0.2px;
-        }
-
-        .trip-type-label:not(.active) .trip-type-text {
-            color: #94a3b8;
-            font-weight: 500;
         }
 
         /* ─── SEARCH MENU HEADER (Where do you want to go? & QUICK SEARCH) ─── */
