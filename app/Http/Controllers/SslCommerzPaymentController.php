@@ -147,6 +147,22 @@ class SslCommerzPaymentController extends Controller
 
         $booking_id = $request->input('value_a');
         $ids = explode(',', $booking_id);
+
+        $activeBookings = Booking::whereIn('id', $ids)
+            ->where(function ($q) {
+                $q->whereNull('expires_at')
+                  ->orWhere('expires_at', '>', now());
+            })
+            ->get();
+
+        if ($activeBookings->isNotEmpty()) {
+            DB::table('bookings')
+                ->whereIn('id', $activeBookings->pluck('id'))
+                ->update(['status' => 'Pending']);
+
+            return redirect()->route('booking.details')->with('error', 'Payment was not completed, but your seats are held for 15 minutes! You can retry payment anytime from My Bookings.');
+        }
+
         DB::table('bookings')
             ->whereIn('id', $ids)
             ->update([
@@ -154,7 +170,7 @@ class SslCommerzPaymentController extends Controller
                 'expires_at' => null,
             ]);
 
-        return redirect()->route('frontend.home')->with('error', 'Payment Failed');
+        return redirect()->route('booking.details')->with('error', 'Payment failed and reservation hold expired.');
     }
 
     public function cancel(Request $request)
@@ -167,6 +183,22 @@ class SslCommerzPaymentController extends Controller
 
         $booking_id = $request->input('value_a');
         $ids = explode(',', $booking_id);
+
+        $activeBookings = Booking::whereIn('id', $ids)
+            ->where(function ($q) {
+                $q->whereNull('expires_at')
+                  ->orWhere('expires_at', '>', now());
+            })
+            ->get();
+
+        if ($activeBookings->isNotEmpty()) {
+            DB::table('bookings')
+                ->whereIn('id', $activeBookings->pluck('id'))
+                ->update(['status' => 'Pending']);
+
+            return redirect()->route('booking.details')->with('message', 'Payment was cancelled, but your seats are held in My Bookings for 15 minutes so you can finish paying.');
+        }
+
         DB::table('bookings')
             ->whereIn('id', $ids)
             ->update([
@@ -174,7 +206,7 @@ class SslCommerzPaymentController extends Controller
                 'expires_at' => null,
             ]);
 
-        return redirect()->route('frontend.home')->with('error', 'Payment Canceled');
+        return redirect()->route('booking.details')->with('error', 'Payment window expired and reservation was released.');
     }
 
     public function ipn(Request $request)

@@ -55,6 +55,9 @@
                             <a href="{{ route('pay.sslcommerz', ['id' => $id]) }}" id="proceed-payment-btn" class="sb-btn" style="width: 100%; display: flex; font-size:16px; padding: 16px; background: #a2e043; color: #0d1a09; font-weight: 800; border-radius: 12px; text-decoration: none; justify-content: center; border: none; align-items: center; transition: background 0.2s;">
                                 <i class="fa fa-lock ms-0 me-2" style="font-size: 14px;"></i> Proceed to Pay ৳{{ $totalAmount }}
                             </a>
+                            <a href="{{ route('booking.details') }}" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px; margin-top:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#cbd5e1; font-size:13px; font-weight:700; text-decoration:none; transition:all 0.2s;">
+                                <i class="fa fa-clock"></i> Pay Later (Held in My Bookings for 15 mins)
+                            </a>
                             <p class="text-center mt-3" style="font-size:12px; color:var(--muted); text-align: center; margin-top: 16px;">
                                 Secure payment powered by SSLCommerz
                             </p>
