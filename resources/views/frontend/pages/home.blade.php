@@ -531,10 +531,7 @@
                     style="font-size:clamp(44px,6vw,84px); line-height:1.05; margin-bottom:20px; font-weight:800; color:#fff; letter-spacing: -2px;">
                     Journey to your <br><span style="color:var(--neon); text-shadow: 0 0 25px rgba(162, 224, 67, 0.55);">Happy Place.</span>
                 </h1>
-                <p
-                    style="color:rgba(255,255,255,0.75); font-size:19px; line-height:1.6; max-width: 580px; margin: 0;">
-                    Premium intercity bus reservations across Bangladesh. Experience comfort, safety, and priority at every
-                    mile.</p>
+              
             </div>
 
             {{-- SHOHOZ-STYLE FLOATING SEARCH WIDGET --}}

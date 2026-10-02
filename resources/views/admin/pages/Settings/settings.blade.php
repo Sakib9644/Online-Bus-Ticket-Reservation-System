@@ -32,20 +32,72 @@
                 </div>
                 <div>
                     <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">Website Images & Media</h3>
-                    <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Upload your custom Hero Background banner and Website Logo</p>
+                    <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Upload Hero Slider images, a fallback banner, and your Website Logo</p>
                 </div>
             </div>
 
+            {{-- Hero Slider Management --}}
+            <div style="margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <div>
+                        <h4 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0;"><i class="fas fa-layer-group" style="color: var(--accent); margin-right: 6px;"></i>Hero Slider Images</h4>
+                        <p style="font-size: 12px; color: var(--muted); margin: 2px 0 0 0;">Add multiple images for an auto-rotating hero banner. If no sliders, the static fallback image below is used.</p>
+                    </div>
+                </div>
+
+                {{-- Existing Slider Images --}}
+                @php
+                    $existingSliders = \App\Models\HeroSlider::orderBy('sort_order')->get();
+                @endphp
+                @if($existingSliders->count() > 0)
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 16px;">
+                        @foreach($existingSliders as $slide)
+                            <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border); position: relative; background: #0b0d11;">
+                                <img src="{{ asset($slide->image_path) }}" alt="Slider {{ $slide->id }}" style="width: 100%; height: 120px; object-fit: cover;">
+                                <div style="padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+                                    <span style="font-size: 11px; font-weight: 700; color: #475569;">
+                                        #{{ $loop->iteration }}
+                                        @if(!$slide->is_active) <span style="color:#ef4444;">(Disabled)</span> @endif
+                                    </span>
+                                    <a href="{{ route('admin.slider.delete', $slide->id) }}" onclick="return confirm('Delete this slider image?')" style="font-size: 11px; color: #ef4444; font-weight: 700; text-decoration: none;">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div style="background: #f0f9ff; border: 1px dashed #93c5fd; border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 16px;">
+                        <i class="fas fa-image" style="font-size: 24px; color: #93c5fd; margin-bottom: 6px; display: block;"></i>
+                        <span style="font-size: 13px; color: #3b82f6; font-weight: 600;">No slider images yet. The static hero background is used instead.</span>
+                    </div>
+                @endif
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div class="admin-form-group">
+                        <label class="admin-label">Add New Slider Image</label>
+                        <input type="file" name="slider_images[]" accept="image/*" class="admin-input" multiple>
+                        <span style="font-size: 11px; color: var(--muted); margin-top: 4px; display: block;">Select one or more images (1920x1080px recommended). Max 5MB each.</span>
+                    </div>
+                    <div class="admin-form-group">
+                        <label class="admin-label">Slider Titles (Optional, one per line)</label>
+                        <textarea name="slider_titles" rows="2" class="admin-input" placeholder="Title for slide 1&#10;Title for slide 2"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--border); margin: 0 0 20px 0;">
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                {{-- Hero Background Image --}}
+                {{-- Fallback Hero Background Image --}}
                 <div class="admin-form-group">
-                    <label class="admin-label" style="font-weight: 700;">Hero Banner Background Image</label>
+                    <label class="admin-label" style="font-weight: 700;">Fallback Hero Background (used when no sliders)</label>
                     <div style="margin-bottom: 12px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #0b0d11; height: 160px; display: flex; align-items: center; justify-content: center; position: relative;">
                         @php
                             $currentHero = setting('hero_image') ? asset(setting('hero_image')) : asset('frontend/images/hero_bg.png');
                         @endphp
                         <img src="{{ $currentHero }}" alt="Hero Background Preview" id="heroPreviewImg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600;">Current Hero Banner</div>
+                        <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600;">Fallback Banner</div>
                     </div>
                     <input type="file" name="hero_image" accept="image/*" class="admin-input" onchange="previewImage(this, 'heroPreviewImg')">
                     <span style="font-size: 11px; color: var(--muted); margin-top: 4px; display: block;">Recommended size: 1920x1080px (JPG, PNG, WebP). Max 5MB.</span>
