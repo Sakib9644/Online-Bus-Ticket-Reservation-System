@@ -76,6 +76,7 @@ class SettingController extends Controller
             'sslcommerz_active',
             'sslcommerz_sandbox',
             'bkash_active',
+            'bkash_sandbox',
             'nagad_active',
             'rocket_active',
         ];
@@ -104,7 +105,11 @@ class SettingController extends Controller
             // SSLCommerz
             'sslcommerz_store_id',
             'sslcommerz_store_password',
-            // bKash
+            // bKash API credentials
+            'bkash_app_key',
+            'bkash_app_secret',
+            'bkash_username',
+            'bkash_password',
             'bkash_number',
             'bkash_type',
             'bkash_instructions',

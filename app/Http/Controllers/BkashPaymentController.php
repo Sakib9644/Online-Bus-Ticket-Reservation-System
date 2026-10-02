@@ -14,16 +14,20 @@ use Illuminate\Support\Facades\Log;
 class BkashPaymentController extends Controller
 {
     /**
-     * bKash Tokenized Checkout Sandbox Credentials
+     * bKash Tokenized Checkout Credentials — read from admin Settings.
      */
     private function getConfig()
     {
+        $isSandbox = setting('bkash_sandbox', '1') == '1';
+
         return [
-            'base_url'   => 'https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout',
-            'username'   => 'sandboxTokenizedUser02',
-            'password'   => 'sandboxTokenizedUser02@12345',
-            'app_key'    => '4f6o0cjiki2rfm34kfdadl1eqq',
-            'app_secret' => '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b',
+            'base_url'   => $isSandbox
+                ? 'https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout'
+                : 'https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout',
+            'username'   => setting('bkash_username', 'sandboxTokenizedUser02'),
+            'password'   => setting('bkash_password', 'sandboxTokenizedUser02@12345'),
+            'app_key'    => setting('bkash_app_key', '4f6o0cjiki2rfm34kfdadl1eqq'),
+            'app_secret' => setting('bkash_app_secret', '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b'),
         ];
     }
 
