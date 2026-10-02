@@ -100,7 +100,7 @@
             border: 1.5px solid rgba(255, 255, 255, 0.14);
             border-radius: 28px;
             padding: 16px 20px 16px 20px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(163, 230, 53, 0.12);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 10px 30px rgba(0, 0, 0, 0.75), 0 0 30px rgba(163, 230, 53, 0.1);
             position: relative;
             z-index: 9999;
             width: 100%;
