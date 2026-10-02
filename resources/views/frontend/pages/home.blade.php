@@ -4,15 +4,17 @@
     <style>
         /* ─── SHOHOZ-STYLE FLOATING SEARCH WIDGET (PURE BLACK & NEON - COMPACT) ─── */
         .shohoz-search-card {
-            background: transparent;
-            border: none;
-            border-radius: 0;
-            padding: 0;
-            box-shadow: none;
+            background: #080808;
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1.5px solid rgba(162, 224, 67, 0.3);
+            border-radius: 18px;
+            padding: 16px 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(162, 224, 67, 0.08);
             position: relative;
             z-index: 20;
             width: 100%;
-            max-width: none;
+            max-width: 1080px;
             margin: 0;
         }
 
@@ -78,10 +80,10 @@
             display: grid;
             grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1.25fr) minmax(0, 1.15fr) auto;
             align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
+            gap: 8px;
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 13px;
             padding: 6px;
         }
 
@@ -643,8 +645,8 @@
                         </div>
                     </div>{{-- /.shohoz-search-grid --}}
                 </form>
-            </div>{{-- /.max-width --}}
-        </div>{{-- /.hero-search-bar-strip --}}
+            </div>{{-- /.shohoz-search-card --}}
+        </div>{{-- /.container --}}
     </section>
 
     {{-- TOP DESTINATIONS SECTION --}}
