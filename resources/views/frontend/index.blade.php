@@ -486,6 +486,46 @@
         ::-webkit-scrollbar-track { background: var(--paper); }
         ::-webkit-scrollbar-thumb { background: #2a2f3a; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #3a3f4a; }
+
+        /* Premium SweetAlert2 Custom Styling */
+        .sb-swal-popup {
+            background: linear-gradient(145deg, #151b24, #0f131a) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+            border-radius: 26px !important;
+            padding: 38px 30px !important;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.85), 0 0 40px rgba(162, 224, 67, 0.1) !important;
+        }
+        .sb-swal-popup .swal2-title {
+            color: #ffffff !important;
+            font-family: 'Syne', sans-serif !important;
+            font-size: 26px !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.5px !important;
+            margin-bottom: 14px !important;
+        }
+        .sb-swal-popup .swal2-html-container {
+            color: #f1f5f9 !important;
+            font-size: 18px !important;
+            line-height: 1.6 !important;
+            font-weight: 500 !important;
+            margin: 12px 0 24px !important;
+        }
+        .sb-swal-popup .swal2-confirm {
+            background: linear-gradient(135deg, #a2e043, #7ab32f) !important;
+            color: #0c1200 !important;
+            font-weight: 800 !important;
+            font-size: 15px !important;
+            border-radius: 12px !important;
+            padding: 14px 34px !important;
+            box-shadow: 0 6px 20px rgba(162, 224, 67, 0.3) !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+        }
+        .sb-swal-popup .swal2-confirm:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 25px rgba(162, 224, 67, 0.45) !important;
+        }
     </style>
 </head>
 <body>
@@ -500,19 +540,25 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
     window.addEventListener('notify', event => {
+        const type = event.detail.type || 'info';
+        const isSuccess = type === 'success';
+        const isWarning = type === 'warning';
+
         Swal.fire({
-            icon: event.detail.type,
-            title: event.detail.type === 'success' ? 'Success!' : 'Oops!',
+            icon: type,
+            title: isSuccess ? 'Success!' : (isWarning ? 'Notice' : 'Attention'),
             text: event.detail.message,
-            timer: 3000,
-            showConfirmButton: false,
+            timer: isSuccess ? 3000 : 6000,
+            timerProgressBar: true,
+            showConfirmButton: !isSuccess,
+            confirmButtonText: 'Understood',
             position: 'center',
             toast: false,
-            background: '#1c201b',
+            background: '#151b24',
             color: '#ffffff',
-            iconColor: event.detail.type === 'success' ? '#a2e043' : '#ff4d4d',
+            iconColor: isSuccess ? '#a2e043' : (isWarning ? '#fbbf24' : '#ff4d4d'),
             customClass: {
-                popup: 'sb-swal-popup' /* Fallback if we need to style border-radius later */
+                popup: 'sb-swal-popup'
             }
         });
     });

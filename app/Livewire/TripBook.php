@@ -43,6 +43,13 @@ class TripBook extends Component
 
     public function updatedSelectedSeats($value)
     {
+        if (count($this->selectedSeats) > 6) {
+            $this->selectedSeats = array_slice($this->selectedSeats, 0, 6);
+            $this->dispatch('seat-limit-exceeded', [
+                'message' => 'You cannot select more than 6 seats per booking.'
+            ]);
+        }
+
         $this->totalPrice = count($this->selectedSeats) * $this->trip->fare;
     }
 
@@ -81,12 +88,22 @@ class TripBook extends Component
             return;
         }
 
+        if (count($this->selectedSeats) > 6) {
+            $this->selectedSeats = array_slice($this->selectedSeats, 0, 6);
+            $this->dispatch('seat-limit-exceeded', [
+                'message' => 'You cannot select more than 6 seats per booking.'
+            ]);
+            return;
+        }
+
         $currentBookingCount = $this->activeSeatLockQuery()
             ->where('user_id', auth()->id())
             ->count();
 
-        if (($currentBookingCount + count($this->selectedSeats)) > 7) {
-            $this->dispatch('notify', type: 'error', message: "You cannot book more than 7 seats for this trip. (You already have $currentBookingCount seats, and you selected " . count($this->selectedSeats) . " more)");
+        if (($currentBookingCount + count($this->selectedSeats)) > 6) {
+            $this->dispatch('seat-limit-exceeded', [
+                'message' => "You cannot have more than 6 total seats booked for this trip. (You already have $currentBookingCount seat(s) booked, and you selected " . count($this->selectedSeats) . " more)."
+            ]);
             return;
         }
 
