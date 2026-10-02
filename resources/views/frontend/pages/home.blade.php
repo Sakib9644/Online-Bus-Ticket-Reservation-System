@@ -563,6 +563,12 @@
         {{-- Clip wrapper --}}
         <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #070907 url(\'' . $heroBackground . '\') center/cover no-repeat;' : '' }}"></div>
 
+        {{-- Background black shadow overlay --}}
+        <div style="position:absolute; inset:0; pointer-events:none; z-index:1;
+            background:
+                linear-gradient(to bottom, rgba(5,7,5,0.55) 0%, rgba(5,7,5,0.2) 40%, rgba(5,7,5,0.75) 100%),
+                linear-gradient(to right, rgba(5,7,5,0.45) 0%, transparent 60%);"></div>
+
         {{-- Center content container (Clean, centered search widget) --}}
         <div style="position:relative; z-index: 9999; width:100%; max-width:1120px; margin:0 auto; padding: 100px 24px 60px; display:flex; flex-direction:column; align-items:center;">
 
