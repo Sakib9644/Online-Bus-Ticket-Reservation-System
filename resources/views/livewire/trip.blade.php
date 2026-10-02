@@ -79,23 +79,25 @@
         }
         .sidebar-title i { color: #a2e043; }
 
-        /* ─── TRIP CARD (TRUE GLASS WITH VISIBLE BORDER) ─── */
+        /* ─── TRIP CARD (PURE BLACK & NEON GLOW) ─── */
         /* ─── SHOHOZ / BUSBD STYLE TICKET CARD ─── */
         .ticket-card {
             position: relative;
-            background: #11141a;
-            border: 1.5px solid rgba(255, 255, 255, 0.09);
-            border-radius: 16px;
+            background: #080808;
+            border: 1.5px solid rgba(162, 224, 67, 0.35);
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 22px 26px;
+            padding: 20px 24px;
             margin-bottom: 16px;
-            gap: 20px;
+            gap: 16px;
             transition: all 0.25s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(162, 224, 67, 0.06);
             animation: cardIn 0.4s ease-out both;
             animation-delay: calc(var(--card-index, 0) * 0.05s);
+            box-sizing: border-box;
+            width: 100%;
         }
 
         @keyframes cardIn {
@@ -104,106 +106,119 @@
         }
 
         .ticket-card:hover {
-            border-color: rgba(162, 224, 67, 0.45);
+            border-color: #a2e043;
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(162, 224, 67, 0.12);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.95), 0 0 30px rgba(162, 224, 67, 0.25);
         }
 
         /* ─── SEGMENT LEFT: OPERATOR & ROUTE ─── */
         .segment-operator {
-            flex: 0 0 280px;
-            max-width: 280px;
-            min-width: 240px;
+            flex: 0 1 220px;
+            min-width: 170px;
+            max-width: 240px;
         }
 
         .operator-header {
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 8px;
+            gap: 12px;
+            margin-bottom: 6px;
         }
 
         .operator-logo {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
-            background: rgba(239, 68, 68, 0.12);
-            border: 1.5px solid rgba(239, 68, 68, 0.35);
-            color: #ef4444;
+            background: rgba(162, 224, 67, 0.12);
+            border: 1.5px solid rgba(162, 224, 67, 0.35);
+            color: #a2e043;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(162, 224, 67, 0.15);
         }
 
         .operator-title {
-            font-size: 19px;
+            font-size: 17px;
             font-weight: 800;
             color: #ffffff;
-            margin: 0 0 3px 0;
+            margin: 0 0 2px 0;
             line-height: 1.2;
             letter-spacing: -0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .operator-subline {
-            font-size: 13px;
+            font-size: 12px;
             color: #94a3b8;
             font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .operator-route {
-            font-size: 12px;
+            font-size: 11px;
             color: #8e99aa;
-            line-height: 1.4;
-            margin-top: 5px;
+            line-height: 1.35;
+            margin-top: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .operator-route strong {
-            color: #cbd5e1;
+            color: #a2e043;
             font-weight: 700;
         }
 
         /* ─── SEGMENT MIDDLE: TIMELINE & SCHEDULE ─── */
         .segment-schedule {
-            flex: 1;
+            flex: 1 1 auto;
+            min-width: 0;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 20px;
-            padding: 0 24px;
-            border-left: 1px solid rgba(255, 255, 255, 0.07);
-            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0 16px;
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .schedule-node {
             display: flex;
             flex-direction: column;
-            min-width: 105px;
+            flex-shrink: 0;
+            min-width: 85px;
         }
 
         .schedule-time {
-            font-size: 22px;
+            font-size: 19px;
             font-weight: 800;
             color: #ffffff;
             line-height: 1.1;
         }
 
         .schedule-date {
-            font-size: 12px;
+            font-size: 11px;
             color: #94a3b8;
             font-weight: 600;
             margin: 3px 0 2px;
         }
 
         .schedule-city {
-            font-size: 13px;
+            font-size: 12px;
             color: #cbd5e1;
             font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 135px;
+            max-width: 105px;
         }
 
         /* Shohoz Journey Timeline Progress Bar */
@@ -211,31 +226,33 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1;
-            min-width: 110px;
-            max-width: 160px;
+            flex: 1 1 auto;
+            min-width: 60px;
+            max-width: 130px;
         }
 
         .timeline-duration {
-            font-size: 12px;
-            color: #94a3b8;
-            font-weight: 600;
-            margin-bottom: 6px;
+            font-size: 11px;
+            color: #a2e043;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
         }
 
         .timeline-track {
             position: relative;
             width: 100%;
-            height: 24px;
+            height: 20px;
             display: flex;
             align-items: center;
         }
 
         .timeline-line {
             width: 100%;
-            height: 2.5px;
-            background: #e67e22;
+            height: 2px;
+            background: #a2e043;
             border-radius: 2px;
+            box-shadow: 0 0 8px rgba(162, 224, 67, 0.5);
         }
 
         .timeline-bus-icon {
@@ -243,60 +260,63 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
-            background: #e67e22;
-            color: #ffffff;
+            background: #a2e043;
+            color: #000000;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
-            box-shadow: 0 0 10px rgba(230, 126, 34, 0.4);
+            font-size: 9px;
+            box-shadow: 0 0 12px rgba(162, 224, 67, 0.7);
         }
 
         .timeline-endpoint {
             position: absolute;
             right: 0;
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            background: #e67e22;
+            background: #a2e043;
+            box-shadow: 0 0 6px rgba(162, 224, 67, 0.7);
         }
 
-        /* ─── SEGMENT RIGHT: FARE & BOOK TICKET ─── */
+        /* ─── SEGMENT RIGHT: FARE & BOOK TICKET (NEON BUTTON) ─── */
         .segment-action {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-width: 170px;
+            flex: 0 0 145px;
+            min-width: 145px;
             gap: 6px;
         }
 
         .fare-amount {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
             color: #ffffff;
             line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .fare-amount .currency {
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 800;
             color: #a2e043;
             margin-right: 2px;
+            text-shadow: 0 0 10px rgba(162, 224, 67, 0.5);
         }
 
         .btn-book-ticket {
-            background: #00a65a;
-            color: #ffffff !important;
-            font-weight: 800;
-            font-size: 14px;
-            letter-spacing: 0.5px;
-            padding: 12px 28px;
-            border-radius: 8px;
+            background: #a2e043 !important;
+            color: #000000 !important;
+            font-weight: 900;
+            font-size: 13px;
+            letter-spacing: 0.8px;
+            padding: 10px 18px;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
             text-decoration: none !important;
@@ -304,28 +324,29 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 14px rgba(0, 166, 90, 0.35);
+            transition: all 0.25s ease;
+            box-shadow: 0 0 20px rgba(162, 224, 67, 0.4);
             text-transform: uppercase;
         }
 
         .btn-book-ticket:hover {
-            background: #00be67;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(0, 166, 90, 0.5);
-            color: #ffffff !important;
+            background: #b5ec58 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(162, 224, 67, 0.8);
+            color: #000000 !important;
         }
 
         .seats-avail-tag {
-            font-size: 12px;
+            font-size: 11px;
             color: #94a3b8;
             font-weight: 600;
             text-align: center;
             margin-top: 2px;
+            white-space: nowrap;
         }
 
         .seats-avail-tag strong {
-            color: #ffffff;
+            color: #a2e043;
             font-weight: 800;
         }
 
@@ -480,7 +501,7 @@
         }
 
         /* ─── RESPONSIVE ─── */
-        @media (max-width: 992px) {
+        @media (max-width: 1080px) {
             .ticket-card {
                 flex-direction: column;
                 align-items: stretch;
@@ -494,8 +515,8 @@
             .segment-schedule {
                 border-left: none;
                 border-right: none;
-                border-top: 1px solid rgba(255, 255, 255, 0.06);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
                 padding: 16px 0;
                 width: 100%;
             }
@@ -504,6 +525,7 @@
                 justify-content: space-between;
                 align-items: center;
                 width: 100%;
+                flex: 1 1 100%;
             }
             .btn-book-ticket {
                 width: auto;
