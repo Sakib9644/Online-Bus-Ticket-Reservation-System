@@ -57,57 +57,126 @@
         }
 
         .hero-brand-eyebrow {
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #a3e635;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
+        }
+
+        .eyebrow-badge {
+            display: inline-flex;
+            align-items: center;
             gap: 8px;
+            padding: 6px 16px;
+            background: rgba(18, 24, 28, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            color: #ffffff;
+            text-transform: uppercase;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+        }
+
+        .eyebrow-badge i {
+            color: #f59e0b;
+            font-size: 11px;
         }
 
         .hero-brand-title {
             margin: 0 0 14px 0;
-            font-size: 52px;
+            font-size: 56px;
             font-weight: 900;
             color: #ffffff;
-            line-height: 1.12;
-            letter-spacing: -0.8px;
+            line-height: 1.08;
+            letter-spacing: -1px;
             font-family: inherit;
+            text-shadow: 0 3px 18px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.9);
         }
 
         .hero-brand-title .highlight {
-            color: #a3e635;
+            color: #8ce429;
         }
 
         .hero-brand-subtitle {
             margin: 0;
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.85);
+            font-size: 15.5px;
+            color: rgba(255, 255, 255, 0.88);
             font-weight: 400;
             line-height: 1.55;
-            max-width: 580px;
+            max-width: 600px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
         }
 
-        /* ─── SLEEK PILL SEARCH BAR ─── */
-        /* ─── SLEEK SEARCH CARD WITH HEADER ─── */
+        /* ─── SLEEK SEARCH CARD WITH GREEN BORDER ─── */
         .shohoz-search-card {
-            background: rgba(14, 25, 30, 0.88);
+            background: rgba(8, 14, 11, 0.94);
             backdrop-filter: blur(28px);
             -webkit-backdrop-filter: blur(28px);
-            border: 1.5px solid rgba(255, 255, 255, 0.14);
-            border-radius: 28px;
-            padding: 16px 20px 16px 20px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 10px 30px rgba(0, 0, 0, 0.75), 0 0 30px rgba(163, 230, 53, 0.1);
+            border: 1.5px solid rgba(140, 228, 41, 0.38);
+            border-radius: 22px;
+            padding: 16px 20px 20px 20px;
+            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 25px rgba(140, 228, 41, 0.12);
             position: relative;
             z-index: 9999;
             width: 100%;
-            max-width: 1080px;
+            max-width: 1100px;
             margin: 0 auto;
             align-self: center;
             overflow: visible;
+        }
+
+        /* ─── TRIP TYPE TOGGLE (One Way / Round Way) ─── */
+        .search-trip-type-row {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 0 4px 14px 4px;
+        }
+
+        .trip-type-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .trip-type-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .trip-type-label.active .trip-type-dot {
+            border-color: #8ce429;
+            box-shadow: 0 0 10px rgba(140, 228, 41, 0.4);
+        }
+
+        .trip-type-label.active .trip-type-dot::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #8ce429;
+        }
+
+        .trip-type-text {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.2px;
+        }
+
+        .trip-type-label:not(.active) .trip-type-text {
+            color: #94a3b8;
+            font-weight: 500;
         }
 
         /* ─── SEARCH MENU HEADER (Where do you want to go? & QUICK SEARCH) ─── */
@@ -400,26 +469,31 @@
         }
 
         .shohoz-search-btn {
-            width: 60px;
             height: 60px;
-            border-radius: 20px;
-            background: #a3e635 !important;
+            padding: 0 26px;
+            border-radius: 14px;
+            background: #8ce429 !important;
             color: #0c1a05 !important;
             border: none;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            transition: all 0.2s ease;
-            box-shadow: 0 6px 20px rgba(163, 230, 53, 0.4);
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 18px rgba(140, 228, 41, 0.4);
             flex-shrink: 0;
+            white-space: nowrap;
+            transition: all 0.2s ease;
         }
 
         .shohoz-search-btn:hover {
-            background: #bbf44e !important;
-            transform: scale(1.06);
-            box-shadow: 0 8px 25px rgba(163, 230, 53, 0.65);
+            background: #9ff23d !important;
+            transform: scale(1.03);
+            box-shadow: 0 6px 22px rgba(140, 228, 41, 0.6);
         }
 
         /* ─── CUSTOM DROPDOWN MENU ─── */
@@ -692,19 +766,21 @@
         {{-- Clip wrapper --}}
         <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #070907 url(\'' . $heroBackground . '\') center/cover no-repeat;' : '' }}"></div>
 
-        {{-- Background shadow overlay: rich shadow coming from bottom --}}
+        {{-- Background shadow overlay: cinematic lighting matching reference image --}}
         <div style="position:absolute; inset:0; pointer-events:none; z-index:1;
             background:
-                linear-gradient(to top, #070907 0%, rgba(7, 9, 7, 0.95) 18%, rgba(7, 9, 7, 0.7) 40%, rgba(7, 9, 7, 0.25) 65%, transparent 85%),
-                linear-gradient(to bottom, rgba(7, 9, 7, 0.6) 0%, rgba(7, 9, 7, 0.15) 30%, transparent 55%),
-                linear-gradient(to right, rgba(7, 9, 7, 0.45) 0%, transparent 55%);"></div>
+                linear-gradient(to top, #070907 0%, rgba(7, 9, 7, 0.9) 16%, rgba(7, 9, 7, 0.48) 35%, transparent 65%),
+                linear-gradient(to bottom, rgba(5, 10, 7, 0.55) 0%, rgba(5, 10, 7, 0.18) 32%, transparent 60%),
+                linear-gradient(to right, rgba(5, 10, 7, 0.5) 0%, rgba(5, 10, 7, 0.15) 38%, transparent 65%);"></div>
 
         {{-- TOP LEFT TEXT CONTAINER --}}
         <div class="hero-top-left-wrap">
             <div class="hero-brand-header">
-                <div class="hero-brand-eyebrow"><i class="fa-solid fa-circle-dot" style="font-size: 8px;"></i> Online Bus Ticket Reservation</div>
-                <h1 class="hero-brand-title">Explore More<br>with <span class="highlight">Every Journey</span></h1>
-                <p class="hero-brand-subtitle">Book your bus tickets easily, get the best prices, and travel to your favorite destinations.</p>
+                <div class="hero-brand-eyebrow">
+                    <span class="eyebrow-badge"><i class="fa-solid fa-plane-departure"></i> REIMAGINING TRAVEL</span>
+                </div>
+                <h1 class="hero-brand-title">Journey to your<br><span class="highlight">Happy Place.</span></h1>
+                <p class="hero-brand-subtitle">Premium Intercity bus reservations across Bangladesh.<br>Experience comfort, safety, and priority at every mile.</p>
             </div>
         </div>
 
@@ -712,21 +788,8 @@
         <div class="hero-center-search-wrap">
             <div class="shohoz-search-card">
 
-                {{-- SEARCH MENU TOP HEADER --}}
-                <div class="search-menu-header">
-                    <div class="search-menu-title-wrap">
-                        <div class="search-menu-icon-circle">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        <div class="search-menu-text">
-                            <h3 class="search-menu-title">Where do you want to go?</h3>
-                            <p class="search-menu-subtitle">Find the best routes, plan your journey</p>
-                        </div>
-                    </div>
-                    <div class="search-menu-badge">
-                        <i class="fa-solid fa-bolt"></i> QUICK SEARCH
-                    </div>
-                </div>
+                {{-- TRIP TYPE TOGGLE: ONE WAY / ROUND WAY --}}
+              
 
                 <form action="{{ route('frontend.reserve') }}" method="GET" id="heroSearchForm" style="margin: 0; width: 100%;">
                     
@@ -739,7 +802,7 @@
                             </div>
                             <div class="shohoz-segment-content">
                                 <div class="shohoz-segment-header">
-                                    <span class="shohoz-segment-label">From</span>
+                                    <span class="shohoz-segment-label">FROM <span style="color:#ef4444">*</span></span>
                                     <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
                                 <input type="hidden" name="from" id="hero-origin-val" value="{{ request('from') }}">
@@ -788,7 +851,7 @@
                             </div>
                             <div class="shohoz-segment-content">
                                 <div class="shohoz-segment-header">
-                                    <span class="shohoz-segment-label">To</span>
+                                    <span class="shohoz-segment-label">TO <span style="color:#ef4444">*</span></span>
                                     <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
                                 <input type="hidden" name="to" id="hero-dest-val" value="{{ request('to') }}">
@@ -830,7 +893,8 @@
                             </div>
                             <div class="shohoz-segment-content">
                                 <div class="shohoz-segment-header">
-                                    <span class="shohoz-segment-label">Date</span>
+                                    <span class="shohoz-segment-label">JOURNEY DATE <span style="color:#ef4444">*</span></span>
+                                    <span style="font-size: 10px; font-weight: 800; color: #8ce429; cursor: pointer; letter-spacing: 0.3px;">+ ADD RETURN</span>
                                     <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
                                 <input type="date" name="date" id="heroDateInput" class="shohoz-date-input-hidden" value="{{ request('date', date('Y-m-d')) }}" min="{{ date('Y-m-d') }}">
@@ -842,10 +906,11 @@
                             </div>
                         </div>
 
-                        {{-- SEARCH BUTTON (Squircle with Magnifying Glass) --}}
+                        {{-- SEARCH BUTTON (Rectangular with Text and Icon) --}}
                         <div class="shohoz-btn-wrap">
                             <button type="submit" class="shohoz-search-btn" title="Search Buses">
                                 <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>SEARCH</span>
                             </button>
                         </div>
                     </div>{{-- /.shohoz-search-grid --}}
@@ -1164,6 +1229,14 @@
                     }, 300);
                 });
             }
+
+            // Trip Type Toggle (One Way / Round Way)
+            document.querySelectorAll('.trip-type-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    document.querySelectorAll('.trip-type-label').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
 
             // ─── VALIDATE 3 REQUIRED FIELDS (FROM, TO, DATE) ───
             const heroSearchForm = document.getElementById('heroSearchForm');
