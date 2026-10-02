@@ -79,23 +79,24 @@
         }
         .sidebar-title i { color: #a2e043; }
 
-        /* ─── TRIP CARD (TRUE GLASS) ─── */
+        /* ─── TRIP CARD (TRUE GLASS WITH VISIBLE BORDER) ─── */
         .ticket-card {
             position: relative;
-            background: rgba(255,255,255,0.03);
+            background: #080808;
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.07);
+            border: 1.5px solid rgba(162, 224, 67, 0.35);
             border-radius: 20px;
             display: flex;
             align-items: stretch;
             overflow: hidden;
-            transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             margin-bottom: 18px;
             min-height: 170px;
             width: 100% !important;
             max-width: 100% !important;
             z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             animation: cardIn 0.5s ease-out both;
             animation-delay: calc(var(--card-index, 0) * 0.07s);
         }
@@ -119,10 +120,10 @@
         }
 
         .ticket-card:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(162, 224, 67, 0.2);
+            background: #0d0d0d;
+            border-color: #a2e043;
             transform: translateY(-4px);
-            box-shadow: 0 20px 50px -12px rgba(162, 224, 67, 0.15), 0 8px 20px -6px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px -12px rgba(162, 224, 67, 0.3), 0 0 25px rgba(162, 224, 67, 0.2);
         }
 
         /* ─── CARD SEGMENTS ─── */
@@ -140,14 +141,14 @@
             min-width: 250px;
             max-width: 250px;
             flex-shrink: 0;
-            border-right: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(162, 224, 67, 0.15);
             padding-left: 28px;
             padding-right: 20px;
         }
         .segment-middle {
             flex: 1;
             min-width: 0;
-            border-right: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(162, 224, 67, 0.15);
             align-items: flex-start;
             padding: 20px 28px;
         }
@@ -593,7 +594,7 @@
                 min-width: 0 !important;
                 max-width: 100% !important;
                 border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.04);
+                border-bottom: 1px solid rgba(162, 224, 67, 0.15);
                 padding: 18px 20px;
             }
             .segment-right { 
