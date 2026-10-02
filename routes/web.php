@@ -143,6 +143,8 @@ Route::post('/busroute/store', [BusRouteController::class, 'store'])->name('admi
 
 // Seat
 Route::get('/seat/list', [SeatController::class, 'list'])->name('admin.seat');
+Route::get('/seat/bus-seats/{id}', [SeatController::class, 'getBusSeatsAjax'])->name('admin.seat.busSeats');
+Route::delete('/seat/clear-bus/{id}', [SeatController::class, 'clearBusSeats'])->name('admin.seat.clearBus');
 Route::get('/seat/edit/{id}',[SeatController::class,'seatEdit'])->name('admin.seat.edit');
 Route::put('/seat/update/{id}',[SeatController::class,'seatUpdate'])->name('admin.seat.update');
 Route::get('/seat/delete/{id}',[SeatController::class, 'seatDelete'])->name('admin.seat.delete');

@@ -28,7 +28,7 @@
                     <select class="admin-input admin-select" required name="bus_id">
                         <option value="">Select a Bus</option>
                         @foreach ($buses as $bus)
-                            <option value="{{ $bus->id }}">{{ $bus->bus_name }} ({{ $bus->bus_no }}) — {{ ucfirst($bus->bus_type) }}</option>
+                            <option value="{{ $bus->id }}" {{ (old('bus_id', request('bus_id')) == $bus->id) ? 'selected' : '' }}>{{ $bus->bus_name }} ({{ $bus->coach_no ?? $bus->bus_no }}) — {{ ucfirst($bus->bus_type) }}</option>
                         @endforeach
                     </select>
                 </div>
