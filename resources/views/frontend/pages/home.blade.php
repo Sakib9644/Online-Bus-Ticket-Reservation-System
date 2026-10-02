@@ -374,9 +374,9 @@
 
     {{-- HERO SECTION WITH SHOHOZ-STYLE SEARCH BAR --}}
     <section
-        style="min-height: 85vh; padding: 120px 40px 90px; position:relative; overflow:hidden; display: flex; align-items: center; background: #000000 url('{{ asset('frontend/images/hero_bg.png') }}') center/cover no-repeat;">
+        style="min-height: 85vh; padding: 120px 40px 90px; position:relative; overflow:hidden; display: flex; align-items: center; background: #0b0d11 url('{{ asset('frontend/images/hero_bg.png') }}') center/cover no-repeat;">
         <div
-            style="position:absolute; inset:0; background: linear-gradient(to right, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.85) 55%, rgba(0, 0, 0, 0.5) 100%); pointer-events:none;">
+            style="position:absolute; inset:0; background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.15) 100%), linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 40%, rgba(11, 13, 17, 0.95) 100%); pointer-events:none;">
         </div>
 
         <div style="max-width:1200px; margin:0 auto; position:relative; z-index: 10; width: 100%;">
