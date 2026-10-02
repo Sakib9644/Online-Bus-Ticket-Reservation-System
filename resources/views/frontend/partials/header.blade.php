@@ -5,8 +5,8 @@
     </a>
     <ul class="sb-links">
         <li><a href="{{ route('frontend.home') }}">Home</a></li>
-        <li><a href="{{ route('frontend.reserve') }}">Find Trips</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="{{ route('frontend.home') }}#find-trips">Find Trips</a></li>
+        <li><a href="{{ route('frontend.home') }}#contact">Contact</a></li>
         @if(auth()->user())
             <li><a href="{{ route('booking.details') }}">My Bookings</a></li>
             <li><a href="#">👤 {{ auth()->user()->name }}</a></li>
