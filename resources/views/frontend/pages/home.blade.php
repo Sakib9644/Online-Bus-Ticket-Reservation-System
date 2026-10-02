@@ -692,11 +692,12 @@
         {{-- Clip wrapper --}}
         <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #070907 url(\'' . $heroBackground . '\') center/cover no-repeat;' : '' }}"></div>
 
-        {{-- Background black shadow overlay --}}
+        {{-- Background shadow overlay: rich shadow coming from bottom --}}
         <div style="position:absolute; inset:0; pointer-events:none; z-index:1;
             background:
-                linear-gradient(to bottom, rgba(5,7,5,0.55) 0%, rgba(5,7,5,0.2) 40%, rgba(5,7,5,0.75) 100%),
-                linear-gradient(to right, rgba(5,7,5,0.45) 0%, transparent 60%);"></div>
+                linear-gradient(to top, #070907 0%, rgba(7, 9, 7, 0.95) 18%, rgba(7, 9, 7, 0.7) 40%, rgba(7, 9, 7, 0.25) 65%, transparent 85%),
+                linear-gradient(to bottom, rgba(7, 9, 7, 0.6) 0%, rgba(7, 9, 7, 0.15) 30%, transparent 55%),
+                linear-gradient(to right, rgba(7, 9, 7, 0.45) 0%, transparent 55%);"></div>
 
         {{-- TOP LEFT TEXT CONTAINER --}}
         <div class="hero-top-left-wrap">

@@ -128,15 +128,32 @@
             list-style: none;
         }
         .sb-links a {
-            color: #ddd;
+            color: #cbd5e1;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
             padding: 8px 16px;
-            border-radius: 6px;
-            transition: background .18s, color .18s;
+            border-radius: 8px;
+            transition: all .2s ease;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid transparent;
         }
-        .sb-links a:hover { background: #111111; color: var(--neon); }
+        .sb-links a:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+        }
+        .sb-links a.active {
+            color: var(--neon) !important;
+            background: rgba(162, 224, 67, 0.12) !important;
+            border: 1px solid rgba(162, 224, 67, 0.32) !important;
+            font-weight: 700 !important;
+            box-shadow: 0 0 16px rgba(162, 224, 67, 0.15) !important;
+        }
+        .sb-links a.active:hover {
+            background: rgba(162, 224, 67, 0.18) !important;
+            color: var(--neon) !important;
+        }
         .sb-links .btn-accent-nav {
             background: var(--neon) !important;
             color: #000000 !important;
