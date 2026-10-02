@@ -2,15 +2,15 @@
 @section('content')
 
     <style>
-        /* ─── SHOHOZ-STYLE FLOATING SEARCH WIDGET ─── */
+        /* ─── SHOHOZ-STYLE FLOATING SEARCH WIDGET (PURE BLACK & NEON) ─── */
         .shohoz-search-card {
-            background: rgba(14, 18, 25, 0.95);
+            background: #080808;
             backdrop-filter: blur(28px);
             -webkit-backdrop-filter: blur(28px);
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(0, 255, 102, 0.35);
             border-radius: 24px;
             padding: 24px 28px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 0 0 50px rgba(162, 224, 67, 0.08);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 255, 102, 0.15);
             position: relative;
             z-index: 20;
             width: 100%;
@@ -50,8 +50,8 @@
         }
 
         .shohoz-type-option input:checked + .shohoz-radio-dot {
-            border-color: #a2e043;
-            box-shadow: 0 0 12px rgba(162, 224, 67, 0.4);
+            border-color: #00ff66;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.6);
         }
 
         .shohoz-type-option input:checked + .shohoz-radio-dot::after {
@@ -59,7 +59,8 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: #a2e043;
+            background: #00ff66;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.8);
         }
 
         .shohoz-type-label {
@@ -79,7 +80,7 @@
             grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1.25fr) minmax(0, 1.15fr) auto;
             align-items: center;
             gap: 12px;
-            background: rgba(255, 255, 255, 0.03);
+            background: #000000;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             padding: 8px 10px;
@@ -90,22 +91,23 @@
             align-items: center;
             gap: 14px;
             padding: 10px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 14px;
             height: 64px;
             transition: all 0.25s ease;
         }
 
         .shohoz-segment:focus-within {
-            border-color: rgba(162, 224, 67, 0.6);
-            background: rgba(162, 224, 67, 0.03);
-            box-shadow: 0 0 20px rgba(162, 224, 67, 0.15);
+            border-color: #00ff66;
+            background: rgba(0, 255, 102, 0.04);
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.25);
         }
 
         .shohoz-segment-icon {
             font-size: 18px;
-            color: #a2e043;
+            color: #00ff66;
+            text-shadow: 0 0 12px rgba(0, 255, 102, 0.5);
             width: 28px;
             display: flex;
             align-items: center;
@@ -125,7 +127,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: rgba(255, 255, 255, 0.4);
+            color: #00ff66;
             margin-bottom: 2px;
         }
 
@@ -133,7 +135,8 @@
             font-size: 9px;
             font-weight: 800;
             letter-spacing: 0.8px;
-            color: #a2e043;
+            color: #00ff66;
+            text-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
             text-transform: uppercase;
             cursor: pointer;
         }
@@ -154,7 +157,7 @@
         }
 
         .shohoz-select option {
-            background: #141822;
+            background: #080808;
             color: #ffffff;
             padding: 12px;
         }
@@ -183,23 +186,24 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            color: #a2e043;
+            background: #0a0a0a;
+            border: 1.5px solid rgba(0, 255, 102, 0.4);
+            color: #00ff66;
             font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .shohoz-swap-btn:hover {
-            background: #a2e043;
-            color: #0c1200;
-            border-color: #a2e043;
-            transform: rotate(180deg) scale(1.1);
-            box-shadow: 0 0 20px rgba(162, 224, 67, 0.4);
+            background: #00ff66;
+            color: #000000;
+            border-color: #00ff66;
+            transform: rotate(180deg) scale(1.12);
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.65);
         }
 
         /* ─── SEARCH BUTTON ─── */
@@ -210,14 +214,14 @@
         }
 
         .shohoz-search-btn {
-            background: linear-gradient(135deg, #a2e043, #7ab32f);
-            color: #0c1200 !important;
+            background: #00ff66 !important;
+            color: #000000 !important;
             font-weight: 900;
             font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             border-radius: 14px;
-            padding: 0 34px;
+            padding: 0 36px;
             height: 100%;
             border: none;
             cursor: pointer;
@@ -225,15 +229,15 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(162, 224, 67, 0.3);
+            transition: all 0.25s ease;
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.45);
             white-space: nowrap;
         }
 
         .shohoz-search-btn:hover {
-            background: linear-gradient(135deg, #b4f056, #8cc93a);
+            background: #33ff85 !important;
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(162, 224, 67, 0.45);
+            box-shadow: 0 0 45px rgba(0, 255, 102, 0.75);
         }
 
         /* ─── RESPONSIVE ─── */
