@@ -104,6 +104,20 @@
             box-shadow: 0 0 20px rgba(162, 224, 67, 0.25);
         }
 
+        .shohoz-segment.field-error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5) !important;
+            animation: segmentShake 0.35s ease;
+        }
+
+        @keyframes segmentShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
         .shohoz-segment-icon {
             font-size: 18px;
             color: #a2e043;
@@ -653,6 +667,8 @@
                     input.value = val;
                     text.textContent = label;
 
+                    wrap.classList.remove('field-error');
+
                     menu.querySelectorAll('.custom-select-option').forEach(opt => opt.classList.remove('selected'));
                     option.classList.add('selected');
 
@@ -710,6 +726,67 @@
                     setTimeout(() => {
                         swapBtn.style.transform = '';
                     }, 300);
+                });
+            }
+
+            // ─── VALIDATE 3 REQUIRED FIELDS (FROM, TO, DATE) ───
+            const heroSearchForm = document.getElementById('heroSearchForm');
+            if (heroSearchForm) {
+                const dateInput = heroSearchForm.querySelector('input[name="date"]');
+                if (dateInput) {
+                    dateInput.addEventListener('change', function() {
+                        if (this.value) {
+                            heroSearchForm.querySelector('.date-segment')?.classList.remove('field-error');
+                        }
+                    });
+                }
+
+                heroSearchForm.addEventListener('submit', function(e) {
+                    const fromInput = document.getElementById('hero-origin-val');
+                    const toInput = document.getElementById('hero-dest-val');
+                    const fromVal = fromInput ? fromInput.value.trim() : '';
+                    const toVal = toInput ? toInput.value.trim() : '';
+                    const dateVal = dateInput ? dateInput.value.trim() : '';
+
+                    let missing = [];
+                    if (!fromVal) {
+                        missing.push('Departure Terminal (FROM)');
+                        document.getElementById('fromDropdown')?.classList.add('field-error');
+                    } else {
+                        document.getElementById('fromDropdown')?.classList.remove('field-error');
+                    }
+
+                    if (!toVal) {
+                        missing.push('Destination Terminal (TO)');
+                        document.getElementById('toDropdown')?.classList.add('field-error');
+                    } else {
+                        document.getElementById('toDropdown')?.classList.remove('field-error');
+                    }
+
+                    if (!dateVal) {
+                        missing.push('Journey Date');
+                        heroSearchForm.querySelector('.date-segment')?.classList.add('field-error');
+                    } else {
+                        heroSearchForm.querySelector('.date-segment')?.classList.remove('field-error');
+                    }
+
+                    if (missing.length > 0) {
+                        e.preventDefault();
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Required Fields Missing',
+                                html: '<div style="color:#cbd5e1; font-size:15px; margin-top:8px;">Please select all 3 required search details:<br><br><span style="color:#a2e043; font-weight:700;">' + missing.join('</span><br><span style="color:#a2e043; font-weight:700;">') + '</span></div>',
+                                confirmButtonText: 'Select Fields',
+                                customClass: {
+                                    popup: 'sb-swal-popup'
+                                }
+                            });
+                        } else {
+                            alert('Please select: ' + missing.join(', ') + ' before searching.');
+                        }
+                        return false;
+                    }
                 });
             }
         });
