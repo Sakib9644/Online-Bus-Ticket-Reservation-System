@@ -1,38 +1,262 @@
 @extends('admin.master')
 @section('content')
 
-<div style="max-width: 1050px; margin: 0 auto;">
+<div style="max-width: 1080px; margin: 0 auto; padding-bottom: 60px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px;">
         <div>
-            <h1 style="font-size: 26px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">Frontend & Website Settings</h1>
-            <p style="color: var(--muted); font-size: 14px; margin-top: 4px;">Customize website branding, contact numbers, address, and footer details dynamically</p>
+            <h1 style="font-size: 26px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; margin: 0;">Website & Payment Settings</h1>
+            <p style="color: var(--muted); font-size: 14px; margin-top: 4px; margin-bottom: 0;">Configure website branding, hero banner image, SSLCommerz, and Mobile Banking (bKash, Nagad, Rocket)</p>
         </div>
         <div style="display: flex; gap: 12px;">
             <a href="{{ route('frontend.home') }}" target="_blank" class="btn-outline-admin" style="background: #fff;">
-                <i class="fas fa-external-link-alt"></i> Preview Frontend
+                <i class="fas fa-external-link-alt"></i> Preview Website
             </a>
         </div>
     </div>
 
     @if(session()->has('message'))
-        <div class="alert-success-admin" style="display: flex; align-items: center; gap: 10px; border-radius: 12px; padding: 14px 20px; font-weight: 600;">
+        <div class="alert-success-admin" style="display: flex; align-items: center; gap: 10px; border-radius: 12px; padding: 14px 20px; font-weight: 600; margin-bottom: 24px;">
             <i class="fas fa-check-circle" style="font-size: 18px;"></i>
             {{ session()->get('message') }}
         </div>
     @endif
 
-    <form action="{{ route('admin.settings.update') }}" method="POST">
+    <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        {{-- ─── SECTION 1: GENERAL BRANDING ─── --}}
+        {{-- ─── SECTION 1: WEBSITE IMAGES & BRANDING MEDIA ─── --}}
         <div class="admin-form-card" style="margin-bottom: 28px; border-radius: 16px; border: 1px solid var(--border);">
             <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
-                <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(59, 130, 246, 0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(59, 130, 246, 0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">Website Images & Media</h3>
+                    <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Upload your custom Hero Background banner and Website Logo</p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                {{-- Hero Background Image --}}
+                <div class="admin-form-group">
+                    <label class="admin-label" style="font-weight: 700;">Hero Banner Background Image</label>
+                    <div style="margin-bottom: 12px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #0b0d11; height: 160px; display: flex; align-items: center; justify-content: center; position: relative;">
+                        @php
+                            $currentHero = setting('hero_image') ? asset(setting('hero_image')) : asset('frontend/images/hero_bg.png');
+                        @endphp
+                        <img src="{{ $currentHero }}" alt="Hero Background Preview" id="heroPreviewImg" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600;">Current Hero Banner</div>
+                    </div>
+                    <input type="file" name="hero_image" accept="image/*" class="admin-input" onchange="previewImage(this, 'heroPreviewImg')">
+                    <span style="font-size: 11px; color: var(--muted); margin-top: 4px; display: block;">Recommended size: 1920x1080px (JPG, PNG, WebP). Max 5MB.</span>
+                </div>
+
+                {{-- Website Logo Image --}}
+                <div class="admin-form-group">
+                    <label class="admin-label" style="font-weight: 700;">Website Logo (Optional Image)</label>
+                    <div style="margin-bottom: 12px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #1e293b; height: 160px; display: flex; align-items: center; justify-content: center; position: relative;">
+                        @if(setting('site_logo_image'))
+                            <img src="{{ asset(setting('site_logo_image')) }}" alt="Site Logo Preview" id="logoPreviewImg" style="max-height: 80px; max-width: 90%; object-fit: contain;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600;">Custom Logo Active</div>
+                        @else
+                            <div id="logoPreviewImg" style="text-align: center; color: #fff; font-family: 'Poppins', sans-serif;">
+                                <div style="font-size: 24px; font-weight: 800;">
+                                    {{ setting('site_logo_prefix', 'Swift') }}<span style="color: #a2e043;">{{ setting('site_logo_suffix', 'Bus') }}</span>
+                                </div>
+                                <span style="font-size: 11px; color: #94a3b8;">Default Text Logo Active</span>
+                            </div>
+                        @endif
+                    </div>
+                    <input type="file" name="site_logo_image" accept="image/*" class="admin-input" onchange="previewImage(this, 'logoPreviewImg')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+                        <span style="font-size: 11px; color: var(--muted);">PNG or SVG with transparent background recommended.</span>
+                        @if(setting('site_logo_image'))
+                            <label style="font-size: 11px; color: #ef4444; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                                <input type="checkbox" name="remove_logo_image" value="1"> Revert to Text Logo
+                            </label>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ─── SECTION 2: PAYMENT GATEWAYS & MOBILE BANKING METHODS ─── --}}
+        <div class="admin-form-card" style="margin-bottom: 28px; border-radius: 16px; border: 1px solid var(--border);">
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(16, 185, 129, 0.1); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">Payment Gateway & Mobile Banking</h3>
+                        <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Enable or disable payment options. When active, they appear in passenger checkout.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+
+                {{-- 1. SSLCOMMERZ GATEWAY --}}
+                <div style="background: #f8fafc; border: 1.5px solid var(--border); border-radius: 14px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 32px; height: 32px; background: #034982; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px;">SSL</div>
+                            <div>
+                                <h4 style="font-size: 15px; font-weight: 800; color: #0f172a; margin: 0;">SSLCommerz Gateway (Cards & Net Banking)</h4>
+                                <span style="font-size: 12px; color: var(--muted);">Automated online gateway for Visa, Mastercard, AMEX & Banks</span>
+                            </div>
+                        </div>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 700; color: #0f172a; background: #fff; padding: 6px 14px; border-radius: 30px; border: 1px solid #cbd5e1;">
+                            <input type="checkbox" name="sslcommerz_active" value="1" {{ setting('sslcommerz_active', '1') == '1' ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #10b981; cursor: pointer;">
+                            <span>Enable SSLCommerz</span>
+                        </label>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                        <div class="admin-form-group">
+                            <label class="admin-label">Store ID</label>
+                            <input name="sslcommerz_store_id" type="text" value="{{ $settings['sslcommerz_store_id'] ?? env('SSLCZ_STORE_ID', '') }}" class="admin-input" placeholder="e.g. swiftbus60a12b3">
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label class="admin-label">Store Password</label>
+                            <input name="sslcommerz_store_password" type="password" value="{{ $settings['sslcommerz_store_password'] ?? env('SSLCZ_STORE_PASSWORD', '') }}" class="admin-input" placeholder="••••••••••••">
+                        </div>
+
+                        <div class="admin-form-group" style="display: flex; flex-direction: column; justify-content: center;">
+                            <label class="admin-label">Gateway Mode</label>
+                            <label style="display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; font-weight: 600; color: #475569; cursor: pointer;">
+                                <input type="checkbox" name="sslcommerz_sandbox" value="1" {{ setting('sslcommerz_sandbox', '1') == '1' ? 'checked' : '' }} style="width: 16px; height: 16px; accent-color: #3b82f6;">
+                                <span>Sandbox (Test Mode)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- 2. BKASH MOBILE BANKING --}}
+                <div style="background: #fff5f8; border: 1.5px solid #fecdd3; border-radius: 14px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="padding: 4px 10px; background: #e2136e; color: #fff; border-radius: 8px; font-weight: 900; font-size: 13px;">bKash</div>
+                            <div>
+                                <h4 style="font-size: 15px; font-weight: 800; color: #881337; margin: 0;">bKash Mobile Banking</h4>
+                                <span style="font-size: 12px; color: #9f1239;">Accept direct bKash payments via Send Money / Merchant Payment</span>
+                            </div>
+                        </div>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 700; color: #881337; background: #fff; padding: 6px 14px; border-radius: 30px; border: 1px solid #fda4af;">
+                            <input type="checkbox" name="bkash_active" value="1" {{ setting('bkash_active', '1') == '1' ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #e2136e; cursor: pointer;">
+                            <span>Enable bKash</span>
+                        </label>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="admin-form-group">
+                            <label class="admin-label">bKash Account Number</label>
+                            <input name="bkash_number" type="text" value="{{ $settings['bkash_number'] ?? '01715484510' }}" class="admin-input" placeholder="e.g. 01715484510">
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label class="admin-label">Account Type</label>
+                            <select name="bkash_type" class="admin-input">
+                                <option value="Merchant" {{ ($settings['bkash_type'] ?? '') == 'Merchant' ? 'selected' : '' }}>Merchant (Payment)</option>
+                                <option value="Personal" {{ ($settings['bkash_type'] ?? '') == 'Personal' ? 'selected' : '' }}>Personal (Send Money)</option>
+                                <option value="Agent" {{ ($settings['bkash_type'] ?? '') == 'Agent' ? 'selected' : '' }}>Agent (Cash Out)</option>
+                            </select>
+                        </div>
+
+                        <div class="admin-form-group" style="grid-column: 1 / -1;">
+                            <label class="admin-label">bKash Payment Instructions for Passenger</label>
+                            <textarea name="bkash_instructions" rows="2" class="admin-input" placeholder="Instructions displayed to passenger at checkout...">{{ $settings['bkash_instructions'] ?? 'Go to your bKash app or dial *247# -> Send Money / Make Payment to the number above -> Enter your TrxID below to confirm.' }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- 3. NAGAD MOBILE BANKING --}}
+                <div style="background: #fff8f6; border: 1.5px solid #fed7aa; border-radius: 14px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="padding: 4px 10px; background: #ed1c24; color: #fff; border-radius: 8px; font-weight: 900; font-size: 13px;">Nagad</div>
+                            <div>
+                                <h4 style="font-size: 15px; font-weight: 800; color: #9a3412; margin: 0;">Nagad Mobile Banking</h4>
+                                <span style="font-size: 12px; color: #c2410c;">Accept direct Nagad payments via Send Money / Merchant Payment</span>
+                            </div>
+                        </div>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 700; color: #9a3412; background: #fff; padding: 6px 14px; border-radius: 30px; border: 1px solid #fdba74;">
+                            <input type="checkbox" name="nagad_active" value="1" {{ setting('nagad_active', '1') == '1' ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #ed1c24; cursor: pointer;">
+                            <span>Enable Nagad</span>
+                        </label>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="admin-form-group">
+                            <label class="admin-label">Nagad Account Number</label>
+                            <input name="nagad_number" type="text" value="{{ $settings['nagad_number'] ?? '01855621000' }}" class="admin-input" placeholder="e.g. 01855621000">
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label class="admin-label">Account Type</label>
+                            <select name="nagad_type" class="admin-input">
+                                <option value="Merchant" {{ ($settings['nagad_type'] ?? '') == 'Merchant' ? 'selected' : '' }}>Merchant (Payment)</option>
+                                <option value="Personal" {{ ($settings['nagad_type'] ?? '') == 'Personal' ? 'selected' : '' }}>Personal (Send Money)</option>
+                            </select>
+                        </div>
+
+                        <div class="admin-form-group" style="grid-column: 1 / -1;">
+                            <label class="admin-label">Nagad Payment Instructions for Passenger</label>
+                            <textarea name="nagad_instructions" rows="2" class="admin-input" placeholder="Instructions displayed to passenger at checkout...">{{ $settings['nagad_instructions'] ?? 'Go to your Nagad app or dial *167# -> Send Money / Make Payment to the number above -> Enter your TrxID below to confirm.' }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- 4. ROCKET (DUTCH-BANGLA BANK) --}}
+                <div style="background: #faf5ff; border: 1.5px solid #e9d5ff; border-radius: 14px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="padding: 4px 10px; background: #8c3494; color: #fff; border-radius: 8px; font-weight: 900; font-size: 13px;">Rocket</div>
+                            <div>
+                                <h4 style="font-size: 15px; font-weight: 800; color: #581c87; margin: 0;">DBBL Rocket</h4>
+                                <span style="font-size: 12px; color: #7e22ce;">Accept Dutch-Bangla Bank Rocket mobile wallet payments</span>
+                            </div>
+                        </div>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 700; color: #581c87; background: #fff; padding: 6px 14px; border-radius: 30px; border: 1px solid #d8b4fe;">
+                            <input type="checkbox" name="rocket_active" value="1" {{ setting('rocket_active', '0') == '1' ? 'checked' : '' }} style="width: 18px; height: 18px; accent-color: #8c3494; cursor: pointer;">
+                            <span>Enable Rocket</span>
+                        </label>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="admin-form-group">
+                            <label class="admin-label">Rocket Account Number (With Check Digit)</label>
+                            <input name="rocket_number" type="text" value="{{ $settings['rocket_number'] ?? '019855621008' }}" class="admin-input" placeholder="e.g. 019855621008">
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label class="admin-label">Account Type</label>
+                            <select name="rocket_type" class="admin-input">
+                                <option value="Merchant" {{ ($settings['rocket_type'] ?? '') == 'Merchant' ? 'selected' : '' }}>Merchant</option>
+                                <option value="Personal" {{ ($settings['rocket_type'] ?? '') == 'Personal' ? 'selected' : '' }}>Personal</option>
+                            </select>
+                        </div>
+
+                        <div class="admin-form-group" style="grid-column: 1 / -1;">
+                            <label class="admin-label">Rocket Payment Instructions for Passenger</label>
+                            <textarea name="rocket_instructions" rows="2" class="admin-input" placeholder="Instructions displayed to passenger at checkout...">{{ $settings['rocket_instructions'] ?? 'Go to your Rocket app or dial *322# -> Send Money / Merchant Payment to the number above -> Enter your TrxID below.' }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- ─── SECTION 3: GENERAL BRANDING & CONTACT DETAILS ─── --}}
+        <div class="admin-form-card" style="margin-bottom: 28px; border-radius: 16px; border: 1px solid var(--border);">
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(59, 130, 246, 0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px;">
                     <i class="fas fa-globe"></i>
                 </div>
                 <div>
-                    <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">General Website Branding</h3>
-                    <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Brand name, logo text parts, and emergency hotline</p>
+                    <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">General Branding & Contact Info</h3>
+                    <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Brand name, text logo parts, emergency helpline, contact emails, and office address</p>
                 </div>
             </div>
 
@@ -40,127 +264,64 @@
                 <div class="admin-form-group">
                     <label class="admin-label">Full Website Name</label>
                     <input name="site_name" type="text" value="{{ $settings['site_name'] ?? 'SwiftBus' }}" class="admin-input" placeholder="e.g. SwiftBus">
-                    <span style="font-size: 11px; color: var(--muted); margin-top: 4px; display: block;">Used in browser title and meta descriptions.</span>
                 </div>
 
                 <div class="admin-form-group">
                     <label class="admin-label">24/7 Helpline Number</label>
                     <input name="helpline" type="text" value="{{ $settings['helpline'] ?? '16374' }}" class="admin-input" placeholder="e.g. 16374">
-                    <span style="font-size: 11px; color: var(--muted); margin-top: 4px; display: block;">Displayed on boarding passes and e-tickets.</span>
                 </div>
 
                 <div class="admin-form-group">
-                    <label class="admin-label">Logo Main Text (White Part)</label>
+                    <label class="admin-label">Text Logo Prefix (White Part)</label>
                     <input name="site_logo_prefix" type="text" value="{{ $settings['site_logo_prefix'] ?? 'Swift' }}" class="admin-input" placeholder="e.g. Swift">
                 </div>
 
                 <div class="admin-form-group">
-                    <label class="admin-label">Logo Suffix (Green/Accent Part)</label>
+                    <label class="admin-label">Text Logo Suffix (Accent Part)</label>
                     <input name="site_logo_suffix" type="text" value="{{ $settings['site_logo_suffix'] ?? 'Bus' }}" class="admin-input" placeholder="e.g. Bus">
                 </div>
 
-                <div class="admin-form-group" style="grid-column: 1 / -1;">
-                    <label class="admin-label">Website Tagline / Mission</label>
-                    <input name="site_tagline" type="text" value="{{ $settings['site_tagline'] ?? 'Fast, easy and reliable bus ticket booking system.' }}" class="admin-input" placeholder="e.g. Fast, easy and reliable bus ticket booking system.">
-                </div>
-            </div>
-        </div>
-
-        {{-- ─── SECTION 2: CONTACT SECTION (AS SHOWN IN SCREENSHOT) ─── --}}
-        <div class="admin-form-card" style="margin-bottom: 28px; border-radius: 16px; border: 1px solid var(--border);">
-            <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
-                <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(16, 185, 129, 0.1); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 16px;">
-                    <i class="fas fa-headset"></i>
-                </div>
-                <div>
-                    <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">Contact Section Details</h3>
-                    <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Phone, Support Line, Email, and Physical Office Address displayed on landing page</p>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                 <div class="admin-form-group">
-                    <label class="admin-label">Primary Phone Number</label>
-                    <div style="position: relative;">
-                        <input name="contact_phone" type="text" value="{{ $settings['contact_phone'] ?? '01715484510' }}" class="admin-input" placeholder="e.g. 01715484510">
-                    </div>
+                    <label class="admin-label">Primary Contact Phone</label>
+                    <input name="contact_phone" type="text" value="{{ $settings['contact_phone'] ?? '01715484510' }}" class="admin-input" placeholder="e.g. 01715484510">
                 </div>
 
                 <div class="admin-form-group">
-                    <label class="admin-label">Support Line Number</label>
-                    <div style="position: relative;">
-                        <input name="contact_support_line" type="text" value="{{ $settings['contact_support_line'] ?? '01985562100' }}" class="admin-input" placeholder="e.g. 01985562100">
-                    </div>
-                </div>
-
-                <div class="admin-form-group">
-                    <label class="admin-label">Official Contact Email</label>
+                    <label class="admin-label">Official Support Email</label>
                     <input name="contact_email" type="email" value="{{ $settings['contact_email'] ?? 'info@xyz.net' }}" class="admin-input" placeholder="e.g. info@xyz.net">
-                </div>
-
-                <div class="admin-form-group">
-                    <label class="admin-label">Section Pill / Badge</label>
-                    <input name="contact_badge" type="text" value="{{ $settings['contact_badge'] ?? 'Get in touch' }}" class="admin-input" placeholder="e.g. Get in touch">
-                </div>
-
-                <div class="admin-form-group">
-                    <label class="admin-label">Section Heading</label>
-                    <input name="contact_heading" type="text" value="{{ $settings['contact_heading'] ?? "We're here to help" }}" class="admin-input" placeholder="e.g. We're here to help">
-                </div>
-
-                <div class="admin-form-group">
-                    <label class="admin-label">Section Subtitle / Description</label>
-                    <input name="contact_subtitle" type="text" value="{{ $settings['contact_subtitle'] ?? 'Have questions about your booking? Reach out anytime.' }}" class="admin-input" placeholder="e.g. Have questions about your booking? Reach out anytime.">
                 </div>
 
                 <div class="admin-form-group" style="grid-column: 1 / -1;">
                     <label class="admin-label">Office Physical Address</label>
-                    <textarea name="contact_address" rows="3" class="admin-input" style="resize: vertical;" placeholder="e.g. Road-8, House-14, Sector-6, Softech Ltd, Dhaka-1230">{{ $settings['contact_address'] ?? "Road-8, House-14, Sector-6\nSoftech Ltd, Dhaka-1230" }}</textarea>
+                    <textarea name="contact_address" rows="2" class="admin-input" placeholder="e.g. Road-8, House-14, Sector-6, Uttara, Dhaka">{{ $settings['contact_address'] ?? "Road-8, House-14, Sector-6\nUttara, Dhaka-1230" }}</textarea>
                 </div>
             </div>
         </div>
 
-        {{-- ─── SECTION 3: FOOTER & SOCIAL LINKS ─── --}}
-        <div class="admin-form-card" style="margin-bottom: 28px; border-radius: 16px; border: 1px solid var(--border);">
-            <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
-                <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(168, 85, 247, 0.1); color: #a855f7; display: flex; align-items: center; justify-content: center; font-size: 16px;">
-                    <i class="fas fa-share-nodes"></i>
-                </div>
-                <div>
-                    <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">Footer & Social Media</h3>
-                    <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Social channels and copyright notice in the frontend footer</p>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="admin-form-group">
-                    <label class="admin-label">Facebook Page URL</label>
-                    <input name="facebook_url" type="url" value="{{ $settings['facebook_url'] ?? 'https://www.facebook.com/s.sakib.47' }}" class="admin-input" placeholder="https://facebook.com/yourpage">
-                </div>
-
-                <div class="admin-form-group">
-                    <label class="admin-label">Twitter / X URL</label>
-                    <input name="twitter_url" type="url" value="{{ $settings['twitter_url'] ?? 'https://twitter.com' }}" class="admin-input" placeholder="https://twitter.com/yourprofile">
-                </div>
-
-                <div class="admin-form-group">
-                    <label class="admin-label">Instagram URL</label>
-                    <input name="instagram_url" type="url" value="{{ $settings['instagram_url'] ?? 'https://instagram.com' }}" class="admin-input" placeholder="https://instagram.com/yourprofile">
-                </div>
-
-                <div class="admin-form-group">
-                    <label class="admin-label">Footer Copyright Notice</label>
-                    <input name="footer_copyright" type="text" value="{{ $settings['footer_copyright'] ?? '© ' . date('Y') . ' SwiftBus. All rights reserved.' }}" class="admin-input" placeholder="© 2026 SwiftBus. All rights reserved.">
-                </div>
-            </div>
-        </div>
-
+        {{-- ─── SUBMIT BUTTON ─── --}}
         <div style="display: flex; justify-content: flex-end; gap: 14px; padding-bottom: 40px;">
-            <button type="submit" class="btn-primary-admin" style="padding: 13px 32px; font-size: 15px; font-weight: 700; border-radius: 10px; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);">
-                <i class="fas fa-save"></i> Save Settings
+            <button type="submit" class="btn-primary-admin" style="padding: 14px 36px; font-size: 15px; font-weight: 800; border-radius: 12px; box-shadow: 0 4px 18px rgba(59, 130, 246, 0.35);">
+                <i class="fas fa-save" style="margin-right: 8px;"></i> Save All Settings
             </button>
         </div>
     </form>
 </div>
+
+<script>
+function previewImage(input, previewId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var target = document.getElementById(previewId);
+            if (target.tagName.toLowerCase() === 'img') {
+                target.src = e.target.result;
+            } else {
+                target.innerHTML = '<img src="' + e.target.result + '" style="max-height:80px; max-width:90%; object-fit:contain;">';
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 
 @endsection

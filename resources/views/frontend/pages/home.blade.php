@@ -430,8 +430,11 @@
     </style>
 
     {{-- HERO SECTION WITH SHOHOZ-STYLE SEARCH BAR --}}
+    @php
+        $heroBackground = setting('hero_image') ? asset(setting('hero_image')) : asset('frontend/images/hero_bg.png');
+    @endphp
     <section
-        style="min-height: 85vh; padding: 120px 40px 100px; position:relative; overflow:visible; z-index: 30; display: flex; align-items: center; background: #0b0d11 url('{{ asset('frontend/images/hero_bg.png') }}') center/cover no-repeat;">
+        style="min-height: 85vh; padding: 120px 40px 100px; position:relative; overflow:visible; z-index: 30; display: flex; align-items: center; background: #0b0d11 url('{{ $heroBackground }}') center/cover no-repeat;">
         <div
             style="position:absolute; inset:0; background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.15) 100%), linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 40%, rgba(11, 13, 17, 0.95) 100%); pointer-events:none;">
         </div>

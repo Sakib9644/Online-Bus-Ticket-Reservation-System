@@ -1,7 +1,11 @@
 <nav class="sb-nav">
-    <a class="sb-brand" href="{{ route('frontend.home') }}">
-        <div class="sb-logo-icon"><i class="fas fa-bus-simple"></i></div>
-        {{ setting('site_logo_prefix', 'Swift') }}<span class="dot">{{ setting('site_logo_suffix', 'Bus') }}</span>
+    <a class="sb-brand" href="{{ route('frontend.home') }}" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+        @if(setting('site_logo_image'))
+            <img src="{{ asset(setting('site_logo_image')) }}" alt="{{ setting('site_name', 'SwiftBus') }}" style="max-height: 38px; max-width: 140px; object-fit: contain;">
+        @else
+            <div class="sb-logo-icon"><i class="fas fa-bus-simple"></i></div>
+            {{ setting('site_logo_prefix', 'Swift') }}<span class="dot">{{ setting('site_logo_suffix', 'Bus') }}</span>
+        @endif
     </a>
     <ul class="sb-links">
         <li><a href="{{ route('frontend.home') }}">Home</a></li>
