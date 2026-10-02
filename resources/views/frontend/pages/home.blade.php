@@ -462,7 +462,7 @@
         </div>
 
         <div style="max-width:1200px; margin:0 auto; position:relative; z-index: 10; width: 100%;">
-            <div style="max-width: 820px; margin-bottom: 48px;">
+            <div style="max-width: 820px; margin-bottom: 28px;">
                 <span class="sb-badge"
                     style="margin-bottom:20px; display:inline-flex;">✨
                     Reimagining Travel</span>
@@ -501,16 +501,16 @@
                                 <i class="fa-solid fa-location-arrow"></i>
                             </div>
                             <div class="shohoz-segment-content">
-                                <span class="shohoz-segment-label">FROM <span style="color:#ef4444; font-size:12px; font-weight:800;">*</span></span>
+                                <div class="shohoz-segment-header">
+                                    <span class="shohoz-segment-label">FROM <span style="color:#ef4444; font-size:11px; font-weight:800;">*</span></span>
+                                    <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
+                                </div>
                                 <input type="hidden" name="from" id="hero-origin-val" value="{{ request('from') }}">
                                 <div class="custom-select-trigger" id="fromTrigger">
                                     <span class="custom-select-text" id="fromTriggerText">
                                         {{ request('from') ?: 'Select Origin (City)' }}
                                     </span>
                                     <i class="fa-solid fa-chevron-down custom-select-arrow"></i>
-                                </div>
-                                <div class="field-error-msg">
-                                    <i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> This field is required
                                 </div>
                             </div>
                             {{-- Custom Options Dropdown --}}
@@ -541,16 +541,16 @@
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <div class="shohoz-segment-content">
-                                <span class="shohoz-segment-label">TO <span style="color:#ef4444; font-size:12px; font-weight:800;">*</span></span>
+                                <div class="shohoz-segment-header">
+                                    <span class="shohoz-segment-label">TO <span style="color:#ef4444; font-size:11px; font-weight:800;">*</span></span>
+                                    <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
+                                </div>
                                 <input type="hidden" name="to" id="hero-dest-val" value="{{ request('to') }}">
                                 <div class="custom-select-trigger" id="toTrigger">
                                     <span class="custom-select-text" id="toTriggerText">
                                         {{ request('to') ?: 'Select Destination' }}
                                     </span>
                                     <i class="fa-solid fa-chevron-down custom-select-arrow"></i>
-                                </div>
-                                <div class="field-error-msg">
-                                    <i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> This field is required
                                 </div>
                             </div>
                             {{-- Custom Options Dropdown --}}
@@ -574,14 +574,12 @@
                                 <i class="fa-solid fa-calendar-days"></i>
                             </div>
                             <div class="shohoz-segment-content">
-                                <div style="display:flex; justify-content:space-between; align-items:center;">
-                                    <span class="shohoz-segment-label">JOURNEY DATE <span style="color:#ef4444; font-size:12px; font-weight:800;">*</span></span>
+                                <div class="shohoz-segment-header">
+                                    <span class="shohoz-segment-label">JOURNEY DATE <span style="color:#ef4444; font-size:11px; font-weight:800;">*</span></span>
                                     <span class="shohoz-return-hint">+ ADD RETURN</span>
+                                    <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
                                 <input type="date" name="date" class="shohoz-date-input" value="{{ request('date', date('Y-m-d')) }}" min="{{ date('Y-m-d') }}">
-                                <div class="field-error-msg">
-                                    <i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> This field is required
-                                </div>
                             </div>
                         </div>
 
