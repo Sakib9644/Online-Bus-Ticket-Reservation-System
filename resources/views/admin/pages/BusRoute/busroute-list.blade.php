@@ -44,7 +44,7 @@
                     <td>
                         <a class="btn btn-primary" href="{{route('admin.bus_route.details', $busroute->id)}}"><i class="fas fa-eye"></i></a>
                         <a class="btn btn-info" href=""><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" href="{{route('admin.bus_route.delete', $busroute->id)}}"><i class="fas fa-trash-alt"></i></a>
+                        <a class="btn btn-danger" data-confirm="Are you sure you want to delete this route?" href="{{route('admin.bus_route.delete', $busroute->id)}}"><i class="fas fa-trash-alt"></i></a>
                   </td>
                 </tr>
             @endforeach

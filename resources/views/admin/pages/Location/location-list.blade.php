@@ -50,7 +50,7 @@
                     <td>
                         <div style="display:flex; gap:8px;">
                             <a href="{{route('admin.location.edit',$location->id)}}" class="btn-outline-admin" style="padding:8px 12px; font-size:12px; color:#8b5cf6;"><i class="fas fa-edit"></i></a>
-                            <a onclick="return confirm('Remove this terminal configuration?')" href="{{route('admin.location.delete',$location->id)}}" class="btn-danger-admin" style="padding:8px 12px; font-size:12px;"><i class="fas fa-trash-alt"></i></a>
+                            <a data-confirm="Remove this terminal configuration?" href="{{route('admin.location.delete',$location->id)}}" class="btn-danger-admin" style="padding:8px 12px; font-size:12px;"><i class="fas fa-trash-alt"></i></a>
                         </div>
                     </td>                 
                 </tr>

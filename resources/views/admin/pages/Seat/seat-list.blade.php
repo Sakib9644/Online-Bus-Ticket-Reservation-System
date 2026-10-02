@@ -190,32 +190,53 @@ $(function() {
         });
     }
 
-    // Single seat deletion via AJAX
+    // Single seat deletion via AJAX with SweetAlert2
     $(document).on('click', '.delete-single-seat-btn', function() {
-        if (!confirm('Are you sure you want to remove this seat?')) {
-            return;
-        }
-
         var btn = $(this);
         var seatId = btn.data('seat-id');
         var busId = btn.data('bus-id');
 
-        $.ajax({
-            url: '{{ url('/admin/seat/delete') }}/' + seatId,
-            type: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            success: function() {
-                btn.parent().fadeOut(200, function() {
-                    $(this).remove();
-                    // Reload bus seats modal count and reload datatable
-                    loadBusSeats(busId);
-                    table.ajax.reload(null, false);
+        Swal.fire({
+            title: 'Remove Seat?',
+            text: 'Are you sure you want to remove this seat?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Yes, remove it',
+            cancelButtonText: 'Cancel'
+        }).then(function(result) {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '{{ url('/admin/seat/delete') }}/' + seatId,
+                    type: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function() {
+                        btn.parent().fadeOut(200, function() {
+                            $(this).remove();
+                            // Reload bus seats modal count and reload datatable
+                            loadBusSeats(busId);
+                            table.ajax.reload(null, false);
+                        });
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Seat Removed',
+                            text: 'The seat has been removed successfully.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Could not delete seat. Please try again.',
+                            confirmButtonColor: '#3b82f6'
+                        });
+                    }
                 });
-            },
-            error: function() {
-                alert('Could not delete seat. Please try again.');
             }
         });
     });

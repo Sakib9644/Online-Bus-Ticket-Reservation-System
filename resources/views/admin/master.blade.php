@@ -12,9 +12,43 @@
     <link href="{{ url('backend/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         .flatpickr-calendar { background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
         .flatpickr-time { border-top: none; }
+
+        /* Admin SweetAlert2 Modern Theme */
+        .swal2-container {
+            z-index: 999999 !important;
+        }
+        .swal2-popup {
+            font-family: 'Poppins', sans-serif !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
+        }
+        .swal2-title {
+            font-weight: 700 !important;
+            font-size: 20px !important;
+            color: #0f172a !important;
+        }
+        .swal2-html-container {
+            font-size: 14px !important;
+            color: #475569 !important;
+        }
+        .swal2-confirm {
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            padding: 10px 22px !important;
+            box-shadow: none !important;
+        }
+        .swal2-cancel {
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            padding: 10px 22px !important;
+            box-shadow: none !important;
+        }
     </style>
 
     <style>
@@ -269,6 +303,77 @@
         dateFormat: "h:i K",
         time_24hr: false
     });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Suppress native JS alert everywhere across admin
+    window.alert = function(msg) {
+        Swal.fire({
+            title: 'Notice',
+            text: msg,
+            icon: 'info',
+            confirmButtonColor: '#3b82f6',
+            confirmButtonText: 'OK'
+        });
+    };
+
+    // Suppress native JS confirm from ever appearing
+    window.confirm = function(msg) {
+        console.warn('Native JS confirm() suppressed. Please use data-confirm attribute or Swal.fire(). Intercepted message:', msg);
+        return false;
+    };
+
+    // Global SweetAlert confirmation handler for links and elements with [data-confirm]
+    $(document).on('click', '[data-confirm]', function(e) {
+        e.preventDefault();
+        var trigger = $(this);
+        var message = trigger.data('confirm') || 'Are you sure you want to proceed?';
+        var href = trigger.attr('href');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: message,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Yes, proceed',
+            cancelButtonText: 'Cancel'
+        }).then(function(result) {
+            if (result.isConfirmed) {
+                if (href && href !== '#' && !href.startsWith('javascript:')) {
+                    window.location.href = href;
+                } else if (trigger.is('form')) {
+                    trigger.submit();
+                }
+            }
+        });
+    });
+
+    // Automatically display session messages via SweetAlert2
+    @if(session('message') || session('msg') || session('success'))
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: {!! json_encode(session('message') ?? session('msg') ?? session('success')) !!},
+            timer: 3500,
+            showConfirmButton: false,
+            confirmButtonColor: '#3b82f6'
+        });
+    });
+    @endif
+    @if(session('error'))
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: {!! json_encode(session('error')) !!},
+            confirmButtonColor: '#ef4444'
+        });
+    });
+    @endif
 </script>
 
 </body>

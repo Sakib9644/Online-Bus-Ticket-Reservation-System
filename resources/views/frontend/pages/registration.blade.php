@@ -13,28 +13,17 @@
         <div class="auth-header">
             <a class="auth-brand" href="{{ route('frontend.home') }}">
                 <div class="auth-brand-icon"><i class="fas fa-bus-simple"></i></div>
-                SwiftBus
+                <span>{{ setting('site_name', 'SwiftBus') }}</span>
             </a>
-
-            <div class="auth-welcome">
-                <h2>Join<span> SwiftBus</span> today</h2>
-                <p>Create your account in under a minute and start booking trips.</p>
-
-                <div class="auth-meta">
-                    <span class="meta-badge">1. Create Account</span>
-                    <span class="meta-badge">2. Find Trips</span>
-                    <span class="meta-badge">3. Book Now</span>
-                </div>
-            </div>
         </div>
 
         <div class="auth-card">
             <div class="auth-form-box">
                 <h1>Create Account</h1>
-                <p class="subtitle">Fill in your details to get started</p>
+                <p class="subtitle">Join and start booking your trips in minutes</p>
 
                 @if($errors->any())
-                    <div style="background:#fff1f0; border:1px solid #ffd4ce; border-radius:10px; padding:12px 16px; margin-bottom:20px; font-size:14px; color:#c53030;">
+                    <div style="background: rgba(239, 68, 68, 0.16); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; font-size: 13.5px; color: #fca5a5;">
                         {{ $errors->first() }}
                     </div>
                 @endif

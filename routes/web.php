@@ -60,6 +60,7 @@ Route::get('/bkash/pay/{id}', [BkashPaymentController::class, 'createPayment'])-
 Route::get('/bkash/callback/{id}', [BkashPaymentController::class, 'callback'])->name('bkash.callback');
 
 // Registration & login
+Route::redirect('/login', '/user/login');
 Route::get('/user/registration',[LoginController::class,'registration'])->name('user.registration');
 Route::post('/user/registration/post',[LoginController::class,'registrationPost'])->name('user.registration.post');
 Route::get('/user/login',[LoginController::class,'login'])->name('user.login');

@@ -74,17 +74,41 @@
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .sb-brand {
+        .sb-brand,
+        .sb-brand:hover,
+        .sb-brand:focus,
+        .sb-brand:active,
+        .sb-brand:visited {
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
             font-size: 22px;
-            color: #fff;
-            text-decoration: none;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            outline: none !important;
+            border: none !important;
+            box-shadow: none !important;
             display: flex; align-items: center; gap: 10px;
+            user-select: none;
+            -webkit-user-select: none;
         }
-        .sb-brand .dot {
-            color: var(--neon);
+        .sb-brand span,
+        .sb-brand:hover span,
+        .sb-brand:focus span,
+        .sb-brand:active span {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border: none !important;
+            outline: none !important;
+        }
+        .sb-brand .dot,
+        .sb-brand:hover .dot,
+        .sb-brand:focus .dot,
+        .sb-brand:active .dot {
+            color: var(--neon) !important;
+            text-decoration: none !important;
             text-shadow: 0 0 15px rgba(162, 224, 67, 0.7);
+            border: none !important;
+            outline: none !important;
         }
         .sb-logo-icon {
             width: 36px; height: 36px;
@@ -93,6 +117,10 @@
             display: flex; align-items: center; justify-content: center;
             color: #000; font-size: 16px;
             box-shadow: 0 0 16px rgba(162, 224, 67, 0.6);
+            transition: transform 0.2s ease;
+        }
+        .sb-brand:hover .sb-logo-icon {
+            transform: scale(1.05);
         }
 
         .sb-links {
@@ -542,45 +570,174 @@
         ::-webkit-scrollbar-thumb { background: #2a2f3a; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #3a3f4a; }
 
-        /* Premium SweetAlert2 Custom Styling */
-        .sb-swal-popup {
-            background: #080808 !important;
-            border: 1.5px solid rgba(162, 224, 67, 0.35) !important;
-            border-radius: 26px !important;
-            padding: 38px 30px !important;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 45px rgba(162, 224, 67, 0.2) !important;
+        /* ─── PREMIUM SWEETALERT2 STYLING ─── */
+        .swal2-container {
+            z-index: 999999 !important;
+            backdrop-filter: blur(8px) !important;
+            background: rgba(0, 0, 0, 0.75) !important;
         }
+
+        .sb-swal-popup {
+            background: #11161d !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            border-radius: 20px !important;
+            padding: 30px 28px 26px 28px !important;
+            width: min(92vw, 420px) !important;
+            max-width: 420px !important;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.5) !important;
+            text-align: center !important;
+        }
+
+        /* Sleek Refined Icon */
+        .sb-swal-popup .swal2-icon {
+            width: 56px !important;
+            height: 56px !important;
+            margin: 0 auto 16px auto !important;
+            border-width: 2px !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .sb-swal-popup .swal2-icon.swal2-warning {
+            border-color: #f59e0b !important;
+            color: #f59e0b !important;
+            background: rgba(245, 158, 11, 0.1) !important;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15) !important;
+        }
+        .sb-swal-popup .swal2-icon.swal2-warning .swal2-icon-content {
+            font-size: 26px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 700 !important;
+            line-height: 52px !important;
+        }
+        .sb-swal-popup .swal2-icon.swal2-success {
+            border-color: #a2e043 !important;
+            color: #a2e043 !important;
+            background: rgba(162, 224, 67, 0.1) !important;
+            box-shadow: 0 0 20px rgba(162, 224, 67, 0.2) !important;
+        }
+        .sb-swal-popup .swal2-icon.swal2-error {
+            border-color: #ef4444 !important;
+            color: #ef4444 !important;
+            background: rgba(239, 68, 68, 0.1) !important;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2) !important;
+        }
+
+        /* Clean Modern Title */
         .sb-swal-popup .swal2-title {
             color: #ffffff !important;
-            font-family: 'Syne', sans-serif !important;
-            font-size: 26px !important;
-            font-weight: 800 !important;
-            letter-spacing: -0.5px !important;
-            margin-bottom: 14px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.3px !important;
+            margin: 0 0 8px 0 !important;
+            padding: 0 !important;
+            line-height: 1.3 !important;
         }
+
+        /* Subtitle / Message */
         .sb-swal-popup .swal2-html-container {
-            color: #f1f5f9 !important;
-            font-size: 18px !important;
-            line-height: 1.6 !important;
-            font-weight: 500 !important;
-            margin: 12px 0 24px !important;
+            color: #94a3b8 !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+            font-weight: 400 !important;
+            margin: 0 0 24px 0 !important;
+            padding: 0 6px !important;
         }
-        .sb-swal-popup .swal2-confirm {
-            background: var(--neon) !important;
-            color: #000000 !important;
-            font-weight: 900 !important;
-            font-size: 15px !important;
-            border-radius: 12px !important;
-            padding: 14px 34px !important;
-            box-shadow: var(--neon-glow) !important;
-            border: none !important;
+
+        /* Actions: Side-by-Side Flex Layout */
+        .sb-swal-popup .swal2-actions {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 12px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Cancel Button: Sleek Dark Glass Outline */
+        .sb-swal-cancel-btn {
+            flex: 1 !important;
+            height: 42px !important;
+            background: rgba(255, 255, 255, 0.06) !important;
+            color: #cbd5e1 !important;
+            border: 1px solid rgba(255, 255, 255, 0.14) !important;
+            border-radius: 10px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
             cursor: pointer !important;
-            transition: all 0.25s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.2s ease !important;
+            text-decoration: none !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
         }
-        .sb-swal-popup .swal2-confirm:hover {
-            background: var(--accent-hover) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: var(--neon-glow-lg) !important;
+        .sb-swal-cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.12) !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.25) !important;
+        }
+
+        /* Confirm Button: Neon Lime */
+        .sb-swal-confirm-btn {
+            flex: 1 !important;
+            height: 42px !important;
+            background: #a2e043 !important;
+            color: #090d12 !important;
+            border: none !important;
+            border-radius: 10px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 13.5px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 4px 14px rgba(162, 224, 67, 0.35) !important;
+            transition: all 0.2s ease !important;
+            text-decoration: none !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+        }
+        .sb-swal-confirm-btn:hover {
+            background: #b5f054 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 6px 18px rgba(162, 224, 67, 0.45) !important;
+        }
+
+        /* Destructive Confirm Button: Crimson Coral */
+        .sb-swal-confirm-danger-btn {
+            flex: 1 !important;
+            height: 42px !important;
+            background: #ef4444 !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 10px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 13.5px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35) !important;
+            transition: all 0.2s ease !important;
+            text-decoration: none !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+        }
+        .sb-swal-confirm-danger-btn:hover {
+            background: #dc2626 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45) !important;
         }
     </style>
 </head>
@@ -595,6 +752,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+    // Global SweetAlert2 notification handler for Livewire
     window.addEventListener('notify', event => {
         const type = event.detail.type || 'info';
         const isSuccess = type === 'success';
@@ -618,6 +776,95 @@
             }
         });
     });
+
+    // Suppress and replace native JS alert everywhere across frontend
+    window.alert = function(msg) {
+        Swal.fire({
+            title: 'Notice',
+            text: msg,
+            icon: 'info',
+            confirmButtonText: 'Understood',
+            buttonsStyling: false,
+            customClass: {
+                popup: 'sb-swal-popup',
+                confirmButton: 'sb-swal-confirm-btn',
+                actions: 'swal2-actions'
+            }
+        });
+    };
+
+    // Suppress native JS confirm from ever appearing
+    window.confirm = function(msg) {
+        console.warn('Native JS confirm() suppressed. Please use data-confirm attribute or Swal.fire(). Intercepted message:', msg);
+        return false;
+    };
+
+    // Global SweetAlert confirmation handler for links and elements with [data-confirm]
+    document.addEventListener('click', function(e) {
+        const trigger = e.target.closest('[data-confirm]');
+        if (!trigger) return;
+
+        e.preventDefault();
+        const message = trigger.getAttribute('data-confirm') || 'Are you sure you want to proceed?';
+        const targetHref = trigger.getAttribute('href');
+        const isDeleteAction = message.toLowerCase().includes('remove') || message.toLowerCase().includes('delete');
+
+        Swal.fire({
+            title: isDeleteAction ? 'Confirm Action' : 'Are you sure?',
+            text: message,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: isDeleteAction ? 'Yes, proceed' : 'Continue',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true,
+            buttonsStyling: false,
+            customClass: {
+                popup: 'sb-swal-popup',
+                confirmButton: isDeleteAction ? 'sb-swal-confirm-danger-btn' : 'sb-swal-confirm-btn',
+                cancelButton: 'sb-swal-cancel-btn',
+                actions: 'swal2-actions'
+            }
+        }).then(result => {
+            if (result.isConfirmed) {
+                if (trigger.tagName.toLowerCase() === 'form') {
+                    trigger.submit();
+                } else if (targetHref && targetHref !== '#' && !targetHref.startsWith('javascript:')) {
+                    window.location.href = targetHref;
+                }
+            }
+        });
+    });
+
+    // Display session messages via SweetAlert2
+    @if(session()->has('message') || session()->has('msg') || session()->has('success'))
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: {!! json_encode(session('message') ?? session('msg') ?? session('success')) !!},
+            timer: 3500,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            background: '#080808',
+            color: '#ffffff',
+            iconColor: '#a2e043',
+            customClass: { popup: 'sb-swal-popup' }
+        });
+    });
+    @endif
+    @if(session()->has('error'))
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Notice',
+            text: {!! json_encode(session('error')) !!},
+            background: '#080808',
+            color: '#ffffff',
+            iconColor: '#ff4d4d',
+            customClass: { popup: 'sb-swal-popup' }
+        });
+    });
+    @endif
     </script>
 
     <script src="{{ url('frontend/js/jquery-2.1.1.min.js') }}"></script>

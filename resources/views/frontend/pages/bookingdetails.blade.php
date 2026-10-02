@@ -140,7 +140,7 @@
                                                             @endif
                                                         </div>
                                                         @if(!$isPaid)
-                                                            <a href="{{ route('booking.delete', $indSeat->id) }}" onclick="return confirm('Remove seat {{ $indSeat->seat?->name }} from this booking?')" style="color: #ff5e5e; font-size: 11px; font-weight: 900; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">Remove</a>
+                                                            <a href="{{ route('booking.delete', $indSeat->id) }}" data-confirm="Remove seat {{ $indSeat->seat?->name }} from this booking?" style="color: #ff5e5e; font-size: 11px; font-weight: 900; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">Remove</a>
                                                         @else
                                                             <span style="color: var(--muted); font-size: 10px; font-weight: 800; opacity: 0.5;"><i class="fa fa-lock"></i> Locked</span>
                                                         @endif

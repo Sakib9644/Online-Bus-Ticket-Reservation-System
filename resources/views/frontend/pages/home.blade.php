@@ -2,73 +2,250 @@
 @section('content')
 
     <style>
-        /* ─── LUXURY BLACK & NEON TICKET SEARCH WIDGET ─── */
-        .shohoz-search-card {
-            background: rgba(6, 9, 6, 0.94);
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border: 1.5px solid rgba(162, 224, 67, 0.35);
-            border-radius: 22px;
-            padding: 24px 28px 24px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(162, 224, 67, 0.1);
+        /* ─── HERO MAIN SECTION ─── */
+        .hero-main-section {
+            min-height: 92vh;
+            position: relative;
+            overflow: visible;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background: #070907;
+            padding: 120px 0 60px 0;
+        }
+
+        /* Top Left Text Container */
+        .hero-top-left-wrap {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            z-index: 999;
+            pointer-events: none;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .hero-top-left-wrap .hero-brand-header {
+            pointer-events: auto;
+        }
+
+        /* Middle Centered Search Bar */
+        .hero-center-search-wrap {
             position: relative;
             z-index: 9999;
             width: 100%;
-            max-width: 1060px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ─── HERO BRAND TEXT (Explore More with Every Journey) ─── */
+        .hero-brand-header {
+            margin-bottom: 0;
+            text-align: left;
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .hero-brand-eyebrow {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a3e635;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-brand-title {
+            margin: 0 0 14px 0;
+            font-size: 52px;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.12;
+            letter-spacing: -0.8px;
+            font-family: inherit;
+        }
+
+        .hero-brand-title .highlight {
+            color: #a3e635;
+        }
+
+        .hero-brand-subtitle {
             margin: 0;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
+            line-height: 1.55;
+            max-width: 580px;
+        }
+
+        /* ─── SLEEK PILL SEARCH BAR ─── */
+        /* ─── SLEEK SEARCH CARD WITH HEADER ─── */
+        .shohoz-search-card {
+            background: rgba(14, 25, 30, 0.88);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1.5px solid rgba(255, 255, 255, 0.14);
+            border-radius: 28px;
+            padding: 16px 20px 16px 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(163, 230, 53, 0.12);
+            position: relative;
+            z-index: 9999;
+            width: 100%;
+            max-width: 1080px;
+            margin: 0 auto;
+            align-self: center;
             overflow: visible;
         }
 
-        .shohoz-search-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1.25fr) minmax(0, 1.15fr) auto;
+        /* ─── SEARCH MENU HEADER (Where do you want to go? & QUICK SEARCH) ─── */
+        .search-menu-header {
+            display: flex;
             align-items: center;
-            gap: 10px;
-            background: transparent;
-            border: none;
-            padding: 0;
+            justify-content: space-between;
+            padding: 2px 4px 14px 4px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            width: 100%;
         }
 
+        .search-menu-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .search-menu-icon-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, rgba(163, 230, 53, 0.25) 0%, rgba(10, 20, 24, 0.95) 75%);
+            border: 1px solid rgba(163, 230, 53, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 0 10px rgba(163, 230, 53, 0.12);
+        }
+
+        .search-menu-icon-circle i {
+            color: #a3e635;
+            font-size: 20px;
+            filter: drop-shadow(0 0 6px rgba(163, 230, 53, 0.5));
+        }
+
+        .search-menu-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .search-menu-title {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.4px;
+            line-height: 1.25;
+            font-family: inherit;
+        }
+
+        .search-menu-subtitle {
+            margin: 3px 0 0 0;
+            font-size: 13px;
+            font-weight: 450;
+            color: #8fa0ad;
+            line-height: 1.35;
+        }
+
+        .search-menu-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border: 1.5px solid rgba(163, 230, 53, 0.75);
+            border-radius: 9999px;
+            background: rgba(163, 230, 53, 0.07);
+            color: #a3e635;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            box-shadow: 0 0 12px rgba(163, 230, 53, 0.15);
+            white-space: nowrap;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-menu-badge:hover {
+            background: rgba(163, 230, 53, 0.15);
+            box-shadow: 0 0 18px rgba(163, 230, 53, 0.3);
+        }
+
+        .search-menu-badge i {
+            font-size: 11px;
+            color: #a3e635;
+        }
+
+        .shohoz-search-grid {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* ─── EACH INPUT FIELD HAS ITS OWN DISTINCT BORDER ─── */
         .shohoz-segment {
             display: flex;
             align-items: center;
             gap: 12px;
             padding: 8px 16px;
-            background: #060906;
-            border: 1.5px solid rgba(255, 255, 255, 0.16) !important;
-            border-radius: 13px;
-            min-height: 60px;
-            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            border-radius: 20px;
             box-sizing: border-box;
             position: relative;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
+            flex: 1;
+            min-width: 0;
+            height: 60px;
         }
 
         .shohoz-segment:hover {
-            border-color: rgba(162, 224, 67, 0.55) !important;
-            background: rgba(162, 224, 67, 0.03);
-            box-shadow: 0 0 16px rgba(162, 224, 67, 0.18);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(163, 230, 53, 0.55);
         }
 
         .shohoz-segment:focus-within,
         .custom-dropdown-wrap.is-open {
-            border-color: #a2e043 !important;
-            background: rgba(162, 224, 67, 0.06) !important;
-            box-shadow: 0 0 20px rgba(162, 224, 67, 0.3) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: #a3e635 !important;
+            box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.2);
             z-index: 100 !important;
         }
 
         .shohoz-segment.field-error {
-            border-color: #ef4444 !important;
-            background: rgba(239, 68, 68, 0.08) !important;
-            box-shadow: 0 0 0 1px #ef4444, 0 0 16px rgba(239, 68, 68, 0.35) !important;
+            background: rgba(239, 68, 68, 0.12) !important;
+            border: 1px solid #ef4444 !important;
+            border-radius: 16px;
             animation: segmentShake 0.35s ease;
         }
 
         .shohoz-segment.field-error .shohoz-segment-icon {
             color: #ef4444 !important;
-            text-shadow: 0 0 10px rgba(239, 68, 68, 0.7) !important;
         }
 
         .shohoz-segment.field-error .shohoz-segment-label {
@@ -76,8 +253,7 @@
         }
 
         .shohoz-segment.field-error .custom-select-trigger,
-        .shohoz-segment.field-error .custom-select-text,
-        .shohoz-segment.field-error .shohoz-date-input {
+        .shohoz-segment.field-error .custom-select-text {
             color: #fca5a5 !important;
         }
 
@@ -106,10 +282,6 @@
             animation: errorFadeIn 0.2s ease forwards;
         }
 
-        .shohoz-segment.field-error .shohoz-return-hint {
-            display: none !important;
-        }
-
         @keyframes errorFadeIn {
             from { opacity: 0; transform: translateY(-2px); }
             to { opacity: 1; transform: translateY(0); }
@@ -124,14 +296,13 @@
         }
 
         .shohoz-segment-icon {
-            font-size: 15px;
-            color: #a2e043;
-            text-shadow: 0 0 10px rgba(162, 224, 67, 0.5);
-            width: 20px;
+            font-size: 22px;
+            color: #a3e635;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            width: 24px;
         }
 
         .shohoz-segment-content {
@@ -140,34 +311,14 @@
             justify-content: center;
             flex: 1;
             min-width: 0;
-            height: 100%;
         }
 
         .shohoz-segment-label {
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #a2e043;
+            font-size: 11px;
+            font-weight: 600;
+            color: #8fa0a8;
             line-height: 1;
-        }
-
-        .shohoz-return-hint {
-            font-size: 8.5px;
-            font-weight: 800;
-            letter-spacing: 0.6px;
-            color: #a2e043;
-            text-shadow: 0 0 8px rgba(162, 224, 67, 0.4);
-            text-transform: uppercase;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        /* ─── CUSTOM DARK NEON DROPDOWN ─── */
-        .custom-dropdown-wrap {
-            position: relative;
-            cursor: pointer;
-            user-select: none;
+            margin-bottom: 3px;
         }
 
         .custom-select-trigger {
@@ -181,7 +332,7 @@
 
         .custom-select-text {
             color: #ffffff;
-            font-size: 13.5px;
+            font-size: 14.5px;
             font-weight: 700;
             white-space: nowrap;
             overflow: hidden;
@@ -189,38 +340,106 @@
             line-height: 1.2;
         }
 
-        .custom-select-arrow {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.4);
-            transition: transform 0.25s ease, color 0.2s ease;
+        /* ─── SWAP BUTTON ─── */
+        .shohoz-swap-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
         }
 
-        .custom-dropdown-wrap.is-open .custom-select-arrow {
-            transform: rotate(180deg);
-            color: #a2e043;
+        .shohoz-swap-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #0c171d;
+            border: 1.5px solid rgba(163, 230, 53, 0.5);
+            color: #a3e635;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(163, 230, 53, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            flex-shrink: 0;
         }
 
-        .custom-dropdown-wrap.is-open {
-            border: none !important;
-            background: rgba(162, 224, 67, 0.08) !important;
-            box-shadow: 0 0 16px rgba(162, 224, 67, 0.25) !important;
-            z-index: 100 !important;
+        .shohoz-swap-btn:hover {
+            background: #a3e635;
+            color: #051808;
+            border-color: #a3e635;
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: 0 0 18px rgba(163, 230, 53, 0.6);
+        }
+
+        /* ─── VERTICAL DIVIDER ─── */
+        .shohoz-v-divider {
+            display: none;
+        }
+
+        /* ─── DATE CAPSULE (Inner Box) ─── */
+        .shohoz-segment.date-segment {
+            flex: 0 0 210px;
+        }
+
+        .shohoz-date-input-hidden {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        }
+
+        /* ─── SEARCH BUTTON (Squircle with Magnifying Glass) ─── */
+        .shohoz-btn-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .shohoz-search-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            background: #a3e635 !important;
+            color: #0c1a05 !important;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 20px rgba(163, 230, 53, 0.4);
+            flex-shrink: 0;
+        }
+
+        .shohoz-search-btn:hover {
+            background: #bbf44e !important;
+            transform: scale(1.06);
+            box-shadow: 0 8px 25px rgba(163, 230, 53, 0.65);
+        }
+
+        /* ─── CUSTOM DROPDOWN MENU ─── */
+        .custom-dropdown-wrap {
+            position: relative;
+            cursor: pointer;
+            user-select: none;
         }
 
         .custom-select-menu {
             position: absolute;
-            top: calc(100% + 6px);
+            top: calc(100% + 12px);
             left: 0;
             right: 0;
-            min-width: 240px;
-            background: #090b0e;
-            border: 1.5px solid rgba(162, 224, 67, 0.45);
-            border-radius: 12px;
-            padding: 6px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.98), 0 0 25px rgba(162, 224, 67, 0.18);
-            max-height: 260px;
-            overflow-y: auto;
+            min-width: 280px;
+            background: #081720;
+            border: 1.5px solid rgba(163, 230, 53, 0.4);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.98), 0 0 25px rgba(163, 230, 53, 0.18);
             z-index: 99999;
             display: none;
         }
@@ -230,182 +449,177 @@
             animation: customDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes customDropFade {
-            from {
-                opacity: 0;
-                transform: translateY(-5px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* ─── SELECT2-STYLE SEARCH INPUT ─── */
+        .custom-select-search-wrap {
+            padding: 4px 4px 8px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 6px;
         }
 
-        .custom-select-menu::-webkit-scrollbar {
-            width: 4px;
+        .custom-select-search-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
-        .custom-select-menu::-webkit-scrollbar-track {
-            background: #0d0d0d;
-            border-radius: 6px;
+        .select2-search-icon {
+            position: absolute;
+            left: 12px;
+            color: #8fa0a8;
+            font-size: 13px;
+            pointer-events: none;
         }
 
-        .custom-select-menu::-webkit-scrollbar-thumb {
-            background: rgba(162, 224, 67, 0.3);
-            border-radius: 6px;
+        .custom-select-search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            padding: 8px 12px 8px 34px;
+            font-size: 13px;
+            color: #ffffff;
+            outline: none;
+            font-family: inherit;
+            transition: all 0.2s ease;
         }
 
-        .custom-select-menu::-webkit-scrollbar-thumb:hover {
-            background: #a2e043;
+        .custom-select-search-input:focus {
+            border-color: #a3e635;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.2);
+        }
+
+        .custom-select-search-input::placeholder {
+            color: #6c7c88;
+        }
+
+        .custom-select-options-list {
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .custom-select-options-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-select-options-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .custom-select-options-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .custom-select-options-list::-webkit-scrollbar-thumb:hover {
+            background: #a3e635;
+        }
+
+        .custom-select-no-results {
+            padding: 16px 12px;
+            text-align: center;
+            color: #8fa0a8;
+            font-size: 13px;
+            display: none;
         }
 
         .custom-select-option {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            border-radius: 8px;
+            gap: 10px;
+            padding: 9px 14px;
+            border-radius: 10px;
             color: #d1d5db;
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.15s ease;
         }
 
-        .custom-select-option .option-icon {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.35);
-            transition: color 0.15s;
-        }
-
         .custom-select-option:hover {
-            background: rgba(162, 224, 67, 0.12);
-            color: #a2e043;
-        }
-
-        .custom-select-option:hover .option-icon {
-            color: #a2e043;
+            background: rgba(163, 230, 53, 0.14);
+            color: #a3e635;
         }
 
         .custom-select-option.selected {
-            background: rgba(162, 224, 67, 0.18);
-            color: #a2e043;
+            background: rgba(163, 230, 53, 0.2);
+            color: #a3e635;
             font-weight: 800;
-        }
-
-        .custom-select-option.selected .option-icon {
-            color: #a2e043;
-        }
-
-        .shohoz-date-input {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-size: 13.5px;
-            font-weight: 700;
-            width: 100%;
-            outline: none;
-            cursor: pointer;
-            padding: 0;
-            line-height: 1.2;
-            color-scheme: dark;
-        }
-
-        /* ─── SWAP BUTTON ─── */
-        .shohoz-swap-wrap {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .shohoz-swap-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #030503;
-            border: 1.5px solid #a2e043;
-            color: #a2e043;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 0 14px rgba(162, 224, 67, 0.3);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .shohoz-swap-btn:hover {
-            background: #a2e043;
-            color: #000000;
-            border-color: #a2e043;
-            transform: rotate(180deg) scale(1.12);
-            box-shadow: 0 0 25px rgba(162, 224, 67, 0.7);
-        }
-
-        /* ─── SEARCH BUTTON ─── */
-        .shohoz-btn-wrap {
-            display: flex;
-            align-items: center;
-            height: 60px;
-        }
-
-        .shohoz-search-btn {
-            background: #a2e043 !important;
-            color: #050d03 !important;
-            font-weight: 900;
-            font-size: 14.5px;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            border-radius: 13px;
-            padding: 0 32px;
-            height: 60px;
-            min-height: 60px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 22px rgba(162, 224, 67, 0.45);
-            white-space: nowrap;
-        }
-
-        .shohoz-search-btn:hover {
-            background: #b5f54c !important;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(162, 224, 67, 0.75);
         }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 992px) {
-            .shohoz-card-header {
+            .hero-main-section {
+                min-height: auto;
+                height: auto;
+                padding: 100px 20px 60px;
                 flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
+                justify-content: flex-start;
             }
-            .shohoz-type-selector {
-                justify-content: center;
-                width: 100%;
+            .hero-top-left-wrap {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                padding: 0 0 24px 0;
+                max-width: 100%;
+            }
+            .hero-center-search-wrap {
+                padding: 0;
+            }
+            .hero-brand-title {
+                font-size: 34px;
+            }
+            .hero-brand-subtitle {
+                font-size: 14px;
+            }
+            .hero-brand-header {
+                margin-bottom: 24px;
+            }
+            .shohoz-search-card {
+                border-radius: 24px;
+                padding: 16px;
+            }
+            .search-menu-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding-bottom: 12px;
+                margin-bottom: 12px;
+            }
+            .search-menu-badge {
+                align-self: flex-start;
+            }
+            .search-menu-title {
+                font-size: 17px;
+            }
+            .search-menu-subtitle {
+                font-size: 12px;
             }
             .shohoz-search-grid {
-                grid-template-columns: 1fr;
-                gap: 8px;
-                padding: 8px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
             }
-            .shohoz-swap-wrap {
-                margin: -2px 0;
+            .shohoz-v-divider {
+                display: none;
+            }
+            .shohoz-segment {
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 16px;
+                padding: 10px 16px;
+                height: 56px;
+            }
+            .shohoz-segment.date-segment {
+                flex: auto;
+                width: 100%;
             }
             .shohoz-swap-btn {
                 transform: rotate(90deg);
+                margin: 0 auto;
             }
-            .shohoz-swap-btn:hover {
-                transform: rotate(270deg) scale(1.1);
-            }
-            .shohoz-btn-wrap, .shohoz-search-btn {
+            .shohoz-search-btn {
                 width: 100%;
+                border-radius: 16px;
                 height: 52px;
-                min-height: 52px;
             }
         }
 
@@ -457,8 +671,7 @@
         $heroBackground = setting('hero_image') ? asset(setting('hero_image')) : asset('frontend/images/hero_bg.png');
         $hasSliders = isset($heroSliders) && $heroSliders->count() > 0;
     @endphp
-    <section
-        style="min-height: 80vh; padding: 0; position:relative; overflow:visible; z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #070907;">
+    <section class="hero-main-section">
 
         {{-- SLIDER IMAGES --}}
         @if($hasSliders)
@@ -485,60 +698,78 @@
                 linear-gradient(to bottom, rgba(5,7,5,0.55) 0%, rgba(5,7,5,0.2) 40%, rgba(5,7,5,0.75) 100%),
                 linear-gradient(to right, rgba(5,7,5,0.45) 0%, transparent 60%);"></div>
 
-        {{-- Center content container (Clean, centered search widget) --}}
-        <div style="position:relative; z-index: 9999; width:100%; max-width:1120px; margin:0 auto; padding: 100px 24px 60px; display:flex; flex-direction:column; align-items:center;">
+        {{-- TOP LEFT TEXT CONTAINER --}}
+        <div class="hero-top-left-wrap">
+            <div class="hero-brand-header">
+                <div class="hero-brand-eyebrow"><i class="fa-solid fa-circle-dot" style="font-size: 8px;"></i> Online Bus Ticket Reservation</div>
+                <h1 class="hero-brand-title">Explore More<br>with <span class="highlight">Every Journey</span></h1>
+                <p class="hero-brand-subtitle">Book your bus tickets easily, get the best prices, and travel to your favorite destinations.</p>
+            </div>
+        </div>
 
-            {{-- LUXURY BLACK & NEON SEARCH WIDGET --}}
+        {{-- CENTER MIDDLE SEARCH BAR CONTAINER --}}
+        <div class="hero-center-search-wrap">
             <div class="shohoz-search-card">
-                <form action="{{ route('frontend.reserve') }}" method="GET" id="heroSearchForm">
-                    
-                    {{-- Clean Minimalist Card Header --}}
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(162, 224, 67, 0.12); border: 1px solid rgba(162, 224, 67, 0.3); display: flex; align-items: center; justify-content: center; color: #a2e043; font-size: 14px;">
-                                <i class="fa-solid fa-bus-simple"></i>
-                            </div>
-                            <span style="font-size: 16px; font-weight: 800; color: #ffffff; letter-spacing: -0.2px;">Online Bus Ticket Reservation</span>
+
+                {{-- SEARCH MENU TOP HEADER --}}
+                <div class="search-menu-header">
+                    <div class="search-menu-title-wrap">
+                        <div class="search-menu-icon-circle">
+                            <i class="fa-solid fa-location-dot"></i>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 6px; background: rgba(162, 224, 67, 0.08); border: 1px solid rgba(162, 224, 67, 0.25); border-radius: 20px; padding: 4px 12px;">
-                            <span style="width: 6px; height: 6px; border-radius: 50%; background: #a2e043; box-shadow: 0 0 8px #a2e043;"></span>
-                            <span style="font-size: 11px; font-weight: 800; color: #a2e043; text-transform: uppercase; letter-spacing: 0.8px;">Direct Booking</span>
+                        <div class="search-menu-text">
+                            <h3 class="search-menu-title">Where do you want to go?</h3>
+                            <p class="search-menu-subtitle">Find the best routes, plan your journey</p>
                         </div>
                     </div>
+                    <div class="search-menu-badge">
+                        <i class="fa-solid fa-bolt"></i> QUICK SEARCH
+                    </div>
+                </div>
 
-                    {{-- Search Fields Grid --}}
+                <form action="{{ route('frontend.reserve') }}" method="GET" id="heroSearchForm" style="margin: 0; width: 100%;">
+                    
                     <div class="shohoz-search-grid">
 
                         {{-- FROM SEGMENT --}}
                         <div class="shohoz-segment from-segment custom-dropdown-wrap" id="fromDropdown">
                             <div class="shohoz-segment-icon">
-                                <i class="fa-solid fa-location-arrow"></i>
+                                <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <div class="shohoz-segment-content">
                                 <div class="shohoz-segment-header">
-                                    <span class="shohoz-segment-label">FROM <span style="color:#ef4444; font-size:11px; font-weight:800;">*</span></span>
+                                    <span class="shohoz-segment-label">From</span>
                                     <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
                                 <input type="hidden" name="from" id="hero-origin-val" value="{{ request('from') }}">
                                 <div class="custom-select-trigger" id="fromTrigger">
                                     <span class="custom-select-text" id="fromTriggerText">
-                                        {{ request('from') ?: 'Select Origin (City)' }}
+                                        {{ request('from') ?: 'Select Origin' }}
                                     </span>
-                                    <i class="fa-solid fa-chevron-down custom-select-arrow"></i>
                                 </div>
                             </div>
-                            {{-- Custom Options Dropdown --}}
                             <div class="custom-select-menu" id="fromMenu">
-                                <div class="custom-select-option {{ !request('from') ? 'selected' : '' }}" data-value="" data-label="Select Origin (City)">
-                                    <i class="fa-solid fa-compass option-icon"></i>
-                                    <span>Select Origin (City)</span>
-                                </div>
-                                @foreach($origins as $orig)
-                                    <div class="custom-select-option {{ request('from') == $orig ? 'selected' : '' }}" data-value="{{ $orig }}" data-label="{{ $orig }}">
-                                        <i class="fa-solid fa-location-dot option-icon"></i>
-                                        <span>{{ $orig }}</span>
+                                <div class="custom-select-search-wrap">
+                                    <div class="custom-select-search-inner">
+                                        <i class="fa-solid fa-magnifying-glass select2-search-icon"></i>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search district..." autocomplete="off">
                                     </div>
-                                @endforeach
+                                </div>
+                                <div class="custom-select-options-list">
+                                    <div class="custom-select-option {{ !request('from') ? 'selected' : '' }}" data-value="" data-label="Select Origin">
+                                        <i class="fa-solid fa-location-dot option-icon"></i>
+                                        <span>Select Origin</span>
+                                    </div>
+                                    @foreach($origins as $orig)
+                                        <div class="custom-select-option {{ request('from') == $orig ? 'selected' : '' }}" data-value="{{ $orig }}" data-label="{{ $orig }}">
+                                            <i class="fa-solid fa-location-dot option-icon"></i>
+                                            <span>{{ $orig }}</span>
+                                        </div>
+                                    @endforeach
+                                    <div class="custom-select-no-results">
+                                        <i class="fa-solid fa-circle-exclamation" style="margin-right: 6px;"></i> No district found
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -556,7 +787,7 @@
                             </div>
                             <div class="shohoz-segment-content">
                                 <div class="shohoz-segment-header">
-                                    <span class="shohoz-segment-label">TO <span style="color:#ef4444; font-size:11px; font-weight:800;">*</span></span>
+                                    <span class="shohoz-segment-label">To</span>
                                     <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
                                 <input type="hidden" name="to" id="hero-dest-val" value="{{ request('to') }}">
@@ -564,43 +795,56 @@
                                     <span class="custom-select-text" id="toTriggerText">
                                         {{ request('to') ?: 'Select Destination' }}
                                     </span>
-                                    <i class="fa-solid fa-chevron-down custom-select-arrow"></i>
                                 </div>
                             </div>
-                            {{-- Custom Options Dropdown --}}
                             <div class="custom-select-menu" id="toMenu">
-                                <div class="custom-select-option {{ !request('to') ? 'selected' : '' }}" data-value="" data-label="Select Destination">
-                                    <i class="fa-solid fa-map-pin option-icon"></i>
-                                    <span>Select Destination</span>
-                                </div>
-                                @foreach($destinationsList as $dst)
-                                    <div class="custom-select-option {{ request('to') == $dst ? 'selected' : '' }}" data-value="{{ $dst }}" data-label="{{ $dst }}">
-                                        <i class="fa-solid fa-location-dot option-icon"></i>
-                                        <span>{{ $dst }}</span>
+                                <div class="custom-select-search-wrap">
+                                    <div class="custom-select-search-inner">
+                                        <i class="fa-solid fa-magnifying-glass select2-search-icon"></i>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search district..." autocomplete="off">
                                     </div>
-                                @endforeach
+                                </div>
+                                <div class="custom-select-options-list">
+                                    <div class="custom-select-option {{ !request('to') ? 'selected' : '' }}" data-value="" data-label="Select Destination">
+                                        <i class="fa-solid fa-location-dot option-icon"></i>
+                                        <span>Select Destination</span>
+                                    </div>
+                                    @foreach($destinationsList as $dst)
+                                        <div class="custom-select-option {{ request('to') == $dst ? 'selected' : '' }}" data-value="{{ $dst }}" data-label="{{ $dst }}">
+                                            <i class="fa-solid fa-location-dot option-icon"></i>
+                                            <span>{{ $dst }}</span>
+                                        </div>
+                                    @endforeach
+                                    <div class="custom-select-no-results">
+                                        <i class="fa-solid fa-circle-exclamation" style="margin-right: 6px;"></i> No district found
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        {{-- JOURNEY DATE SEGMENT --}}
+                        {{-- JOURNEY DATE SEGMENT (Capsule Box) --}}
                         <div class="shohoz-segment date-segment">
                             <div class="shohoz-segment-icon">
                                 <i class="fa-solid fa-calendar-days"></i>
                             </div>
                             <div class="shohoz-segment-content">
                                 <div class="shohoz-segment-header">
-                                    <span class="shohoz-segment-label">JOURNEY DATE <span style="color:#ef4444; font-size:11px; font-weight:800;">*</span></span>
+                                    <span class="shohoz-segment-label">Date</span>
                                     <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
-                                <input type="date" name="date" class="shohoz-date-input" value="{{ request('date', date('Y-m-d')) }}" min="{{ date('Y-m-d') }}">
+                                <input type="date" name="date" id="heroDateInput" class="shohoz-date-input-hidden" value="{{ request('date', date('Y-m-d')) }}" min="{{ date('Y-m-d') }}">
+                                <div class="custom-select-trigger" id="dateTrigger">
+                                    <span class="custom-select-text" id="dateTriggerText">
+                                        {{ request('date') ? date('d/m/Y', strtotime(request('date'))) : date('d/m/Y') }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        {{-- SEARCH BUTTON --}}
+                        {{-- SEARCH BUTTON (Squircle with Magnifying Glass) --}}
                         <div class="shohoz-btn-wrap">
-                            <button type="submit" class="shohoz-search-btn">
+                            <button type="submit" class="shohoz-search-btn" title="Search Buses">
                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                <span>SEARCH BUSES</span>
                             </button>
                         </div>
                     </div>{{-- /.shohoz-search-grid --}}
@@ -722,7 +966,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Setup custom dropdowns
+            // Setup custom dropdowns with Select2-style live search filter
             function setupCustomDropdown(wrapId, triggerId, textId, inputId, menuId) {
                 const wrap = document.getElementById(wrapId);
                 const trigger = document.getElementById(triggerId);
@@ -732,17 +976,81 @@
 
                 if (!wrap || !trigger || !text || !input || !menu) return;
 
-                // Toggle menu on entire segment click (not just the arrow)
+                const searchInput = menu.querySelector('.custom-select-search-input');
+                const noResults = menu.querySelector('.custom-select-no-results');
+                const options = menu.querySelectorAll('.custom-select-option');
+
+                function resetSearch() {
+                    if (searchInput) searchInput.value = '';
+                    options.forEach(opt => opt.style.display = '');
+                    if (noResults) noResults.style.display = 'none';
+                }
+
+                // Toggle menu on entire segment click
                 wrap.addEventListener('click', function(e) {
                     if (e.target.closest('.custom-select-menu')) return;
                     e.stopPropagation();
                     const wasOpen = wrap.classList.contains('is-open');
-                    // Close any other open dropdowns first
-                    document.querySelectorAll('.custom-dropdown-wrap').forEach(w => w.classList.remove('is-open'));
+                    
+                    // Close any other open dropdowns first and reset their search
+                    document.querySelectorAll('.custom-dropdown-wrap').forEach(w => {
+                        w.classList.remove('is-open');
+                        const s = w.querySelector('.custom-select-search-input');
+                        if (s) s.value = '';
+                        w.querySelectorAll('.custom-select-option').forEach(opt => opt.style.display = '');
+                        const nr = w.querySelector('.custom-select-no-results');
+                        if (nr) nr.style.display = 'none';
+                    });
+
                     if (!wasOpen) {
                         wrap.classList.add('is-open');
+                        resetSearch();
+                        if (searchInput) {
+                            setTimeout(() => searchInput.focus(), 60);
+                        }
                     }
                 });
+
+                // Live district filtering
+                if (searchInput) {
+                    searchInput.addEventListener('input', function(e) {
+                        e.stopPropagation();
+                        const query = this.value.trim().toLowerCase();
+                        let matches = 0;
+
+                        options.forEach(opt => {
+                            const val = opt.getAttribute('data-value') || '';
+                            const label = (opt.getAttribute('data-label') || '').toLowerCase();
+
+                            // Hide the placeholder "Select Origin" while typing a query
+                            if (!val && query) {
+                                opt.style.display = 'none';
+                                return;
+                            }
+
+                            if (!query || label.includes(query)) {
+                                opt.style.display = 'flex';
+                                matches++;
+                            } else {
+                                opt.style.display = 'none';
+                            }
+                        });
+
+                        if (noResults) {
+                            noResults.style.display = matches === 0 ? 'block' : 'none';
+                        }
+                    });
+
+                    searchInput.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                    });
+
+                    searchInput.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            wrap.classList.remove('is-open');
+                        }
+                    });
+                }
 
                 // Select option
                 menu.addEventListener('click', function(e) {
@@ -761,6 +1069,7 @@
                     menu.querySelectorAll('.custom-select-option').forEach(opt => opt.classList.remove('selected'));
                     option.classList.add('selected');
 
+                    resetSearch();
                     wrap.classList.remove('is-open');
                 });
             }
@@ -770,23 +1079,45 @@
 
             // Click anywhere on date segment to open date picker
             const dateSegment = document.querySelector('.date-segment');
-            const dateInput = document.querySelector('.shohoz-date-input');
-            if (dateSegment && dateInput) {
+            const dateInput = document.getElementById('heroDateInput');
+            const dateTriggerText = document.getElementById('dateTriggerText');
+            if (dateSegment && dateInput && dateTriggerText) {
                 dateSegment.addEventListener('click', function(e) {
-                    if (e.target !== dateInput) {
-                        if (typeof dateInput.showPicker === 'function') {
-                            try { dateInput.showPicker(); } catch(err) { dateInput.focus(); }
-                        } else {
-                            dateInput.focus();
-                        }
+                    if (typeof dateInput.showPicker === 'function') {
+                        try { dateInput.showPicker(); } catch(err) { dateInput.focus(); }
+                    } else {
+                        dateInput.focus();
                     }
+                });
+
+                ['input', 'change'].forEach(evt => {
+                    dateInput.addEventListener(evt, function() {
+                        if (this.value) {
+                            const parts = this.value.split('-');
+                            if (parts.length === 3) {
+                                dateTriggerText.textContent = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                            } else {
+                                dateTriggerText.textContent = this.value;
+                            }
+                            dateSegment.classList.remove('field-error');
+                        } else {
+                            dateTriggerText.textContent = 'Select date';
+                        }
+                    });
                 });
             }
 
             // Click outside closes any open dropdown
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.custom-dropdown-wrap')) {
-                    document.querySelectorAll('.custom-dropdown-wrap').forEach(w => w.classList.remove('is-open'));
+                    document.querySelectorAll('.custom-dropdown-wrap').forEach(w => {
+                        w.classList.remove('is-open');
+                        const s = w.querySelector('.custom-select-search-input');
+                        if (s) s.value = '';
+                        w.querySelectorAll('.custom-select-option').forEach(opt => opt.style.display = '');
+                        const nr = w.querySelector('.custom-select-no-results');
+                        if (nr) nr.style.display = 'none';
+                    });
                 }
             });
 
@@ -805,10 +1136,10 @@
                     e.stopPropagation();
 
                     const tempVal = fromVal.value;
-                    const tempText = fromText.textContent;
+                    const tempText = fromText.textContent.trim();
 
                     fromVal.value = toVal.value;
-                    fromText.textContent = toVal.value ? toText.textContent : 'Select Origin (City)';
+                    fromText.textContent = toVal.value ? toText.textContent.trim() : 'Select Origin';
 
                     toVal.value = tempVal;
                     toText.textContent = tempVal ? tempText : 'Select Destination';
