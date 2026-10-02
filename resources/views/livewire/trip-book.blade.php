@@ -1,46 +1,31 @@
 <div>
-    <!-- Custom Seat Limit & Alert Modal -->
+    <!-- Simple Seat Limit Modal (Clean Design, Normal Font) -->
     <div id="seat-limit-modal" class="custom-modal-overlay" style="display: none;" onclick="if(event.target === this) closeSeatLimitModal()">
         <div class="custom-modal-card">
             <!-- Close Button -->
-            <button type="button" class="custom-modal-close" onclick="closeSeatLimitModal()">&times;</button>
+            <button type="button" class="custom-modal-close" onclick="closeSeatLimitModal()" aria-label="Close">&times;</button>
             
-            <!-- Glowing Icon with Ring -->
-            <div class="custom-modal-icon-wrap">
-                <div class="custom-modal-icon-pulse"></div>
-                <div class="custom-modal-icon-inner">
-                    <i class="fa-solid fa-couch"></i>
-                </div>
-            </div>
-
-            <!-- Top Pill Badge -->
-            <div class="custom-modal-badge">
-                <i class="fa-solid fa-triangle-exclamation"></i> SEAT POLICY NOTICE
+            <!-- Simple Clean Icon -->
+            <div class="custom-modal-icon-simple">
+                <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
 
             <!-- Title -->
-            <h3 class="custom-modal-title">Selection Limit Reached</h3>
+            <h3 class="custom-modal-title">Seat Limit Exceeded</h3>
 
             <!-- Message Body -->
             <div class="custom-modal-message">
                 <p id="seat-limit-modal-text">
-                    You cannot select more than <span class="highlight-seats">6 seats</span> per booking.
+                    You cannot select more than <strong>6 seats</strong> per booking.
                 </p>
                 <div class="custom-modal-subtext">
-                    To maintain passenger safety and availability, individual reservations are restricted to a maximum of 6 seats.
+                    To reserve additional seats, please complete this reservation first or book remaining seats separately.
                 </div>
-            </div>
-
-            <!-- Helpful Info Box -->
-            <div class="custom-modal-info-box">
-                <i class="fa-solid fa-circle-info info-icon"></i>
-                <span>Planning a group or family tour? Complete this reservation for 6 seats, then reserve additional seats in a separate booking or contact support.</span>
             </div>
 
             <!-- Action Button -->
             <button type="button" class="custom-modal-btn" onclick="closeSeatLimitModal()">
-                <span>Understood, Keep My 6 Seats</span>
-                <i class="fa-solid fa-arrow-right"></i>
+                <span>Understood</span>
             </button>
         </div>
     </div>
@@ -72,19 +57,20 @@
     @endif
 
     <style>
-        /* ─── CUSTOM MODAL STYLES ─── */
+        /* ─── SIMPLE CLEAN MODAL (Normal Font, Minimal Design) ─── */
         .custom-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(6, 9, 14, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 99999;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            animation: modalFadeIn 0.2s ease-out forwards;
         }
 
         @keyframes modalFadeIn {
@@ -93,185 +79,113 @@
         }
 
         .custom-modal-card {
-            background: linear-gradient(145deg, #151b24, #0f131a);
-            border: 1.5px solid rgba(245, 158, 11, 0.4);
-            border-radius: 28px;
-            padding: 42px 34px 34px;
-            max-width: 480px;
+            background: #111418;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 30px 26px 26px;
+            max-width: 410px;
             width: 100%;
             text-align: center;
             position: relative;
-            box-shadow: 
-                0 30px 80px -15px rgba(0, 0, 0, 0.9),
-                0 0 50px rgba(245, 158, 11, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            transform: scale(0.95);
-            animation: modalZoomIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            animation: modalZoomIn 0.2s ease-out forwards;
         }
 
         @keyframes modalZoomIn {
-            from { transform: scale(0.92) translateY(15px); opacity: 0; }
-            to { transform: scale(1) translateY(0); opacity: 1; }
+            from { transform: scale(0.96); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .custom-modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 38px;
-            height: 38px;
+            top: 14px;
+            right: 14px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            border: none;
             color: #94a3b8;
-            font-size: 24px;
+            font-size: 22px;
             line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: color 0.2s, background 0.2s;
         }
         .custom-modal-close:hover {
-            background: rgba(255, 255, 255, 0.15);
             color: #ffffff;
-            transform: rotate(90deg);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .custom-modal-icon-wrap {
-            position: relative;
-            width: 82px;
-            height: 82px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .custom-modal-icon-pulse {
-            position: absolute;
-            inset: -4px;
+        .custom-modal-icon-simple {
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 70%);
-            animation: iconPulse 2s infinite ease-in-out;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.18); opacity: 0.95; }
-        }
-
-        .custom-modal-icon-inner {
-            position: relative;
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.1));
-            border: 2px solid rgba(245, 158, 11, 0.55);
-            color: #fbbf24;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
-        }
-
-        .custom-modal-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 100px;
-            background: rgba(245, 158, 11, 0.14);
+            background: rgba(245, 158, 11, 0.12);
             border: 1px solid rgba(245, 158, 11, 0.3);
-            color: #fbbf24;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 14px;
+            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 16px;
         }
 
         .custom-modal-title {
-            font-family: 'Syne', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
             color: #ffffff;
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin: 0 0 14px;
-            line-height: 1.2;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            margin: 0 0 10px;
+            line-height: 1.3;
         }
 
         .custom-modal-message p {
-            font-size: 18px;
-            font-weight: 600;
-            color: #f1f5f9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-size: 15px;
+            font-weight: 500;
+            color: #cbd5e1;
             line-height: 1.5;
-            margin: 0 0 10px;
+            margin: 0 0 8px;
         }
 
-        .custom-modal-message .highlight-seats {
-            color: #fbbf24;
-            font-size: 22px;
-            font-weight: 800;
-            text-decoration: underline;
-            text-decoration-color: rgba(245, 158, 11, 0.45);
-            text-underline-offset: 4px;
+        .custom-modal-message strong {
+            color: #ffffff;
+            font-weight: 700;
         }
 
         .custom-modal-subtext {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
             color: #94a3b8;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .custom-modal-info-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 14px;
-            padding: 14px 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            text-align: left;
-            margin-bottom: 26px;
             font-size: 13px;
-            color: #cbd5e1;
             line-height: 1.5;
-        }
-
-        .custom-modal-info-box .info-icon {
-            color: #fbbf24;
-            font-size: 16px;
-            margin-top: 2px;
-            flex-shrink: 0;
+            margin-bottom: 22px;
         }
 
         .custom-modal-btn {
             width: 100%;
-            height: 52px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0c0e12;
+            height: 44px;
+            border-radius: 10px;
+            background: #00ff66;
+            color: #000000;
             border: none;
-            font-weight: 800;
-            font-size: 16px;
-            letter-spacing: 0.5px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-weight: 700;
+            font-size: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35);
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
 
         .custom-modal-btn:hover {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.45);
-            color: #000;
+            background: #2aff7b;
+            transform: translateY(-1px);
         }
 
         .custom-modal-btn:active {
@@ -429,7 +343,7 @@
             const textEl = document.getElementById('seat-limit-modal-text');
             if (modal) {
                 if (textEl && message) {
-                    textEl.innerHTML = message.replace('6 seats', '<span class="highlight-seats">6 seats</span>');
+                    textEl.innerHTML = message.replace('6 seats', '<strong>6 seats</strong>');
                 }
                 modal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';

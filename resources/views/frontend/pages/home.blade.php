@@ -141,25 +141,135 @@
             cursor: pointer;
         }
 
-        .shohoz-select {
-            background: transparent;
-            border: none;
+        /* ─── CUSTOM DARK NEON DROPDOWN ─── */
+        .custom-dropdown-wrap {
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .custom-select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 8px;
+        }
+
+        .custom-select-text {
             color: #ffffff;
             font-size: 15px;
             font-weight: 700;
-            width: 100%;
-            outline: none;
-            cursor: pointer;
-            padding: 0;
-            appearance: none;
-            -webkit-appearance: none;
+            white-space: nowrap;
+            overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .shohoz-select option {
+        .custom-select-arrow {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            transition: transform 0.25s ease, color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .custom-dropdown-wrap.is-open .custom-select-arrow {
+            transform: rotate(180deg);
+            color: #00ff66;
+        }
+
+        .custom-dropdown-wrap.is-open {
+            border-color: #00ff66 !important;
+            background: rgba(0, 255, 102, 0.05) !important;
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.25) !important;
+        }
+
+        .custom-select-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            min-width: 250px;
             background: #080808;
-            color: #ffffff;
-            padding: 12px;
+            border: 1.5px solid rgba(0, 255, 102, 0.35);
+            border-radius: 14px;
+            padding: 6px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 255, 102, 0.15);
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 9999;
+            display: none;
+        }
+
+        .custom-dropdown-wrap.is-open .custom-select-menu {
+            display: block;
+            animation: customDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes customDropFade {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .custom-select-menu::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .custom-select-menu::-webkit-scrollbar-track {
+            background: #0d0d0d;
+            border-radius: 8px;
+        }
+
+        .custom-select-menu::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 102, 0.3);
+            border-radius: 8px;
+        }
+
+        .custom-select-menu::-webkit-scrollbar-thumb:hover {
+            background: #00ff66;
+        }
+
+        .custom-select-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: #d1d5db;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .custom-select-option .option-icon {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+            transition: color 0.15s;
+        }
+
+        .custom-select-option:hover {
+            background: rgba(0, 255, 102, 0.12);
+            color: #00ff66;
+        }
+
+        .custom-select-option:hover .option-icon {
+            color: #00ff66;
+        }
+
+        .custom-select-option.selected {
+            background: rgba(0, 255, 102, 0.18);
+            color: #00ff66;
+            font-weight: 800;
+        }
+
+        .custom-select-option.selected .option-icon {
+            color: #00ff66;
         }
 
         .shohoz-date-input {
@@ -264,19 +374,19 @@
 
     {{-- HERO SECTION WITH SHOHOZ-STYLE SEARCH BAR --}}
     <section
-        style="min-height: 85vh; padding: 120px 40px 90px; position:relative; overflow:hidden; display: flex; align-items: center; background: url('{{ asset('frontend/images/hero_bg.png') }}') center/cover no-repeat;">
+        style="min-height: 85vh; padding: 120px 40px 90px; position:relative; overflow:hidden; display: flex; align-items: center; background: #000000 url('{{ asset('frontend/images/hero_bg.png') }}') center/cover no-repeat;">
         <div
-            style="position:absolute; inset:0; background: linear-gradient(to right, rgba(14, 18, 14, 0.95) 0%, rgba(14, 18, 14, 0.65) 55%, rgba(14, 18, 14, 0.25) 100%); pointer-events:none;">
+            style="position:absolute; inset:0; background: linear-gradient(to right, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.85) 55%, rgba(0, 0, 0, 0.5) 100%); pointer-events:none;">
         </div>
 
         <div style="max-width:1200px; margin:0 auto; position:relative; z-index: 10; width: 100%;">
             <div style="max-width: 820px; margin-bottom: 48px;">
                 <span class="sb-badge"
-                    style="background:rgba(162,224,67,0.1); color:var(--accent); margin-bottom:20px; display:inline-flex; border:1px solid rgba(162,224,67,0.2);">✨
+                    style="margin-bottom:20px; display:inline-flex;">✨
                     Reimagining Travel</span>
                 <h1 class="syne"
                     style="font-size:clamp(44px,6vw,84px); line-height:1.05; margin-bottom:20px; font-weight:800; color:#fff; letter-spacing: -2px;">
-                    Journey to your <br><span style="color:var(--accent);">Happy Place.</span>
+                    Journey to your <br><span style="color:var(--neon); text-shadow: 0 0 25px rgba(0, 255, 102, 0.55);">Happy Place.</span>
                 </h1>
                 <p
                     style="color:rgba(255,255,255,0.75); font-size:19px; line-height:1.6; max-width: 580px; margin: 0;">
@@ -304,18 +414,32 @@
                     {{-- Main Search Bar Grid --}}
                     <div class="shohoz-search-grid">
                         {{-- FROM SEGMENT --}}
-                        <div class="shohoz-segment from-segment">
+                        <div class="shohoz-segment from-segment custom-dropdown-wrap" id="fromDropdown">
                             <div class="shohoz-segment-icon">
                                 <i class="fa-solid fa-location-arrow"></i>
                             </div>
                             <div class="shohoz-segment-content">
                                 <span class="shohoz-segment-label">FROM</span>
-                                <select name="from" id="hero-origin-select" class="shohoz-select">
-                                    <option value="">Select Origin (City)</option>
-                                    @foreach($origins as $orig)
-                                        <option value="{{ $orig }}" {{ request('from') == $orig ? 'selected' : '' }}>{{ $orig }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="hidden" name="from" id="hero-origin-val" value="{{ request('from') }}">
+                                <div class="custom-select-trigger" id="fromTrigger">
+                                    <span class="custom-select-text" id="fromTriggerText">
+                                        {{ request('from') ?: 'Select Origin (City)' }}
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down custom-select-arrow"></i>
+                                </div>
+                            </div>
+                            {{-- Custom Options Dropdown --}}
+                            <div class="custom-select-menu" id="fromMenu">
+                                <div class="custom-select-option {{ !request('from') ? 'selected' : '' }}" data-value="" data-label="Select Origin (City)">
+                                    <i class="fa-solid fa-compass option-icon"></i>
+                                    <span>Select Origin (City)</span>
+                                </div>
+                                @foreach($origins as $orig)
+                                    <div class="custom-select-option {{ request('from') == $orig ? 'selected' : '' }}" data-value="{{ $orig }}" data-label="{{ $orig }}">
+                                        <i class="fa-solid fa-location-dot option-icon"></i>
+                                        <span>{{ $orig }}</span>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
 
@@ -327,18 +451,32 @@
                         </div>
 
                         {{-- TO SEGMENT --}}
-                        <div class="shohoz-segment to-segment">
+                        <div class="shohoz-segment to-segment custom-dropdown-wrap" id="toDropdown">
                             <div class="shohoz-segment-icon">
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <div class="shohoz-segment-content">
                                 <span class="shohoz-segment-label">TO</span>
-                                <select name="to" id="hero-dest-select" class="shohoz-select">
-                                    <option value="">Select Destination</option>
-                                    @foreach($destinationsList as $dst)
-                                        <option value="{{ $dst }}" {{ request('to') == $dst ? 'selected' : '' }}>{{ $dst }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="hidden" name="to" id="hero-dest-val" value="{{ request('to') }}">
+                                <div class="custom-select-trigger" id="toTrigger">
+                                    <span class="custom-select-text" id="toTriggerText">
+                                        {{ request('to') ?: 'Select Destination' }}
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down custom-select-arrow"></i>
+                                </div>
+                            </div>
+                            {{-- Custom Options Dropdown --}}
+                            <div class="custom-select-menu" id="toMenu">
+                                <div class="custom-select-option {{ !request('to') ? 'selected' : '' }}" data-value="" data-label="Select Destination">
+                                    <i class="fa-solid fa-map-pin option-icon"></i>
+                                    <span>Select Destination</span>
+                                </div>
+                                @foreach($destinationsList as $dst)
+                                    <div class="custom-select-option {{ request('to') == $dst ? 'selected' : '' }}" data-value="{{ $dst }}" data-label="{{ $dst }}">
+                                        <i class="fa-solid fa-location-dot option-icon"></i>
+                                        <span>{{ $dst }}</span>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
 
@@ -414,7 +552,7 @@
                                             {{ $dest['name'] }}</h4>
                                         <p style="color:rgba(255,255,255,0.7); font-size:14px; font-weight: 500; margin-bottom: 24px; line-height: 1.4;">{{ $dest['desc'] }}</p>
                                         
-                                        <div style="color: #a2e043; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; transition: gap 0.3s;">
+                                        <div style="color: var(--neon); text-shadow: 0 0 10px rgba(0, 255, 102, 0.6); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; transition: gap 0.3s;">
                                             FIND TRIPS <i class="fa fa-arrow-right" style="font-size: 11px;"></i>
                                         </div>
                                     </div>
@@ -481,17 +619,90 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Setup custom dropdowns
+            function setupCustomDropdown(wrapId, triggerId, textId, inputId, menuId) {
+                const wrap = document.getElementById(wrapId);
+                const trigger = document.getElementById(triggerId);
+                const text = document.getElementById(textId);
+                const input = document.getElementById(inputId);
+                const menu = document.getElementById(menuId);
+
+                if (!wrap || !trigger || !text || !input || !menu) return;
+
+                // Toggle menu on trigger or segment click
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const wasOpen = wrap.classList.contains('is-open');
+                    // Close any other open dropdowns first
+                    document.querySelectorAll('.custom-dropdown-wrap').forEach(w => w.classList.remove('is-open'));
+                    if (!wasOpen) {
+                        wrap.classList.add('is-open');
+                    }
+                });
+
+                // Select option
+                menu.addEventListener('click', function(e) {
+                    const option = e.target.closest('.custom-select-option');
+                    if (!option) return;
+                    e.stopPropagation();
+
+                    const val = option.getAttribute('data-value') || '';
+                    const label = option.getAttribute('data-label') || '';
+
+                    input.value = val;
+                    text.textContent = label;
+
+                    menu.querySelectorAll('.custom-select-option').forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+
+                    wrap.classList.remove('is-open');
+                });
+            }
+
+            setupCustomDropdown('fromDropdown', 'fromTrigger', 'fromTriggerText', 'hero-origin-val', 'fromMenu');
+            setupCustomDropdown('toDropdown', 'toTrigger', 'toTriggerText', 'hero-dest-val', 'toMenu');
+
+            // Click outside closes any open dropdown
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.custom-dropdown-wrap')) {
+                    document.querySelectorAll('.custom-dropdown-wrap').forEach(w => w.classList.remove('is-open'));
+                }
+            });
+
             // Swap From and To locations
             const swapBtn = document.getElementById('swapLocationsBtn');
-            const fromSelect = document.getElementById('hero-origin-select');
-            const toSelect = document.getElementById('hero-dest-select');
+            const fromVal = document.getElementById('hero-origin-val');
+            const toVal = document.getElementById('hero-dest-val');
+            const fromText = document.getElementById('fromTriggerText');
+            const toText = document.getElementById('toTriggerText');
+            const fromMenu = document.getElementById('fromMenu');
+            const toMenu = document.getElementById('toMenu');
 
-            if (swapBtn && fromSelect && toSelect) {
+            if (swapBtn && fromVal && toVal && fromText && toText) {
                 swapBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const temp = fromSelect.value;
-                    fromSelect.value = toSelect.value;
-                    toSelect.value = temp;
+                    e.stopPropagation();
+
+                    const tempVal = fromVal.value;
+                    const tempText = fromText.textContent;
+
+                    fromVal.value = toVal.value;
+                    fromText.textContent = toVal.value ? toText.textContent : 'Select Origin (City)';
+
+                    toVal.value = tempVal;
+                    toText.textContent = tempVal ? tempText : 'Select Destination';
+
+                    // Update selected highlight in both menus
+                    if (fromMenu) {
+                        fromMenu.querySelectorAll('.custom-select-option').forEach(opt => {
+                            opt.classList.toggle('selected', opt.getAttribute('data-value') === fromVal.value);
+                        });
+                    }
+                    if (toMenu) {
+                        toMenu.querySelectorAll('.custom-select-option').forEach(opt => {
+                            opt.classList.toggle('selected', opt.getAttribute('data-value') === toVal.value);
+                        });
+                    }
 
                     // Quick spin animation feedback
                     swapBtn.style.transform = 'rotate(180deg) scale(1.15)';
