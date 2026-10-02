@@ -488,45 +488,15 @@
             width: 24px;
             border-radius: 4px;
         }
-
-        /* ─── HERO LAYOUT ─── */
-        .hero-section {
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding-bottom: 0;
-        }
-        .hero-content-wrap {
-            position: relative;
-            z-index: 10;
-            max-width: 1280px;
-            margin: 0 auto;
-            width: 100%;
-            padding: 0 48px;
-        }
-        .hero-headline-area {
-            padding-bottom: 36px;
-        }
-        .hero-search-bar-strip {
-            background: rgba(4, 4, 4, 0.88);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-top: 1px solid rgba(162, 224, 67, 0.15);
-            padding: 22px 48px;
-            margin: 0 -48px;
-        }
     </style>
 
-    {{-- PREMIUM HERO SECTION --}}
+    {{-- HERO SECTION --}}
     @php
         $heroBackground = setting('hero_image') ? asset(setting('hero_image')) : asset('frontend/images/hero_bg.png');
         $hasSliders = isset($heroSliders) && $heroSliders->count() > 0;
     @endphp
-    <section class="hero-section"
-        style="{{ !$hasSliders ? "background: #080a0d url('" . $heroBackground . "') center/cover no-repeat;" : 'background: #080a0d;' }}">
+    <section
+        style="min-height: 88vh; padding: 130px 40px 80px; position:relative; overflow:hidden; z-index: 30; display: flex; align-items: center; {{ !$hasSliders ? "background: #0b0d11 url('" . $heroBackground . "') center/cover no-repeat;" : 'background: #0b0d11;' }}">
 
         {{-- SLIDER IMAGES --}}
         @if($hasSliders)
@@ -544,38 +514,25 @@
             @endif
         @endif
 
-        {{-- Cinematic multi-layer overlay: rich left fade + deep bottom vignette --}}
-        <div style="position:absolute; inset:0; background:
-            linear-gradient(105deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 38%, rgba(0,0,0,0.12) 68%, transparent 100%),
-            linear-gradient(to top, rgba(4,4,4,0.98) 0%, rgba(4,4,4,0.7) 18%, rgba(0,0,0,0.2) 40%, transparent 65%);
-            pointer-events:none; z-index: 1;"></div>
+        {{-- Subtle overlay for text readability --}}
+        <div style="position:absolute; inset:0; background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 35%, rgba(11,13,17,0.75) 100%); pointer-events:none; z-index: 1;"></div>
 
-        {{-- Subtle neon green glow accent top-left --}}
-        <div style="position:absolute; top:-120px; left:-80px; width:500px; height:500px; background:radial-gradient(circle, rgba(162,224,67,0.07) 0%, transparent 70%); pointer-events:none; z-index:2;"></div>
-
-        <div class="hero-content-wrap">
-            {{-- HEADLINE AREA --}}
-            <div class="hero-headline-area">
-                <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(162,224,67,0.08); border:1px solid rgba(162,224,67,0.25); border-radius:30px; padding:5px 14px; margin-bottom:22px;">
-                    <span style="width:6px;height:6px;border-radius:50%;background:#a2e043;box-shadow:0 0 8px #a2e043;display:inline-block;"></span>
-                    <span style="font-size:11.5px;font-weight:700;color:#a2e043;letter-spacing:1.5px;text-transform:uppercase;">Reimagining Travel</span>
-                </div>
+        <div style="max-width:1200px; margin:0 auto; position:relative; z-index: 10; width: 100%;">
+            <div style="max-width: 820px; margin-bottom: 32px;">
+                <span class="sb-badge" style="margin-bottom:20px; display:inline-flex;">✨ Reimagining Travel</span>
                 <h1 class="syne"
-                    style="font-size:clamp(48px,6.5vw,96px); line-height:0.98; margin:0 0 18px 0; font-weight:900; color:#fff; letter-spacing:-3px; max-width:700px;">
-                    Journey to<br>your <span style="color:#a2e043; text-shadow: 0 0 40px rgba(162,224,67,0.5), 0 0 80px rgba(162,224,67,0.2);">Happy</span><br><span style="color:#fff;">Place.</span>
+                    style="font-size:clamp(44px,6vw,84px); line-height:1.05; margin-bottom:20px; font-weight:800; color:#fff; letter-spacing: -2px;">
+                    Journey to your <br><span style="color:var(--neon); text-shadow: 0 0 25px rgba(162, 224, 67, 0.55);">Happy Place.</span>
                 </h1>
-                <p style="color:rgba(255,255,255,0.55); font-size:16px; font-weight:500; max-width:420px; line-height:1.65; margin:0;">
-                    Premium intercity bus travel across Bangladesh — comfort, safety, and speed at every mile.
+                <p style="color:rgba(255,255,255,0.65); font-size:17px; line-height:1.65; max-width:520px; margin:0;">
+                    Premium intercity bus reservations across Bangladesh. Experience comfort, safety, and priority at every mile.
                 </p>
             </div>
-        </div>
 
-        {{-- SEARCH BAR STRIP — Full-width pinned to bottom --}}
-        <div class="hero-search-bar-strip">
-            <div style="max-width:1280px; margin:0 auto;">
+            {{-- FLOATING SEARCH WIDGET --}}
+            <div class="shohoz-search-card">
                 <form action="{{ route('frontend.reserve') }}" method="GET" id="heroSearchForm">
-                    {{-- Trip Type Selector --}}
-                    <div class="shohoz-type-selector" style="margin-bottom:14px;">
+                    <div class="shohoz-type-selector">
                         <label class="shohoz-type-option">
                             <input type="radio" name="trip_type" value="oneway" checked>
                             <span class="shohoz-radio-dot"></span>
@@ -587,7 +544,6 @@
                             <span class="shohoz-type-label">Round Way</span>
                         </label>
                     </div>
-                    {{-- Search Grid --}}
                     <div class="shohoz-search-grid">
 
                         {{-- FROM SEGMENT --}}
