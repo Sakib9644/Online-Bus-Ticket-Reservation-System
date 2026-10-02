@@ -4,13 +4,13 @@
     <style>
         /* ─── SHOHOZ-STYLE FLOATING SEARCH WIDGET (PURE BLACK & NEON - COMPACT) ─── */
         .shohoz-search-card {
-            background: #080808;
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border: 1.5px solid rgba(162, 224, 67, 0.3);
-            border-radius: 18px;
-            padding: 16px 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(162, 224, 67, 0.08);
+            background: rgba(6, 8, 12, 0.92);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1.5px solid rgba(162, 224, 67, 0.25);
+            border-radius: 20px;
+            padding: 18px 22px 20px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255,255,255,0.04), 0 0 40px rgba(162, 224, 67, 0.06);
             position: relative;
             z-index: 9999;
             width: 100%;
@@ -22,9 +22,10 @@
         .shohoz-type-selector {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 22px;
-            margin-bottom: 10px;
-            padding-left: 4px;
+            margin-bottom: 12px;
+            padding-left: 0;
         }
 
         .shohoz-type-option {
@@ -499,7 +500,7 @@
         $hasSliders = isset($heroSliders) && $heroSliders->count() > 0;
     @endphp
     <section
-        style="min-height: 88vh; padding: 160px 40px 120px; position:relative; overflow:visible; z-index: 50; display: flex; align-items: center; background: #0b0d11;">
+        style="min-height: 92vh; padding: 0; position:relative; overflow:visible; z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #0b0d11;">
 
         {{-- SLIDER IMAGES --}}
         @if($hasSliders)
@@ -517,25 +518,36 @@
             @endif
         @endif
 
-        {{-- Clip wrapper: contains background + slider so they stay bounded while dropdowns can overflow --}}
+        {{-- Clip wrapper --}}
         <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #0b0d11 url(\'' . $heroBackground . '\') center/cover no-repeat;' : '' }}"></div>
-        {{-- Subtle overlay for text readability --}}
-        <div style="position:absolute; inset:0; background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 35%, rgba(11,13,17,0.75) 100%); pointer-events:none; z-index: 1;"></div>
+        {{-- Rich multi-layer overlay for premium depth --}}
+        <div style="position:absolute; inset:0; pointer-events:none; z-index:1;
+            background:
+                linear-gradient(to bottom, rgba(5,7,10,0.52) 0%, rgba(5,7,10,0.1) 40%, rgba(5,7,10,0.72) 100%),
+                linear-gradient(to right, rgba(5,7,10,0.45) 0%, transparent 60%);"></div>
 
-        <div style="max-width:1200px; margin:0 auto; position:relative; z-index: 9999; width: 100%;">
-            <div style="max-width: 820px; margin-bottom: 32px;">
-                <span class="sb-badge" style="margin-bottom:20px; display:inline-flex;">✨ Reimagining Travel</span>
-                <h1 class="syne"
-                    style="font-size:clamp(44px,6vw,84px); line-height:1.05; margin-bottom:20px; font-weight:800; color:#fff; letter-spacing: -2px;">
-                    Journey to your <br><span style="color:var(--neon); text-shadow: 0 0 25px rgba(162, 224, 67, 0.55);">Happy Place.</span>
-                </h1>
-                <p style="color:rgba(255,255,255,0.65); font-size:17px; line-height:1.65; max-width:520px; margin:0;">
-                    Premium intercity bus reservations across Bangladesh. Experience comfort, safety, and priority at every mile.
-                </p>
+        {{-- Center content container --}}
+        <div style="position:relative; z-index: 9999; width:100%; max-width:1100px; margin:0 auto; padding: 140px 40px 80px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+
+            {{-- Badge --}}
+            <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(162,224,67,0.1); border:1px solid rgba(162,224,67,0.3); border-radius:30px; padding:6px 18px; margin-bottom:24px; backdrop-filter: blur(8px);">
+                <span style="width:6px;height:6px;border-radius:50%;background:#a2e043;box-shadow:0 0 10px #a2e043;display:inline-block;"></span>
+                <span style="font-size:11px;font-weight:800;color:#a2e043;letter-spacing:2px;text-transform:uppercase;">✦ Reimagining Travel in Bangladesh</span>
             </div>
 
-            {{-- FLOATING SEARCH WIDGET --}}
-            <div class="shohoz-search-card">
+            {{-- Headline --}}
+            <h1 class="syne" style="font-size:clamp(42px,6.5vw,88px); line-height:1.0; margin:0 0 20px 0; font-weight:900; color:#fff; letter-spacing:-3px; max-width:860px;">
+                Journey to your<br>
+                <span style="color:#a2e043; text-shadow: 0 0 40px rgba(162,224,67,0.5), 0 0 80px rgba(162,224,67,0.2);">Happy Place.</span>
+            </h1>
+
+            {{-- Subtitle --}}
+            <p style="color:rgba(255,255,255,0.62); font-size:16.5px; line-height:1.7; max-width:520px; margin:0 0 38px 0; font-weight:400;">
+                Premium intercity bus reservations across Bangladesh.<br>Comfort, safety, and speed — guaranteed.
+            </p>
+
+            {{-- CENTERED SEARCH WIDGET --}}
+            <div class="shohoz-search-card" style="max-width:980px; width:100%;">
                 <form action="{{ route('frontend.reserve') }}" method="GET" id="heroSearchForm">
                     <div class="shohoz-type-selector">
                         <label class="shohoz-type-option">
