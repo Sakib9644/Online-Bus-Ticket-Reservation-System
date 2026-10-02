@@ -4,13 +4,13 @@
     <style>
         /* ─── LUXURY BLACK & NEON TICKET SEARCH WIDGET ─── */
         .shohoz-search-card {
-            background: rgba(5, 8, 5, 0.95);
-            backdrop-filter: blur(32px);
-            -webkit-backdrop-filter: blur(32px);
+            background: rgba(8, 12, 8, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1.5px solid rgba(162, 224, 67, 0.35);
-            border-radius: 24px;
-            padding: 24px 28px 22px;
-            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255,255,255,0.04), 0 0 45px rgba(162, 224, 67, 0.08);
+            border-radius: 20px;
+            padding: 22px 24px 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(162, 224, 67, 0.12);
             position: relative;
             z-index: 9999;
             width: 100%;
@@ -24,7 +24,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }
 
@@ -114,10 +114,10 @@
             grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1.25fr) minmax(0, 1.15fr) auto;
             align-items: center;
             gap: 8px;
-            background: #020302;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 7px;
+            background: rgba(0, 0, 0, 0.45);
+            border: none;
+            border-radius: 14px;
+            padding: 6px;
         }
 
         .shohoz-segment {
@@ -125,20 +125,22 @@
             align-items: center;
             gap: 12px;
             padding: 8px 14px;
-            background: #080b08;
-            border: 1.5px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: none !important;
+            border-radius: 11px;
             min-height: 58px;
             height: 58px;
             box-sizing: border-box;
             position: relative;
+            cursor: pointer;
             transition: all 0.25s ease;
         }
 
-        .shohoz-segment:focus-within {
-            border-color: #a2e043;
-            background: rgba(162, 224, 67, 0.04);
-            box-shadow: 0 0 18px rgba(162, 224, 67, 0.25);
+        .shohoz-segment:focus-within,
+        .shohoz-segment:hover {
+            border: none !important;
+            background: rgba(162, 224, 67, 0.08) !important;
+            box-shadow: 0 0 14px rgba(162, 224, 67, 0.18) !important;
         }
 
         .shohoz-segment.field-error {
@@ -284,9 +286,9 @@
         }
 
         .custom-dropdown-wrap.is-open {
-            border-color: #a2e043 !important;
-            background: rgba(162, 224, 67, 0.05) !important;
-            box-shadow: 0 0 16px rgba(162, 224, 67, 0.2) !important;
+            border: none !important;
+            background: rgba(162, 224, 67, 0.08) !important;
+            box-shadow: 0 0 16px rgba(162, 224, 67, 0.25) !important;
             z-index: 100 !important;
         }
 
@@ -459,36 +461,6 @@
             box-shadow: 0 0 40px rgba(162, 224, 67, 0.75);
         }
 
-        /* ─── CARD FOOTER TRUST PERKS ─── */
-        .shohoz-card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            gap: 16px;
-            margin-top: 18px;
-            padding-top: 14px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            flex-wrap: wrap;
-        }
-
-        .shohoz-feature-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .shohoz-feature-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #a2e043;
-            box-shadow: 0 0 8px #a2e043;
-            display: inline-block;
-        }
-
         /* ─── RESPONSIVE ─── */
         @media (max-width: 992px) {
             .shohoz-card-header {
@@ -518,11 +490,6 @@
                 width: 100%;
                 height: 52px;
                 min-height: 52px;
-            }
-            .shohoz-card-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
             }
         }
 
