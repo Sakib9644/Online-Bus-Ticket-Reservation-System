@@ -12,10 +12,11 @@
             padding: 16px 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(162, 224, 67, 0.08);
             position: relative;
-            z-index: 20;
+            z-index: 9999;
             width: 100%;
             max-width: 1080px;
             margin: 0;
+            overflow: visible;
         }
 
         .shohoz-type-selector {
@@ -498,7 +499,7 @@
         $hasSliders = isset($heroSliders) && $heroSliders->count() > 0;
     @endphp
     <section
-        style="min-height: 88vh; padding: 130px 40px 80px; position:relative; overflow:hidden; z-index: 30; display: flex; align-items: center; {{ !$hasSliders ? "background: #0b0d11 url('" . $heroBackground . "') center/cover no-repeat;" : 'background: #0b0d11;' }}">
+        style="min-height: 88vh; padding: 160px 40px 120px; position:relative; overflow:visible; z-index: 50; display: flex; align-items: center; background: #0b0d11;">
 
         {{-- SLIDER IMAGES --}}
         @if($hasSliders)
@@ -516,10 +517,12 @@
             @endif
         @endif
 
+        {{-- Clip wrapper: contains background + slider so they stay bounded while dropdowns can overflow --}}
+        <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #0b0d11 url(' . $heroBackground . ') center/cover no-repeat;' : '' }}"></div>
         {{-- Subtle overlay for text readability --}}
         <div style="position:absolute; inset:0; background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 35%, rgba(11,13,17,0.75) 100%); pointer-events:none; z-index: 1;"></div>
 
-        <div style="max-width:1200px; margin:0 auto; position:relative; z-index: 10; width: 100%;">
+        <div style="max-width:1200px; margin:0 auto; position:relative; z-index: 9999; width: 100%;">
             <div style="max-width: 820px; margin-bottom: 32px;">
                 <span class="sb-badge" style="margin-bottom:20px; display:inline-flex;">✨ Reimagining Travel</span>
                 <h1 class="syne"
