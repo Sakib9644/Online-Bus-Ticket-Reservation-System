@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\LoginController;
 use App\Http\Controllers\Frontend\BookingDetailsController;
 use App\Http\Controllers\Frontend\UserPaymentController;
 use App\Http\Controllers\SslCommerzPaymentController;
+use App\Http\Controllers\BkashPaymentController;
 
 
 // Backend
@@ -54,6 +55,9 @@ Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel'])->name('ss
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn'])->name('sslc.ipn');
 //SSLCOMMERZ END
 
+// bKash Direct Payment (Tokenized Checkout Sandbox)
+Route::get('/bkash/pay/{id}', [BkashPaymentController::class, 'createPayment'])->name('bkash.pay');
+Route::get('/bkash/callback/{id}', [BkashPaymentController::class, 'callback'])->name('bkash.callback');
 
 // Registration & login
 Route::get('/user/registration',[LoginController::class,'registration'])->name('user.registration');
