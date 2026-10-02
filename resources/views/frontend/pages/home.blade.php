@@ -2,32 +2,34 @@
 @section('content')
 
     <style>
-        /* ─── SHOHOZ-STYLE FLOATING SEARCH WIDGET (PURE BLACK & NEON) ─── */
+        /* ─── SHOHOZ-STYLE FLOATING SEARCH WIDGET (PURE BLACK & NEON - COMPACT) ─── */
         .shohoz-search-card {
             background: #080808;
             backdrop-filter: blur(28px);
             -webkit-backdrop-filter: blur(28px);
             border: 1.5px solid rgba(162, 224, 67, 0.35);
-            border-radius: 24px;
-            padding: 24px 28px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95), 0 0 40px rgba(162, 224, 67, 0.15);
+            border-radius: 18px;
+            padding: 14px 18px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.92), 0 0 30px rgba(162, 224, 67, 0.12);
             position: relative;
             z-index: 20;
             width: 100%;
+            max-width: 1080px;
+            margin: 0 auto;
         }
 
         .shohoz-type-selector {
             display: flex;
             align-items: center;
-            gap: 28px;
-            margin-bottom: 18px;
-            padding-left: 6px;
+            gap: 22px;
+            margin-bottom: 10px;
+            padding-left: 4px;
         }
 
         .shohoz-type-option {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
             margin: 0;
             user-select: none;
@@ -38,10 +40,10 @@
         }
 
         .shohoz-radio-dot {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -51,21 +53,21 @@
 
         .shohoz-type-option input:checked + .shohoz-radio-dot {
             border-color: #a2e043;
-            box-shadow: 0 0 15px rgba(162, 224, 67, 0.6);
+            box-shadow: 0 0 12px rgba(162, 224, 67, 0.6);
         }
 
         .shohoz-type-option input:checked + .shohoz-radio-dot::after {
             content: '';
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: #a2e043;
-            box-shadow: 0 0 10px rgba(162, 224, 67, 0.8);
+            box-shadow: 0 0 8px rgba(162, 224, 67, 0.8);
         }
 
         .shohoz-type-label {
             color: #e2e8f0;
-            font-size: 15px;
+            font-size: 13.5px;
             font-weight: 700;
             transition: color 0.2s;
         }
@@ -78,24 +80,25 @@
         .shohoz-search-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1.25fr) minmax(0, 1.15fr) auto;
-            align-items: stretch;
-            gap: 12px;
+            align-items: center;
+            gap: 8px;
             background: #000000;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 8px 10px;
+            border-radius: 13px;
+            padding: 6px;
         }
 
         .shohoz-segment {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 10px 16px;
+            gap: 10px;
+            padding: 6px 13px;
             background: #0a0a0a;
             border: 1.5px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            min-height: 64px;
-            height: auto;
+            border-radius: 11px;
+            min-height: 52px;
+            height: 52px;
+            box-sizing: border-box;
             position: relative;
             transition: all 0.25s ease;
         }
@@ -103,19 +106,19 @@
         .shohoz-segment:focus-within {
             border-color: #a2e043;
             background: rgba(162, 224, 67, 0.04);
-            box-shadow: 0 0 20px rgba(162, 224, 67, 0.25);
+            box-shadow: 0 0 16px rgba(162, 224, 67, 0.2);
         }
 
         .shohoz-segment.field-error {
             border-color: #ef4444 !important;
             background: rgba(239, 68, 68, 0.08) !important;
-            box-shadow: 0 0 0 1px #ef4444, 0 0 20px rgba(239, 68, 68, 0.4) !important;
+            box-shadow: 0 0 0 1px #ef4444, 0 0 16px rgba(239, 68, 68, 0.35) !important;
             animation: segmentShake 0.35s ease;
         }
 
         .shohoz-segment.field-error .shohoz-segment-icon {
             color: #ef4444 !important;
-            text-shadow: 0 0 12px rgba(239, 68, 68, 0.7) !important;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.7) !important;
         }
 
         .shohoz-segment.field-error .shohoz-segment-label {
@@ -128,21 +131,33 @@
             color: #fca5a5 !important;
         }
 
+        .shohoz-segment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+            line-height: 1;
+        }
+
         .field-error-msg {
             display: none;
             color: #ef4444;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
-            line-height: 1.2;
-            margin-top: 3px;
+            line-height: 1;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             letter-spacing: 0.2px;
+            white-space: nowrap;
         }
 
         .shohoz-segment.field-error .field-error-msg {
-            display: flex;
+            display: inline-flex;
             animation: errorFadeIn 0.2s ease forwards;
+        }
+
+        .shohoz-segment.field-error .shohoz-return-hint {
+            display: none !important;
         }
 
         @keyframes errorFadeIn {
@@ -152,17 +167,17 @@
 
         @keyframes segmentShake {
             0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-6px); }
-            40% { transform: translateX(6px); }
-            60% { transform: translateX(-4px); }
-            80% { transform: translateX(4px); }
+            20% { transform: translateX(-5px); }
+            40% { transform: translateX(5px); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
         }
 
         .shohoz-segment-icon {
-            font-size: 18px;
+            font-size: 15px;
             color: #a2e043;
-            text-shadow: 0 0 12px rgba(162, 224, 67, 0.5);
-            width: 28px;
+            text-shadow: 0 0 10px rgba(162, 224, 67, 0.5);
+            width: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -172,27 +187,30 @@
         .shohoz-segment-content {
             display: flex;
             flex-direction: column;
+            justify-content: center;
             flex: 1;
             min-width: 0;
+            height: 100%;
         }
 
         .shohoz-segment-label {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 0.8px;
             color: #a2e043;
-            margin-bottom: 2px;
+            line-height: 1;
         }
 
         .shohoz-return-hint {
-            font-size: 9px;
+            font-size: 8.5px;
             font-weight: 800;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             color: #a2e043;
             text-shadow: 0 0 8px rgba(162, 224, 67, 0.4);
             text-transform: uppercase;
             cursor: pointer;
+            line-height: 1;
         }
 
         /* ─── CUSTOM DARK NEON DROPDOWN ─── */
@@ -207,20 +225,22 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            gap: 8px;
+            gap: 6px;
+            line-height: 1.2;
         }
 
         .custom-select-text {
             color: #ffffff;
-            font-size: 15px;
+            font-size: 13.5px;
             font-weight: 700;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            line-height: 1.2;
         }
 
         .custom-select-arrow {
-            font-size: 11px;
+            font-size: 10px;
             color: rgba(255, 255, 255, 0.4);
             transition: transform 0.25s ease, color 0.2s ease;
             flex-shrink: 0;
@@ -234,22 +254,22 @@
         .custom-dropdown-wrap.is-open {
             border-color: #a2e043 !important;
             background: rgba(162, 224, 67, 0.05) !important;
-            box-shadow: 0 0 20px rgba(162, 224, 67, 0.25) !important;
+            box-shadow: 0 0 16px rgba(162, 224, 67, 0.2) !important;
             z-index: 100 !important;
         }
 
         .custom-select-menu {
             position: absolute;
-            top: calc(100% + 8px);
+            top: calc(100% + 6px);
             left: 0;
             right: 0;
-            min-width: 260px;
+            min-width: 240px;
             background: #090b0e;
             border: 1.5px solid rgba(162, 224, 67, 0.45);
-            border-radius: 14px;
-            padding: 8px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.98), 0 0 30px rgba(162, 224, 67, 0.2);
-            max-height: 280px;
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.98), 0 0 25px rgba(162, 224, 67, 0.18);
+            max-height: 260px;
             overflow-y: auto;
             z-index: 99999;
             display: none;
@@ -263,7 +283,7 @@
         @keyframes customDropFade {
             from {
                 opacity: 0;
-                transform: translateY(-6px);
+                transform: translateY(-5px);
             }
             to {
                 opacity: 1;
@@ -272,17 +292,17 @@
         }
 
         .custom-select-menu::-webkit-scrollbar {
-            width: 5px;
+            width: 4px;
         }
 
         .custom-select-menu::-webkit-scrollbar-track {
             background: #0d0d0d;
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         .custom-select-menu::-webkit-scrollbar-thumb {
             background: rgba(162, 224, 67, 0.3);
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         .custom-select-menu::-webkit-scrollbar-thumb:hover {
@@ -292,18 +312,18 @@
         .custom-select-option {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            border-radius: 10px;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
             color: #d1d5db;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.15s ease;
         }
 
         .custom-select-option .option-icon {
-            font-size: 13px;
+            font-size: 12px;
             color: rgba(255, 255, 255, 0.35);
             transition: color 0.15s;
         }
@@ -331,12 +351,13 @@
             background: transparent;
             border: none;
             color: #ffffff;
-            font-size: 15px;
+            font-size: 13.5px;
             font-weight: 700;
             width: 100%;
             outline: none;
             cursor: pointer;
             padding: 0;
+            line-height: 1.2;
             color-scheme: dark;
         }
 
@@ -348,18 +369,18 @@
         }
 
         .shohoz-swap-btn {
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: #0a0a0a;
             border: 1.5px solid rgba(162, 224, 67, 0.4);
             color: #a2e043;
-            font-size: 15px;
+            font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(162, 224, 67, 0.2);
+            box-shadow: 0 0 12px rgba(162, 224, 67, 0.2);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -368,54 +389,53 @@
             color: #000000;
             border-color: #a2e043;
             transform: rotate(180deg) scale(1.12);
-            box-shadow: 0 0 25px rgba(162, 224, 67, 0.65);
+            box-shadow: 0 0 20px rgba(162, 224, 67, 0.65);
         }
 
         /* ─── SEARCH BUTTON ─── */
         .shohoz-btn-wrap {
             display: flex;
             align-items: center;
-            min-height: 64px;
-            height: 100%;
+            height: 52px;
         }
 
         .shohoz-search-btn {
             background: #a2e043 !important;
             color: #000000 !important;
             font-weight: 900;
-            font-size: 16px;
+            font-size: 13.5px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            border-radius: 14px;
-            padding: 0 36px;
-            min-height: 64px;
-            height: 100%;
+            letter-spacing: 1.2px;
+            border-radius: 11px;
+            padding: 0 26px;
+            height: 52px;
+            min-height: 52px;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.25s ease;
-            box-shadow: 0 0 25px rgba(162, 224, 67, 0.45);
+            box-shadow: 0 0 20px rgba(162, 224, 67, 0.4);
             white-space: nowrap;
         }
 
         .shohoz-search-btn:hover {
             background: #b5ec58 !important;
             transform: translateY(-2px);
-            box-shadow: 0 0 45px rgba(162, 224, 67, 0.75);
+            box-shadow: 0 0 35px rgba(162, 224, 67, 0.7);
         }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 992px) {
             .shohoz-search-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
-                padding: 12px;
+                gap: 8px;
+                padding: 8px;
             }
             .shohoz-swap-wrap {
-                margin: -4px 0;
+                margin: -2px 0;
             }
             .shohoz-swap-btn {
                 transform: rotate(90deg);
@@ -425,6 +445,8 @@
             }
             .shohoz-btn-wrap, .shohoz-search-btn {
                 width: 100%;
+                height: 48px;
+                min-height: 48px;
             }
         }
     </style>
