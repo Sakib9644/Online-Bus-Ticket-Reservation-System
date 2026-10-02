@@ -82,23 +82,195 @@
 
         {{-- ─── SECTION 2: PAYMENT GATEWAYS & MOBILE BANKING METHODS ─── --}}
         <div class="admin-form-card" style="margin-bottom: 28px; border-radius: 16px; border: 1px solid var(--border);">
-            <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(16, 185, 129, 0.1); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                        <i class="fas fa-credit-card"></i>
-                    </div>
-                    <div>
-                        <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">Payment Gateway & Mobile Banking</h3>
-                        <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Enable or disable payment options. When active, they appear in passenger checkout.</p>
-                    </div>
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(16, 185, 129, 0.1); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">Payment Gateway & Mobile Banking</h3>
+                    <p style="font-size: 12.5px; color: var(--muted); margin: 0;">Enable or disable payment options. When active, they appear in passenger checkout.</p>
                 </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div style="display: flex; flex-direction: column; gap: 20px;">
 
-                {{-- 1. SSLCOMMERZ GATEWAY --}}
-                <div style="background: #f8fafc; border: 1.5px solid var(--border); border-radius: 14px; padding: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                {{-- 1. SSLCOMMERZ --}}
+                <div style="border: 1.5px solid #e2e8f0; border-radius: 14px; overflow: hidden;">
+                    <div style="background: #f1f5f9; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 32px; height: 32px; background: #034982; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px;">SSL</div>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 800; color: #0f172a;">SSLCommerz Gateway</div>
+                                <div style="font-size: 11.5px; color: var(--muted);">Visa, Mastercard, AMEX, Internet Banking</div>
+                            </div>
+                        </div>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 700; color: #0f172a; background: #fff; padding: 6px 14px; border-radius: 30px; border: 1px solid #cbd5e1;">
+                            <input type="checkbox" name="sslcommerz_active" value="1" {{ setting('sslcommerz_active', '1') == '1' ? 'checked' : '' }} style="width: 16px; height: 16px; accent-color: #10b981; cursor: pointer;">
+                            <span>Enable SSLCommerz</span>
+                        </label>
+                    </div>
+                    <div style="padding: 18px 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+                            <div class="admin-form-group" style="margin: 0;">
+                                <label class="admin-label">Store ID</label>
+                                <input name="sslcommerz_store_id" type="text" value="{{ $settings['sslcommerz_store_id'] ?? env('SSLCZ_STORE_ID', '') }}" class="admin-input" placeholder="e.g. swiftbus60a12b3">
+                            </div>
+                            <div class="admin-form-group" style="margin: 0;">
+                                <label class="admin-label">Store Password</label>
+                                <input name="sslcommerz_store_password" type="password" value="{{ $settings['sslcommerz_store_password'] ?? env('SSLCZ_STORE_PASSWORD', '') }}" class="admin-input" placeholder="••••••••••••">
+                            </div>
+                            <div class="admin-form-group" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                                <label class="admin-label">Gateway Mode</label>
+                                <label style="display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; font-weight: 600; color: #475569; cursor: pointer;">
+                                    <input type="checkbox" name="sslcommerz_sandbox" value="1" {{ setting('sslcommerz_sandbox', '1') == '1' ? 'checked' : '' }} style="width: 16px; height: 16px; accent-color: #3b82f6;">
+                                    <span>Sandbox (Test Mode)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- 2. BKASH --}}
+                <div style="border: 1.5px solid #fecdd3; border-radius: 14px; overflow: hidden;">
+                    <div style="background: #fff1f2; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="padding: 4px 10px; background: #e2136e; color: #fff; border-radius: 8px; font-weight: 900; font-size: 13px;">bKash</div>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 800; color: #881337;">bKash Tokenized Checkout</div>
+                                <div style="font-size: 11.5px; color: #9f1239;">Direct bKash payment via API — no manual TrxID needed</div>
+                            </div>
+                        </div>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 700; color: #881337; background: #fff; padding: 6px 14px; border-radius: 30px; border: 1px solid #fda4af;">
+                            <input type="checkbox" name="bkash_active" value="1" {{ setting('bkash_active', '1') == '1' ? 'checked' : '' }} style="width: 16px; height: 16px; accent-color: #e2136e; cursor: pointer;">
+                            <span>Enable bKash</span>
+                        </label>
+                    </div>
+                    <div style="padding: 18px 20px;">
+                        {{-- API Credentials --}}
+                        <div style="margin-bottom: 14px;">
+                            <div style="font-size: 11px; font-weight: 800; color: #e2136e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                                <i class="fas fa-key"></i> API Credentials (Tokenized Checkout)
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px;">
+                                <div class="admin-form-group" style="margin: 0;">
+                                    <label class="admin-label">App Key</label>
+                                    <input name="bkash_app_key" type="text" value="{{ $settings['bkash_app_key'] ?? '4f6o0cjiki2rfm34kfdadl1eqq' }}" class="admin-input" placeholder="bKash App Key">
+                                </div>
+                                <div class="admin-form-group" style="margin: 0;">
+                                    <label class="admin-label">App Secret</label>
+                                    <input name="bkash_app_secret" type="password" value="{{ $settings['bkash_app_secret'] ?? '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b' }}" class="admin-input" placeholder="••••••••••••">
+                                </div>
+                                <div class="admin-form-group" style="margin: 0;">
+                                    <label class="admin-label">Username</label>
+                                    <input name="bkash_username" type="text" value="{{ $settings['bkash_username'] ?? 'sandboxTokenizedUser02' }}" class="admin-input" placeholder="API Username">
+                                </div>
+                                <div class="admin-form-group" style="margin: 0;">
+                                    <label class="admin-label">Password</label>
+                                    <input name="bkash_password" type="password" value="{{ $settings['bkash_password'] ?? 'sandboxTokenizedUser02@12345' }}" class="admin-input" placeholder="••••••••••••">
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Mode & Display Info --}}
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; padding-top: 14px; border-top: 1px solid #fecdd3;">
+                            <div class="admin-form-group" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+                                <label class="admin-label">Gateway Mode</label>
+                                <label style="display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; font-weight: 600; color: #475569; cursor: pointer;">
+                                    <input type="checkbox" name="bkash_sandbox" value="1" {{ setting('bkash_sandbox', '1') == '1' ? 'checked' : '' }} style="width: 16px; height: 16px; accent-color: #e2136e;">
+                                    <span>Sandbox (Test Mode)</span>
+                                </label>
+                            </div>
+                            <div class="admin-form-group" style="margin: 0;">
+                                <label class="admin-label">Merchant Number (Display)</label>
+                                <input name="bkash_number" type="text" value="{{ $settings['bkash_number'] ?? '01715484510' }}" class="admin-input" placeholder="e.g. 01715484510">
+                            </div>
+                            <div class="admin-form-group" style="margin: 0;">
+                                <label class="admin-label">Account Type</label>
+                                <select name="bkash_type" class="admin-input">
+                                    <option value="Merchant" {{ ($settings['bkash_type'] ?? '') == 'Merchant' ? 'selected' : '' }}>Merchant</option>
+                                    <option value="Personal" {{ ($settings['bkash_type'] ?? '') == 'Personal' ? 'selected' : '' }}>Personal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- 3. NAGAD --}}
+                <div style="border: 1.5px solid #fed7aa; border-radius: 14px; overflow: hidden;">
+                    <div style="background: #fff7ed; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="padding: 4px 10px; background: #ed1c24; color: #fff; border-radius: 8px; font-weight: 900; font-size: 13px;">Nagad</div>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 800; color: #9a3412;">Nagad Mobile Banking</div>
+                                <div style="font-size: 11.5px; color: #c2410c;">Send Money / Merchant Payment</div>
+                            </div>
+                        </div>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 700; color: #9a3412; background: #fff; padding: 6px 14px; border-radius: 30px; border: 1px solid #fdba74;">
+                            <input type="checkbox" name="nagad_active" value="1" {{ setting('nagad_active', '1') == '1' ? 'checked' : '' }} style="width: 16px; height: 16px; accent-color: #ed1c24; cursor: pointer;">
+                            <span>Enable Nagad</span>
+                        </label>
+                    </div>
+                    <div style="padding: 18px 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                            <div class="admin-form-group" style="margin: 0;">
+                                <label class="admin-label">Nagad Account Number</label>
+                                <input name="nagad_number" type="text" value="{{ $settings['nagad_number'] ?? '01855621000' }}" class="admin-input" placeholder="e.g. 01855621000">
+                            </div>
+                            <div class="admin-form-group" style="margin: 0;">
+                                <label class="admin-label">Account Type</label>
+                                <select name="nagad_type" class="admin-input">
+                                    <option value="Merchant" {{ ($settings['nagad_type'] ?? '') == 'Merchant' ? 'selected' : '' }}>Merchant (Payment)</option>
+                                    <option value="Personal" {{ ($settings['nagad_type'] ?? '') == 'Personal' ? 'selected' : '' }}>Personal (Send Money)</option>
+                                </select>
+                            </div>
+                            <div class="admin-form-group" style="margin: 0; grid-column: 1 / -1;">
+                                <label class="admin-label">Nagad Payment Instructions</label>
+                                <textarea name="nagad_instructions" rows="2" class="admin-input" placeholder="Instructions displayed to passenger at checkout...">{{ $settings['nagad_instructions'] ?? 'Dial *167# → Send Money to the number above → Enter TrxID to confirm.' }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- 4. ROCKET --}}
+                <div style="border: 1.5px solid #e9d5ff; border-radius: 14px; overflow: hidden;">
+                    <div style="background: #faf5ff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="padding: 4px 10px; background: #8c3494; color: #fff; border-radius: 8px; font-weight: 900; font-size: 13px;">Rocket</div>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 800; color: #581c87;">DBBL Rocket</div>
+                                <div style="font-size: 11.5px; color: #7e22ce;">Dutch-Bangla Bank mobile wallet</div>
+                            </div>
+                        </div>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 700; color: #581c87; background: #fff; padding: 6px 14px; border-radius: 30px; border: 1px solid #d8b4fe;">
+                            <input type="checkbox" name="rocket_active" value="1" {{ setting('rocket_active', '0') == '1' ? 'checked' : '' }} style="width: 16px; height: 16px; accent-color: #8c3494; cursor: pointer;">
+                            <span>Enable Rocket</span>
+                        </label>
+                    </div>
+                    <div style="padding: 18px 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                            <div class="admin-form-group" style="margin: 0;">
+                                <label class="admin-label">Rocket Account Number (with Check Digit)</label>
+                                <input name="rocket_number" type="text" value="{{ $settings['rocket_number'] ?? '019855621008' }}" class="admin-input" placeholder="e.g. 019855621008">
+                            </div>
+                            <div class="admin-form-group" style="margin: 0;">
+                                <label class="admin-label">Account Type</label>
+                                <select name="rocket_type" class="admin-input">
+                                    <option value="Merchant" {{ ($settings['rocket_type'] ?? '') == 'Merchant' ? 'selected' : '' }}>Merchant</option>
+                                    <option value="Personal" {{ ($settings['rocket_type'] ?? '') == 'Personal' ? 'selected' : '' }}>Personal</option>
+                                </select>
+                            </div>
+                            <div class="admin-form-group" style="margin: 0; grid-column: 1 / -1;">
+                                <label class="admin-label">Rocket Payment Instructions</label>
+                                <textarea name="rocket_instructions" rows="2" class="admin-input" placeholder="Instructions displayed to passenger at checkout...">{{ $settings['rocket_instructions'] ?? 'Dial *322# → Send Money to the number above → Enter TrxID to confirm.' }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="width: 32px; height: 32px; background: #034982; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px;">SSL</div>
                             <div>
