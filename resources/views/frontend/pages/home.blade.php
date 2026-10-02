@@ -2,39 +2,69 @@
 @section('content')
 
     <style>
-        /* ─── SHOHOZ-STYLE FLOATING SEARCH WIDGET (PURE BLACK & NEON - COMPACT) ─── */
+        /* ─── LUXURY BLACK & NEON TICKET SEARCH WIDGET ─── */
         .shohoz-search-card {
-            background: rgba(6, 8, 12, 0.92);
+            background: rgba(5, 8, 5, 0.95);
             backdrop-filter: blur(32px);
             -webkit-backdrop-filter: blur(32px);
-            border: 1.5px solid rgba(162, 224, 67, 0.25);
-            border-radius: 20px;
-            padding: 18px 22px 20px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255,255,255,0.04), 0 0 40px rgba(162, 224, 67, 0.06);
+            border: 1.5px solid rgba(162, 224, 67, 0.35);
+            border-radius: 24px;
+            padding: 24px 28px 22px;
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255,255,255,0.04), 0 0 45px rgba(162, 224, 67, 0.08);
             position: relative;
             z-index: 9999;
             width: 100%;
-            max-width: 1080px;
+            max-width: 1060px;
             margin: 0;
             overflow: visible;
         }
 
-        .shohoz-type-selector {
+        .shohoz-card-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 22px;
-            margin-bottom: 12px;
-            padding-left: 0;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .shohoz-service-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(162, 224, 67, 0.1);
+            border: 1.5px solid #a2e043;
+            color: #a2e043;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            box-shadow: 0 0 14px rgba(162, 224, 67, 0.25);
+        }
+
+        .shohoz-type-selector {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 0;
+            padding: 4px;
+            background: #020302;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
         }
 
         .shohoz-type-option {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
             cursor: pointer;
             margin: 0;
             user-select: none;
+            transition: all 0.2s ease;
         }
 
         .shohoz-type-option input {
@@ -42,40 +72,41 @@
         }
 
         .shohoz-radio-dot {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             position: relative;
         }
 
         .shohoz-type-option input:checked + .shohoz-radio-dot {
             border-color: #a2e043;
-            box-shadow: 0 0 12px rgba(162, 224, 67, 0.6);
+            box-shadow: 0 0 10px rgba(162, 224, 67, 0.6);
         }
 
         .shohoz-type-option input:checked + .shohoz-radio-dot::after {
             content: '';
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: #a2e043;
             box-shadow: 0 0 8px rgba(162, 224, 67, 0.8);
         }
 
         .shohoz-type-label {
-            color: #e2e8f0;
-            font-size: 13.5px;
+            color: #94a3b8;
+            font-size: 13px;
             font-weight: 700;
             transition: color 0.2s;
         }
 
         .shohoz-type-option input:checked ~ .shohoz-type-label {
             color: #ffffff;
+            font-weight: 800;
         }
 
         .shohoz-search-grid {
@@ -83,22 +114,22 @@
             grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1.25fr) minmax(0, 1.15fr) auto;
             align-items: center;
             gap: 8px;
-            background: #000000;
+            background: #020302;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 13px;
-            padding: 6px;
+            border-radius: 16px;
+            padding: 7px;
         }
 
         .shohoz-segment {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 6px 13px;
-            background: #0a0a0a;
+            gap: 12px;
+            padding: 8px 14px;
+            background: #080b08;
             border: 1.5px solid rgba(255, 255, 255, 0.08);
-            border-radius: 11px;
-            min-height: 52px;
-            height: 52px;
+            border-radius: 12px;
+            min-height: 58px;
+            height: 58px;
             box-sizing: border-box;
             position: relative;
             transition: all 0.25s ease;
@@ -107,7 +138,7 @@
         .shohoz-segment:focus-within {
             border-color: #a2e043;
             background: rgba(162, 224, 67, 0.04);
-            box-shadow: 0 0 16px rgba(162, 224, 67, 0.2);
+            box-shadow: 0 0 18px rgba(162, 224, 67, 0.25);
         }
 
         .shohoz-segment.field-error {
