@@ -18,8 +18,8 @@
         /* ─── LAYOUT GRID ─── */
         .trip-layout-grid {
             display: grid;
-            grid-template-columns: 310px minmax(0, 1fr);
-            gap: 40px;
+            grid-template-columns: 260px minmax(0, 1fr);
+            gap: 28px;
         }
         @media (max-width: 992px) {
             .trip-layout-grid {
@@ -86,12 +86,12 @@
             background: #080808;
             border: 1.5px solid rgba(162, 224, 67, 0.35);
             border-radius: 18px;
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(180px, 220px) minmax(280px, 1fr) 150px;
             align-items: center;
-            justify-content: space-between;
             padding: 20px 24px;
             margin-bottom: 16px;
-            gap: 16px;
+            gap: 20px;
             transition: all 0.25s ease;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(162, 224, 67, 0.06);
             animation: cardIn 0.4s ease-out both;
@@ -113,9 +113,9 @@
 
         /* ─── SEGMENT LEFT: OPERATOR & ROUTE ─── */
         .segment-operator {
-            flex: 0 1 220px;
-            min-width: 170px;
-            max-width: 240px;
+            min-width: 0;
+            overflow: hidden;
+            width: 100%;
         }
 
         .operator-header {
@@ -123,6 +123,14 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 6px;
+            min-width: 0;
+            width: 100%;
+        }
+
+        .operator-meta {
+            min-width: 0;
+            flex: 1;
+            overflow: hidden;
         }
 
         .operator-logo {
@@ -141,11 +149,11 @@
         }
 
         .operator-title {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 800;
             color: #ffffff;
             margin: 0 0 2px 0;
-            line-height: 1.2;
+            line-height: 1.25;
             letter-spacing: -0.2px;
             white-space: nowrap;
             overflow: hidden;
@@ -166,10 +174,9 @@
             color: #8e99aa;
             line-height: 1.35;
             margin-top: 4px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            white-space: nowrap;
             overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .operator-route strong {
@@ -179,29 +186,39 @@
 
         /* ─── SEGMENT MIDDLE: TIMELINE & SCHEDULE ─── */
         .segment-schedule {
-            flex: 1 1 auto;
             min-width: 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            padding: 0 16px;
-            border-left: 1px solid rgba(255, 255, 255, 0.08);
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 14px;
+            padding: 0 20px;
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .schedule-node {
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            min-width: 85px;
+            min-width: 75px;
+        }
+
+        .schedule-node.departure {
+            text-align: left;
+        }
+
+        .schedule-node.arrival {
+            text-align: right;
         }
 
         .schedule-time {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 800;
             color: #ffffff;
             line-height: 1.1;
+            white-space: nowrap;
         }
 
         .schedule-date {
@@ -209,6 +226,7 @@
             color: #94a3b8;
             font-weight: 600;
             margin: 3px 0 2px;
+            white-space: nowrap;
         }
 
         .schedule-city {
@@ -218,7 +236,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 105px;
+            max-width: 95px;
         }
 
         /* Shohoz Journey Timeline Progress Bar */
@@ -227,8 +245,9 @@
             flex-direction: column;
             align-items: center;
             flex: 1 1 auto;
-            min-width: 60px;
-            max-width: 130px;
+            min-width: 55px;
+            max-width: 120px;
+            padding: 0 4px;
         }
 
         .timeline-duration {
@@ -237,6 +256,7 @@
             font-weight: 700;
             margin-bottom: 5px;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         .timeline-track {
@@ -288,9 +308,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex: 0 0 145px;
-            min-width: 145px;
+            width: 150px;
             gap: 6px;
+            min-width: 140px;
+            box-sizing: border-box;
         }
 
         .fare-amount {
@@ -503,6 +524,7 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 1080px) {
             .ticket-card {
+                display: flex;
                 flex-direction: column;
                 align-items: stretch;
                 padding: 20px;
@@ -515,8 +537,8 @@
             .segment-schedule {
                 border-left: none;
                 border-right: none;
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 padding: 16px 0;
                 width: 100%;
             }
