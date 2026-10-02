@@ -4,13 +4,13 @@
     <style>
         /* ─── LUXURY BLACK & NEON TICKET SEARCH WIDGET ─── */
         .shohoz-search-card {
-            background: rgba(8, 12, 8, 0.94);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(6, 9, 6, 0.94);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
             border: 1.5px solid rgba(162, 224, 67, 0.35);
-            border-radius: 20px;
-            padding: 22px 24px 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(162, 224, 67, 0.12);
+            border-radius: 22px;
+            padding: 24px 28px 24px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(162, 224, 67, 0.1);
             position: relative;
             z-index: 9999;
             width: 100%;
@@ -19,128 +19,44 @@
             overflow: visible;
         }
 
-        .shohoz-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .shohoz-service-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(162, 224, 67, 0.1);
-            border: 1.5px solid #a2e043;
-            color: #a2e043;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 12px;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            box-shadow: 0 0 14px rgba(162, 224, 67, 0.25);
-        }
-
-        .shohoz-type-selector {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 0;
-            padding: 4px;
-            background: #020302;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-        }
-
-        .shohoz-type-option {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin: 0;
-            user-select: none;
-            transition: all 0.2s ease;
-        }
-
-        .shohoz-type-option input {
-            display: none;
-        }
-
-        .shohoz-radio-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .shohoz-type-option input:checked + .shohoz-radio-dot {
-            border-color: #a2e043;
-            box-shadow: 0 0 10px rgba(162, 224, 67, 0.6);
-        }
-
-        .shohoz-type-option input:checked + .shohoz-radio-dot::after {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #a2e043;
-            box-shadow: 0 0 8px rgba(162, 224, 67, 0.8);
-        }
-
-        .shohoz-type-label {
-            color: #94a3b8;
-            font-size: 13px;
-            font-weight: 700;
-            transition: color 0.2s;
-        }
-
-        .shohoz-type-option input:checked ~ .shohoz-type-label {
-            color: #ffffff;
-            font-weight: 800;
-        }
-
         .shohoz-search-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1.25fr) minmax(0, 1.15fr) auto;
             align-items: center;
-            gap: 8px;
-            background: rgba(0, 0, 0, 0.45);
+            gap: 10px;
+            background: transparent;
             border: none;
-            border-radius: 14px;
-            padding: 6px;
+            padding: 0;
         }
 
         .shohoz-segment {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border: none !important;
-            border-radius: 11px;
-            min-height: 58px;
-            height: 58px;
+            padding: 8px 16px;
+            background: #060906;
+            border: 1.5px solid rgba(255, 255, 255, 0.16) !important;
+            border-radius: 13px;
+            min-height: 60px;
+            height: 60px;
             box-sizing: border-box;
             position: relative;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
+        }
+
+        .shohoz-segment:hover {
+            border-color: rgba(162, 224, 67, 0.55) !important;
+            background: rgba(162, 224, 67, 0.03);
+            box-shadow: 0 0 16px rgba(162, 224, 67, 0.18);
         }
 
         .shohoz-segment:focus-within,
-        .shohoz-segment:hover {
-            border: none !important;
-            background: rgba(162, 224, 67, 0.08) !important;
-            box-shadow: 0 0 14px rgba(162, 224, 67, 0.18) !important;
+        .custom-dropdown-wrap.is-open {
+            border-color: #a2e043 !important;
+            background: rgba(162, 224, 67, 0.06) !important;
+            box-shadow: 0 0 20px rgba(162, 224, 67, 0.3) !important;
+            z-index: 100 !important;
         }
 
         .shohoz-segment.field-error {
@@ -430,35 +346,35 @@
         .shohoz-btn-wrap {
             display: flex;
             align-items: center;
-            height: 58px;
+            height: 60px;
         }
 
         .shohoz-search-btn {
-            background: linear-gradient(135deg, #a2e043 0%, #89ce2c 100%) !important;
+            background: #a2e043 !important;
             color: #050d03 !important;
             font-weight: 900;
             font-size: 14.5px;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            border-radius: 12px;
-            padding: 0 30px;
-            height: 58px;
-            min-height: 58px;
+            border-radius: 13px;
+            padding: 0 32px;
+            height: 60px;
+            min-height: 60px;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.25s ease;
-            box-shadow: 0 0 24px rgba(162, 224, 67, 0.45);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 22px rgba(162, 224, 67, 0.45);
             white-space: nowrap;
         }
 
         .shohoz-search-btn:hover {
-            background: #b2f24a !important;
+            background: #b5f54c !important;
             transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(162, 224, 67, 0.75);
+            box-shadow: 0 8px 32px rgba(162, 224, 67, 0.75);
         }
 
         /* ─── RESPONSIVE ─── */
