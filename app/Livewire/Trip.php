@@ -112,15 +112,12 @@ class Trip extends Component
             $hasFilters = true;
         }
 
-        // Only fetch and show trips if at least one filter is applied
-        if ($hasFilters) {
-            $trips = $query->take($this->perPage)->get();
-        } else {
-            $trips = collect();
-        }
+        $totalCount = $query->count();
+        $trips = $query->with(['bus.seats', 'bookings'])->orderBy('id', 'desc')->take($this->perPage)->get();
 
         return view('livewire.trip', [
             'trips' => $trips,
+            'totalCount' => $totalCount,
             'origins' => $this->origins,
             'destinations' => $this->destinations,
             'times' => $this->times,

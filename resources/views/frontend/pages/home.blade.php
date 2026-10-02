@@ -1,198 +1,6 @@
 @extends('frontend.index')
 @section('content')
 
-    <style>
-        .booking-bar {
-            position: relative;
-            z-index: 20;
-        }
-
-        @media (max-width: 768px) {
-            .booking-bar {
-                flex-direction: column;
-                border-radius: 24px;
-                padding: 20px;
-            }
-
-            .booking-bar-item {
-                border-right: none !important;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-                width: 100%;
-            }
-
-            .booking-bar-btn {
-                width: 100%;
-                border-radius: 12px;
-                margin-top: 10px;
-            }
-        }
-
-        /* Slider Compact Card Restyling (Midnight Indigo Aesthetic) */
-        .premium-card-wrapper {
-            width: 100%;
-        }
-
-        .ticket-card {
-            background: #000 !important;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 20px;
-            padding: 25px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 260px;
-        }
-
-        .ticket-card:hover {
-            border-color: rgba(162, 224, 67, 0.6);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(162, 224, 67, 0.25);
-            background: #050505 !important;
-        }
-
-        .operator-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 15px;
-        }
-
-        .bus-name {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 18px;
-            font-weight: 800;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .tag-pill-premium {
-            background: #a2e043;
-            color: #000;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: 800;
-            font-size: 10px;
-            letter-spacing: 0.5px;
-            flex-shrink: 0;
-        }
-
-        .journey-details {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-
-        .journey-timeline {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .time-val {
-            font-size: 18px;
-            font-weight: 800;
-            color: #fff;
-            display: block;
-            line-height: 1;
-        }
-
-        .time-suffix {
-            font-size: 11px;
-            color: #a2e043;
-            font-weight: 700;
-        }
-
-        .duration-center {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 15px;
-        }
-
-        .duration-line {
-            width: 100%;
-            height: 2px;
-            background: rgba(162, 224, 67, 0.4);
-            margin-bottom: 4px;
-            box-shadow: 0 0 10px rgba(162, 224, 67, 0.2);
-        }
-
-        .duration-text {
-            font-size: 10px;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .location-block {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            font-weight: 600;
-            color: #ccc;
-        }
-
-        .action-zone {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .fare-price {
-            font-size: 26px;
-            font-weight: 800;
-            color: #a2e043;
-            line-height: 1;
-        }
-
-        .fare-label {
-            font-size: 11px;
-            color: #555;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-            margin-top: 2px;
-        }
-
-        .seats-badge {
-            color: #fff;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: block;
-            text-align: right;
-        }
-
-        .book-btn-premium {
-            background: #a2e043;
-            color: #000 !important;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 12px;
-            text-decoration: none !important;
-            transition: all 0.2s;
-            display: inline-block;
-        }
-
-        .book-btn-premium:hover {
-            background: #fff;
-            transform: translateY(-2px);
-        }
-    </style>
-
     {{-- HERO SECTION --}}
     <section
         style="min-height: 80vh; padding: 120px 40px 100px; position:relative; overflow:hidden; display: flex; align-items: center; background: url('{{ asset('frontend/images/hero_bg.png') }}') center/cover no-repeat;">
@@ -210,15 +18,44 @@
                     Journey to your <br><span style="color:var(--accent);">Happy Place.</span>
                 </h1>
                 <p
-                    style="color:rgba(255,255,255,0.7); font-size:20px; margin-bottom:48px; line-height:1.6; max-width: 550px;">
+                    style="color:rgba(255,255,255,0.7); font-size:20px; margin-bottom:40px; line-height:1.6; max-width: 550px;">
                     Premium intercity bus reservations across Bangladesh. Experience comfort, safety, and priority at every
                     mile.</p>
+                <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                    <a href="#find-trips" class="sb-btn sb-btn-primary" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 36px; font-size: 15px; font-weight: 700; border-radius: 12px; text-decoration: none; box-shadow: 0 8px 24px rgba(162, 224, 67, 0.3);">
+                        <i class="fa-solid fa-magnifying-glass"></i> Find Trips Now
+                    </a>
+                    <a href="#destinations" style="background: rgba(255,255,255,0.06); color: #fff; border: 1px solid rgba(255,255,255,0.12); padding: 16px 28px; font-size: 15px; font-weight: 600; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.12)';" onmouseout="this.style.background='rgba(255,255,255,0.06)';">
+                        <i class="fa-solid fa-map-location-dot"></i> Explore Destinations
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
+    {{-- FIND TRIPS SECTION --}}
+    <section id="find-trips" style="padding: 80px 40px 90px; background: #0b0d12; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); scroll-margin-top: 70px;">
+        <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 800px; height: 350px; background: radial-gradient(circle, rgba(162, 224, 67, 0.05) 0%, transparent 70%); pointer-events: none;"></div>
+
+        <div style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 10;">
+            <div style="margin-bottom: 40px;">
+                <span class="sb-badge" style="margin-bottom: 12px; background: rgba(162, 224, 67, 0.1); color: var(--accent); border: 1px solid rgba(162, 224, 67, 0.2);">
+                    ✨ Live Bus Terminals & Schedules
+                </span>
+                <h2 class="syne" style="font-size: clamp(32px, 4vw, 44px); font-weight: 800; color: #fff; margin: 0 0 10px; letter-spacing: -1px;">
+                    Find & Book <span style="color: var(--accent);">Trips</span>
+                </h2>
+                <p style="color: rgba(255,255,255,0.6); margin: 0; font-size: 16px; max-width: 650px;">
+                    Search your preferred route, filter by date, departure time, or coach type, and secure your seats instantly.
+                </p>
+            </div>
+
+            <livewire:trip />
+        </div>
+    </section>
+
     {{-- TOP DESTINATIONS SECTION --}}
-    <section style="padding:100px 40px; background: var(--paper); position: relative;">
+    <section id="destinations" style="padding:100px 40px; background: var(--paper); position: relative; scroll-margin-top: 70px;">
         <div
             style="position: absolute; top:0; right:0; width: 400px; height: 400px; background: var(--accent); filter: blur(200px); opacity: 0.03; pointer-events:none;">
         </div>
@@ -244,7 +81,7 @@
                     <div class="swiper-wrapper">
                         @foreach($destinations as $dest)
                             <div class="swiper-slide" style="height: auto;">
-                                <a href="{{ route('frontend.reserve', ['to' => $dest['name']]) }}" class="destination-card"
+                                <a href="{{ route('frontend.home', ['to' => $dest['name']]) }}#find-trips" class="destination-card"
                                     style="height:420px; border-radius:32px; overflow:hidden; position:relative; cursor:pointer; border: 1px solid rgba(255,255,255,0.03); text-decoration: none; display: block; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
                                     
                                     {{-- Background Image --}}

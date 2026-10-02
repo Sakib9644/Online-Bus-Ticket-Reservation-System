@@ -20,12 +20,10 @@
             display: grid;
             grid-template-columns: 310px minmax(0, 1fr);
             gap: 40px;
-            margin-left: -50px;
         }
         @media (max-width: 992px) {
             .trip-layout-grid {
                 grid-template-columns: 1fr;
-                margin-left: 0;
             }
         }
 
@@ -772,6 +770,14 @@
                             </div>
                         @endforeach
                     </div>
+
+                    @if (isset($totalCount) && $totalCount > $trips->count())
+                        <div style="text-align: center; margin-top: 32px;">
+                            <button type="button" wire:click="loadMore" class="mini-btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: auto; padding: 14px 32px; background: rgba(162, 224, 67, 0.1); color: #a2e043; border: 1px solid rgba(162, 224, 67, 0.3); border-radius: 12px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='var(--accent)'; this.style.color='#000';" onmouseout="this.style.background='rgba(162, 224, 67, 0.1)'; this.style.color='#a2e043';">
+                                <i class="fa-solid fa-angles-down"></i> Load More Trips (Showing {{ $trips->count() }} of {{ $totalCount }})
+                            </button>
+                        </div>
+                    @endif
                 @else
                     <div style="text-align: center; padding: 80px 20px; position: relative; z-index: 1;">
                         <div style="font-size: 44px; color: rgba(255,255,255,0.06); margin-bottom: 18px;">
