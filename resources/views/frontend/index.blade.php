@@ -18,11 +18,11 @@
     <style>
         :root {
             color-scheme: dark;
-            /* Core Brand Colors - Pure Pitch Black & Neon Lime */
-            --paper: #000000; /* Pure Black Foundation */
-            --bg-black: #000000;
-            --card-bg: #070707; /* Deep Obsidian */
-            --accent: #a2e043; /* Neon Lime from original design */
+            /* Core Brand Colors */
+            --paper: #0b0d11; /* Deep Midnight Foundation */
+            --bg-black: #0b0d11;
+            --card-bg: #14171d; /* Premium Midnight Slate */
+            --accent: #a2e043; /* SwiftBus Neon Lime */
             --accent-hover: #b5ec58;
             --neon: #a2e043;
             --neon-glow: 0 0 20px rgba(162, 224, 67, 0.45);
@@ -30,15 +30,15 @@
 
             /* UI Elements */
             --ink: #ffffff;
-            --muted: #94a3b8;
+            --muted: #8e99aa;
             --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(162, 224, 67, 0.5);
+            --border-hover: rgba(162, 224, 67, 0.4);
 
             /* Seat Status */
-            --seat-available: #1e3a8a;
+            --seat-available: #3871ce;
             --seat-selected: #a2e043;
-            --seat-booked: #dc2626;
-            --seat-empty: #0e0e0e;
+            --seat-booked: #d34539;
+            --seat-empty: #14171d;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,12 +48,12 @@
         }
 
         select option, option {
-            background-color: #070707 !important;
+            background-color: #14171d !important;
             color: #ffffff !important;
         }
 
         body {
-            background: #000000 !important;
+            background: var(--paper) !important;
             color: var(--ink);
             font-family: 'Poppins', sans-serif;
             font-size: 15px;
@@ -70,7 +70,7 @@
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 40px;
             height: 68px;
-            background: rgba(0, 0, 0, 0.96) !important;
+            background: rgba(11, 13, 17, 0.96) !important;
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
@@ -139,7 +139,7 @@
         }
 
         /* ── MAIN ── */
-        main { padding-top: 68px; min-height: calc(100vh - 68px); background: #000000; }
+        main { padding-top: 68px; min-height: calc(100vh - 68px); background: var(--paper); }
 
         /* ── CARDS ── */
         .sb-card {
