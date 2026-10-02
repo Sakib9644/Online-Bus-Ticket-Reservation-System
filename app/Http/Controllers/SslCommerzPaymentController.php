@@ -52,6 +52,15 @@ class SslCommerzPaymentController extends Controller
                 'status' => 'Pending'
             ]);
 
+        // Dynamically apply admin settings if configured
+        if (setting('sslcommerz_store_id')) {
+            config([
+                'sslcommerz.store.id' => setting('sslcommerz_store_id'),
+                'sslcommerz.store.password' => setting('sslcommerz_store_password'),
+                'sslcommerz.sandbox' => setting('sslcommerz_sandbox', '1') == '1',
+            ]);
+        }
+
         $response = Sslcommerz::setOrder($total_amount, $tran_id, 'Bus Ticket', 'Ticket')
             ->setCustomer(
                 Auth::user()->name,

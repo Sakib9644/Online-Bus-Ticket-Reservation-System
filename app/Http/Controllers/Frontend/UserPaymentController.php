@@ -46,35 +46,47 @@ class UserPaymentController extends Controller
     {
         app(BookingExpiryService::class)->releaseExpiredPending();
 
-        $booking = Booking::where('id', $id)
+        $bookingIds = explode(',', $id);
+        $bookings = Booking::whereIn('id', $bookingIds)
             ->where('user_id', Auth::id())
-            ->first();
+            ->get();
 
-        if (!$booking) {
+        if ($bookings->isEmpty()) {
             return redirect()->route('booking.details')->with('error', 'Booking not found or already expired.');
         }
 
-        if (strtolower((string) $booking->status) !== 'pending') {
-            return redirect()->route('view.info', ['id' => $id])->with('message', 'Booking is already paid or no longer pending.');
+        $pendingBookings = $bookings->filter(fn($b) => strtolower((string)$b->status) === 'pending');
+
+        if ($pendingBookings->isEmpty()) {
+            return redirect()->route('view.info', ['id' => $id])->with('message', 'Booking is already paid or completed.');
         }
 
-        if ($booking->expires_at && $booking->expires_at->isPast()) {
-            $booking->delete();
-            return redirect()->route('booking.details')->with('error', 'Payment window expired. Please book again.');
-        }
+        $request->validate([
+            'transaction_id' => 'required|string|min:4|max:50',
+            'payment_method' => 'nullable|string',
+            'sender_number' => 'nullable|string|max:20',
+        ]);
+
+        $totalAmount = $pendingBookings->sum('amount');
+        $method = $request->payment_method ?: $request->payment_mathod ?: 'bKash/Nagad/Rocket';
+        $sender = $request->sender_number ? ' (' . $request->sender_number . ')' : '';
+        $ticketNo = $pendingBookings->first()->ticket_no ?: ('SB-' . date('y') . '-' . strtoupper(substr(md5(uniqid()), 0, 6)));
 
         Payment::create([
             'user_id' => Auth::id(),
-            'payment_mathod' => $request->payment_mathod,
+            'payment_mathod' => $method . $sender,
             'transaction_id' => $request->transaction_id,
-            'amount' => $booking->amount,
+            'amount' => $totalAmount,
         ]);
 
-        $booking->status = 'complete';
-        $booking->expires_at = null;
-        $booking->save();
+        \Illuminate\Support\Facades\DB::table('bookings')
+            ->whereIn('id', $pendingBookings->pluck('id'))
+            ->update([
+                'status' => 'complete',
+                'ticket_no' => $ticketNo,
+                'expires_at' => null,
+            ]);
 
-
-        return redirect()->route('view.info', ['id' => $id])->with('message', 'Payment Succefully!');
+        return redirect()->route('view.info', ['id' => $id])->with('message', 'Payment recorded successfully! Your booking is confirmed.');
     }
 }
