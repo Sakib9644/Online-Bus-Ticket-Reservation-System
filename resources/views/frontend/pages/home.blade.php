@@ -562,11 +562,6 @@
 
         {{-- Clip wrapper --}}
         <div style="position:absolute; inset:0; overflow:hidden; z-index:0; {{ !$hasSliders ? 'background: #070907 url(\'' . $heroBackground . '\') center/cover no-repeat;' : '' }}"></div>
-        {{-- Rich multi-layer overlay for depth without heavy dark blocks --}}
-        <div style="position:absolute; inset:0; pointer-events:none; z-index:1;
-            background:
-                linear-gradient(to bottom, rgba(5,7,5,0.45) 0%, rgba(5,7,5,0.08) 40%, rgba(5,7,5,0.65) 100%),
-                linear-gradient(to right, rgba(5,7,5,0.35) 0%, transparent 60%);"></div>
 
         {{-- Center content container (Clean, centered search widget) --}}
         <div style="position:relative; z-index: 9999; width:100%; max-width:1120px; margin:0 auto; padding: 100px 24px 60px; display:flex; flex-direction:column; align-items:center;">
@@ -695,26 +690,6 @@
                             </button>
                         </div>
                     </div>{{-- /.shohoz-search-grid --}}
-
-                    {{-- Trust perks footer inside card --}}
-                    <div class="shohoz-card-footer">
-                        <div class="shohoz-feature-item">
-                            <span class="shohoz-feature-dot"></span>
-                            <span>Instant E-Ticket Delivery</span>
-                        </div>
-                        <div class="shohoz-feature-item">
-                            <span class="shohoz-feature-dot"></span>
-                            <span>100% Verified Bus Operators</span>
-                        </div>
-                        <div class="shohoz-feature-item">
-                            <span class="shohoz-feature-dot"></span>
-                            <span>bKash Direct Checkout</span>
-                        </div>
-                        <div class="shohoz-feature-item">
-                            <span class="shohoz-feature-dot"></span>
-                            <span>24/7 Helpline: <strong>{{ setting('helpline', '16374') }}</strong></span>
-                        </div>
-                    </div>
 
                 </form>
             </div>{{-- /.shohoz-search-card --}}
