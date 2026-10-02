@@ -8,6 +8,7 @@ use App\Models\Bus;
 use App\Models\Trip;
 use App\Models\Location;
 use App\Models\City;
+use App\Models\HeroSlider;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -97,7 +98,11 @@ class HomeController extends Controller
         $destinationsList = Trip::select('location_to')->distinct()->whereNotNull('location_to')->pluck('location_to');
 
         $trips = Trip::with('bus')->withCount('bookings')->orderByDesc('bookings_count')->get();
-        return view('frontend.pages.home', compact('buses', 'locations', 'trips', 'destinations', 'origins', 'destinationsList'));
+
+        // Hero Slider images from admin panel
+        $heroSliders = HeroSlider::getActive();
+
+        return view('frontend.pages.home', compact('buses', 'locations', 'trips', 'destinations', 'origins', 'destinationsList', 'heroSliders'));
     }
 
     public function reserveForm(Request $request)
