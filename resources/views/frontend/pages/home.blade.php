@@ -492,24 +492,17 @@
             <div class="shohoz-search-card">
                 <form action="{{ route('frontend.reserve') }}" method="GET" id="heroSearchForm">
                     
-                    {{-- Card Header: Service Pill + Trip Type Selector --}}
-                    <div class="shohoz-card-header">
-                        <div class="shohoz-service-pill">
-                            <i class="fa-solid fa-bus-simple"></i>
-                            <span>Online Bus Ticket Reservation</span>
+                    {{-- Clean Minimalist Card Header --}}
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(162, 224, 67, 0.12); border: 1px solid rgba(162, 224, 67, 0.3); display: flex; align-items: center; justify-content: center; color: #a2e043; font-size: 14px;">
+                                <i class="fa-solid fa-bus-simple"></i>
+                            </div>
+                            <span style="font-size: 16px; font-weight: 800; color: #ffffff; letter-spacing: -0.2px;">Online Bus Ticket Reservation</span>
                         </div>
-
-                        <div class="shohoz-type-selector">
-                            <label class="shohoz-type-option">
-                                <input type="radio" name="trip_type" value="oneway" checked>
-                                <span class="shohoz-radio-dot"></span>
-                                <span class="shohoz-type-label">One Way</span>
-                            </label>
-                            <label class="shohoz-type-option">
-                                <input type="radio" name="trip_type" value="round">
-                                <span class="shohoz-radio-dot"></span>
-                                <span class="shohoz-type-label">Round Trip</span>
-                            </label>
+                        <div style="display: flex; align-items: center; gap: 6px; background: rgba(162, 224, 67, 0.08); border: 1px solid rgba(162, 224, 67, 0.25); border-radius: 20px; padding: 4px 12px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: #a2e043; box-shadow: 0 0 8px #a2e043;"></span>
+                            <span style="font-size: 11px; font-weight: 800; color: #a2e043; text-transform: uppercase; letter-spacing: 0.8px;">Direct Booking</span>
                         </div>
                     </div>
 
@@ -597,7 +590,6 @@
                             <div class="shohoz-segment-content">
                                 <div class="shohoz-segment-header">
                                     <span class="shohoz-segment-label">JOURNEY DATE <span style="color:#ef4444; font-size:11px; font-weight:800;">*</span></span>
-                                    <span class="shohoz-return-hint">+ ADD RETURN</span>
                                     <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
                                 <input type="date" name="date" class="shohoz-date-input" value="{{ request('date', date('Y-m-d')) }}" min="{{ date('Y-m-d') }}">
