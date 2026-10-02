@@ -2,13 +2,13 @@
 @section('content')
 
 @php
-    $sslActive = setting('sslcommerz_active', '1') == '1';
+    $sslActive = setting('sslcommerz_active', '0') == '1';
     $bkashActive = setting('bkash_active', '1') == '1';
-    $nagadActive = setting('nagad_active', '1') == '1';
-    $rocketActive = setting('rocket_active', '0') == '1';
+    $nagadActive = false; // Disabled for testing
+    $rocketActive = false; // Disabled for testing
 
-    $hasAnyMethod = $sslActive || $bkashActive || $nagadActive || $rocketActive;
-    $defaultTab = $sslActive ? 'ssl' : ($bkashActive ? 'bkash' : ($nagadActive ? 'nagad' : ($rocketActive ? 'rocket' : 'none')));
+    $hasAnyMethod = $sslActive || $bkashActive;
+    $defaultTab = $bkashActive ? 'bkash' : ($sslActive ? 'ssl' : 'none');
 @endphp
 
 <div class="section-wrap" style="padding-top:60px; min-height: 80vh; background: var(--paper);">
@@ -146,6 +146,28 @@
                                             Click the button below to pay securely through bKash. You will be redirected to bKash to complete the payment, then returned here automatically.
                                         </p>
                                     </div>
+
+                                    @if(setting('bkash_sandbox', '1') == '1')
+                                        <div style="background: rgba(226, 19, 110, 0.08); border: 1px dashed rgba(226, 19, 110, 0.45); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px;">
+                                            <div style="font-weight: 800; color: #f472b6; font-size: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                                                <i class="fa fa-flask"></i> bKash Sandbox Test Credentials
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center;">
+                                                <div style="background: rgba(0,0,0,0.35); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                                                    <div style="font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700;">Wallet No</div>
+                                                    <div style="font-weight: 800; color: #fff; font-family: monospace; font-size: 13px; margin-top: 2px;">01770618575</div>
+                                                </div>
+                                                <div style="background: rgba(0,0,0,0.35); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                                                    <div style="font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700;">Test OTP</div>
+                                                    <div style="font-weight: 800; color: #a2e043; font-family: monospace; font-size: 13px; margin-top: 2px;">123456</div>
+                                                </div>
+                                                <div style="background: rgba(0,0,0,0.35); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                                                    <div style="font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700;">Test PIN</div>
+                                                    <div style="font-weight: 800; color: #38bdf8; font-family: monospace; font-size: 13px; margin-top: 2px;">12121</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <a href="{{ route('bkash.pay', ['id' => $id]) }}" class="sb-btn" style="width: 100%; display: flex; font-size: 16px; padding: 16px; background: #e2136e; color: #fff; font-weight: 800; border-radius: 12px; text-decoration: none; justify-content: center; border: none; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(226, 19, 110, 0.4); transition: all 0.2s;">
                                         <i class="fa fa-lock"></i> Pay ৳{{ $totalAmount }} with bKash
