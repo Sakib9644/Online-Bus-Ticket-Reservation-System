@@ -854,7 +854,6 @@
                             <div class="shohoz-segment-content">
                                 <div class="shohoz-segment-header">
                                     <span class="shohoz-segment-label">JOURNEY DATE <span style="color:#ef4444">*</span></span>
-                                    <span style="font-size: 10px; font-weight: 800; color: #8ce429; cursor: pointer; letter-spacing: 0.3px;">+ ADD RETURN</span>
                                     <span class="field-error-msg"><i class="fa-solid fa-circle-exclamation"></i> Required</span>
                                 </div>
                                 <input type="date" name="date" id="heroDateInput" class="shohoz-date-input-hidden" value="{{ request('date', date('Y-m-d')) }}" min="{{ date('Y-m-d') }}">
