@@ -115,7 +115,7 @@
             -webkit-backdrop-filter: blur(28px);
             border: 1.5px solid rgba(140, 228, 41, 0.38);
             border-radius: 24px;
-            padding: 14px 18px;
+            padding: 18px 22px 18px 22px;
             box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 25px rgba(140, 228, 41, 0.12);
             position: relative;
             z-index: 9999;
@@ -735,8 +735,21 @@
         <div class="hero-center-search-wrap">
             <div class="shohoz-search-card">
 
-                {{-- TRIP TYPE TOGGLE: ONE WAY / ROUND WAY --}}
-              
+                {{-- SEARCH MENU TOP HEADER --}}
+                <div class="search-menu-header">
+                    <div class="search-menu-title-wrap">
+                        <div class="search-menu-icon-circle">
+                            <i class="fa-solid fa-bus"></i>
+                        </div>
+                        <div class="search-menu-text">
+                            <h3 class="search-menu-title">Where do you want to go?</h3>
+                            <p class="search-menu-subtitle">Find the best routes, compare fares & book your journey</p>
+                        </div>
+                    </div>
+                    <div class="search-menu-badge">
+                        <i class="fa-solid fa-bolt"></i> QUICK SEARCH
+                    </div>
+                </div>
 
                 <form action="{{ route('frontend.reserve') }}" method="GET" id="heroSearchForm" style="margin: 0; width: 100%;">
                     
@@ -1176,14 +1189,6 @@
                     }, 300);
                 });
             }
-
-            // Trip Type Toggle (One Way / Round Way)
-            document.querySelectorAll('.trip-type-label').forEach(label => {
-                label.addEventListener('click', function() {
-                    document.querySelectorAll('.trip-type-label').forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
 
             // ─── VALIDATE 3 REQUIRED FIELDS (FROM, TO, DATE) ───
             const heroSearchForm = document.getElementById('heroSearchForm');
