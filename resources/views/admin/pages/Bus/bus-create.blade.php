@@ -37,8 +37,8 @@
                     <label class="admin-label">Vehicle Category</label>
                     <select class="admin-input admin-select" required name="bus_type">
                         <option value="">Select Category</option>
-                        <option value="Ac Bus">Luxury AC Bus</option>
-                        <option value="Non Ac Bus">Standard Non-AC Bus</option>
+                        <option value="ac" {{ old('bus_type') == 'ac' ? 'selected' : '' }}>Luxury AC Bus</option>
+                        <option value="non-ac" {{ old('bus_type') == 'non-ac' ? 'selected' : '' }}>Standard Non-AC Bus</option>
                     </select>
                 </div>
 

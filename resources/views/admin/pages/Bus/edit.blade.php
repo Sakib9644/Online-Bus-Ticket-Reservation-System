@@ -36,10 +36,15 @@
 
                 <div class="admin-form-group">
                     <label class="admin-label">Vehicle Category</label>
-                    <select class="admin-input admin-select" name="bus_type">
+                    @php
+                        $currType = strtolower($bus->bus_type ?? '');
+                        $isAc = str_contains($currType, 'ac') && !str_contains($currType, 'non');
+                        $isNonAc = str_contains($currType, 'non');
+                    @endphp
+                    <select class="admin-input admin-select" required name="bus_type">
                         <option value="">Select Category</option>
-                        <option value="Ac Bus" {{ $bus->bus_type == 'Ac Bus' ? 'selected' : '' }}>Luxury AC Bus</option>
-                        <option value="Non Ac Bus" {{ $bus->bus_type == 'Non Ac Bus' ? 'selected' : '' }}>Standard Non-AC Bus</option>
+                        <option value="ac" {{ (old('bus_type') == 'ac' || (empty(old('bus_type')) && $isAc)) ? 'selected' : '' }}>Luxury AC Bus</option>
+                        <option value="non-ac" {{ (old('bus_type') == 'non-ac' || (empty(old('bus_type')) && $isNonAc)) ? 'selected' : '' }}>Standard Non-AC Bus</option>
                     </select>
                 </div>
 

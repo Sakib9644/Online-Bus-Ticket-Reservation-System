@@ -45,57 +45,74 @@ class BusController extends Controller
 
   public function store(Request $request)
   {
-      $filename = "";
-      if($request->hasFile('bus_image')){
-        $file = $request->file('bus_image');
-        $filename = date('Ymdhms').'.'.$file->getclientOriginalExtension();
-        $file->storeAs('/uploads',$filename);
-      }
-
       $request->validate([
         'bus_name'=>'required',
         'coach_no'=>'required',
         'bus_type'=>'required',
       ]);
 
-      // dd('ok');
-      // dd($request->all());
+      $filename = "";
+      if($request->hasFile('bus_image')){
+        $file = $request->file('bus_image');
+        $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
+        $file->storeAs('/uploads',$filename);
+      }
+
+      $busType = strtolower($request->bus_type);
+      if (str_contains($busType, 'non')) {
+          $busType = 'non-ac';
+      } elseif (str_contains($busType, 'ac')) {
+          $busType = 'ac';
+      }
 
       Bus::create ([
           'bus_name'=>$request->bus_name,
           'coach_no'=>$request->coach_no,
-          'bus_type'=>$request->bus_type,
+          'bus_type'=>$busType,
           'image'=>$filename
       ]);
       return redirect()->route('admin.bus')->with('success','Bus created successfully!');
-    }
+  }
 
   public function busEdit($id)
-    {
-        $bus = Bus::find($id);
-        if ($bus) {
-            return view('admin.pages.Bus.edit',compact('bus'));
-        }
-    }
+  {
+      $bus = Bus::findOrFail($id);
+      return view('admin.pages.Bus.edit',compact('bus'));
+  }
 
-    public function busUpdate(Request $request,$id){
-        $bus = Bus::find($id);
-        $filename = '';
-      if($request->hasFile('bus_image')){
-        $file = $request->file('bus_image');
-        $filename = date('Ymdhms').'.'.$file->getclientOriginalExtension();
-        $file->storeAs('/uploads',$filename);
+  public function busUpdate(Request $request, $id)
+  {
+      $bus = Bus::findOrFail($id);
+
+      $request->validate([
+          'bus_name'=>'required',
+          'coach_no'=>'required',
+          'bus_type'=>'required',
+      ]);
+
+      $busType = strtolower($request->bus_type);
+      if (str_contains($busType, 'non')) {
+          $busType = 'non-ac';
+      } elseif (str_contains($busType, 'ac')) {
+          $busType = 'ac';
       }
-        if ($bus) {
-            $bus->update([
-                'bus_name'=>$request->bus_name,
-                'coach_no'=>$request->coach_no,
-                'bus_type'=>$request->bus_type,
-                'image'=>$filename
-            ]);
-            return redirect()->route('admin.bus')->with('message','Bus Updated successfully!');
-        }
-    }
+
+      $data = [
+          'bus_name'=>$request->bus_name,
+          'coach_no'=>$request->coach_no,
+          'bus_type'=>$busType,
+      ];
+
+      if($request->hasFile('bus_image')){
+          $file = $request->file('bus_image');
+          $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
+          $file->storeAs('/uploads',$filename);
+          $data['image'] = $filename;
+      }
+
+      $bus->update($data);
+      return redirect()->route('admin.bus')->with('message','Bus Updated successfully!');
+  }
 
   public function busDetails($bus_id)
   {
